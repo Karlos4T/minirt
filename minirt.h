@@ -7,6 +7,14 @@
 
 # include <mlx.h>
 # include <math.h>
+# include <stdlib.h>
+
+typedef struct s_sphere {
+	int	x_origin;
+	int	y_origin;
+	int z_origin;
+	int radius;
+} t_sphere;
 
 
 
