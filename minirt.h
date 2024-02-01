@@ -14,7 +14,7 @@ typedef struct s_sphere {
 	int	y_origin;
 	int z_origin;
 	int radius;
-	int	color;
+	int	*color;
 } t_sphere;
 
 typedef struct s_light {
@@ -22,7 +22,7 @@ typedef struct s_light {
 	int	y_origin;
 	int z_origin;
 	int radius;
-	int	color;
+	int	*color;
 } t_light;
 
 
