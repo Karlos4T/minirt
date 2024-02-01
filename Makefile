@@ -14,7 +14,7 @@ CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 NAME = minirt
-SRC = main.c
+SRC = main.c math_functions.c
 SRCS = $(addprefix src/, $(SRC))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))

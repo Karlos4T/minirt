@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/01/31 17:13:38 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/01 13:57:03 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void print_square(t_data *data)
     }
 }
 
-t_sphere *create_sphere(int x, int y, int radius)
+t_sphere *create_sphere(int x, int y, int radius, int color)
 {
     t_sphere *sphere;
 
@@ -56,66 +56,73 @@ t_sphere *create_sphere(int x, int y, int radius)
     sphere->x_origin = x;
     sphere->y_origin = y;
     sphere->radius = radius;
+    sphere->color = color;
     return sphere;
 }
 
-
-int axys_coord(int x)
+int maped_color(int x, int y, t_sphere *sphere)
 {
-    x = x + WIN_WIDTH / 2 - WIN_WIDTH;
+    int color;
 
-    //y = y + WIN_HEIGHT / 2;
-    return x;
+    color = 255 - sphere->color * (vector_module(x, y, sphere->x_origin, sphere->y_origin) / vector_module(x, y, WIN_WIDTH, WIN_HEIGHT));
+    return (color);
 }
 
-void print_circle(t_data *data)
+int pixl_color(t_sphere *sphere, t_light *light, int x, int y)
+{
+    int color;
+    (void)x; (void)y;
+    
+    color = (light->color  - sphere->color);
+    return (color);
+}
+
+t_light *create_light(int x, int y, int radius, int color)
+{
+    t_light *light;
+
+    light = malloc(sizeof(t_light));
+    light->x_origin = x;
+    light->y_origin = y;
+    light->radius = radius;
+    light->color = color;
+    return (light);
+}
+
+void print_circle(t_data *data, t_sphere *sphere, t_light *light)
 {
     int         x;
     int         y;
-    int         color;
-    t_sphere    *sphere;
 
     y = 0;
-    sphere = create_sphere(100, 100, 150);
     while(y < WIN_HEIGHT)
     {
         x = 0;
         while(x < WIN_WIDTH)
         {
-            color = 255 - sqrt(pow(axys_coord(x), 2) + pow(axys_coord(y), 2));
-            if((sqrt(pow(sphere->x_origin - axys_coord(x), 2) + pow(sphere->y_origin - axys_coord(y), 2))) < sphere->radius)              
-                my_mlx_pixel_put(data, x, y, 0x00000000 + color);
-            if (axys_coord(x) == sphere->x_origin)
+            if(vector_module(x, y, sphere->x_origin, sphere->y_origin) < sphere->radius)              
+            my_mlx_pixel_put(data, x, y, pixl_color(sphere, light, x, y));
+            if (x_pos(x) == sphere->x_origin)
                 my_mlx_pixel_put(data, x, y, 0x0000FF00);
-            if (axys_coord(y) == sphere->y_origin)
-                my_mlx_pixel_put(data, x, y, 0x0000FF00);
-            if (axys_coord(y) == 100)
+            if (y_pos(y) == sphere->y_origin)
                 my_mlx_pixel_put(data, x, y, 0x0000FF00);
             x++;
         }
-        if (x < 100 && y < 100)
-            printf("\n");
         y++;
     }
 }
 
-void map_win()
-{
-    int x;
-    int y;
-
-    x = 0;
-    y = 0;
-    
-    
-}
-
 int main(int argc, char const *argv[])
 {
-    void    *mlx;
-    void    *mlx_win;
-    t_data  img;
-
+    void        *mlx;
+    void        *mlx_win;
+    t_data      img;
+    t_sphere    *sphere1, *sphere2;
+    t_light     *light;
+    
+    light = create_light(0, 0, 300, 0xFF0000);
+    sphere1 = create_sphere(100, 100, 150, 0xFFFFFF);
+    sphere2 = create_sphere(-200, 100, 100, 0x000000);
     (void)argv;
     (void)argc;
     mlx = mlx_init();
@@ -123,7 +130,8 @@ int main(int argc, char const *argv[])
     img.img = mlx_new_image(mlx, WIN_HEIGHT, WIN_WIDTH);
     img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
     //print_square(&img);
-    print_circle(&img);
+    print_circle(&img, sphere1, light);
+    print_circle(&img, sphere2, light);
     print_square(&img);
     mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
     mlx_loop(mlx);
