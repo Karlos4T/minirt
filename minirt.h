@@ -9,6 +9,26 @@
 # include <math.h>
 # include <stdlib.h>
 
+typedef struct s_cords {
+	int x;
+	int	y;
+	int z;
+}	t_cords;
+
+typedef struct	s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+} t_data;
+
+typedef struct	s_camera {
+	t_cords	*cords;
+	int dir;
+	int fov;
+}	t_camera;
+
 typedef struct s_sphere {
 	int	x_origin;
 	int	y_origin;
@@ -24,6 +44,7 @@ typedef struct s_light {
 	int radius;
 	int	*color;
 } t_light;
+
 
 
 //MATH FUNCTIONS
