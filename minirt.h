@@ -10,10 +10,17 @@
 # include <stdlib.h>
 
 typedef struct s_cords {
-	int x;
-	int	y;
-	int z;
+	double	x;
+	double	y;
+	double	z;
 }	t_cords;
+
+typedef struct s_vector {
+	double x;
+	double	y;
+	double z;
+	
+} t_vector;
 
 typedef struct	s_data {
 	void	*img;
@@ -30,9 +37,9 @@ typedef struct	s_camera {
 }	t_camera;
 
 typedef struct s_sphere {
-	int	x_origin;
-	int	y_origin;
-	int z_origin;
+	int	x;
+	int	y;
+	int z;
 	int radius;
 	int	*color;
 } t_sphere;
