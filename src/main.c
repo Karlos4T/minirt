@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/15 13:40:32 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:58:47 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ t_camera *start_camera(int x, int y, int z, int fov)
 	return camera;
 }
 
-/*
-int *get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
+double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 {
 	t_vector *v1;
 	t_vector *v2;
@@ -43,15 +42,11 @@ int *get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 	v1 = create_vector(*p, l->o);
 	v2 = create_vector(s->o, l->o);
 	
-	v1->x * v2->x + v1->y * v2->y + v3->x * v3->x;
-	sqrt(v1->x * v1->x + v1->y * v1->y + v1->z * v1->z) * sqrt(v2->x * v2->x + v2->y * v2->y + v2->z * v2->z)
-	
-	alpha = 1 / cos();
-	
+	alpha = 1 / cos(v1->x * v2->x + v1->y * v2->y + v1->z * v2->z / (module(*v1) * module(*v2)));
+	alpha = alpha * 180 / 3.1416;
+	//if (alpha  == 0.0)
+	return (alpha);
 }
-
-
-*/
 
 
 void render_pixel(int x, int y, t_data *data)
@@ -63,9 +58,10 @@ void render_pixel(int x, int y, t_data *data)
 	t_light		*light;
 	int color = 0X000000;
 	int	t;
+	double	alpha;
 
-	sphere = create_sphere(0, 0, -90, 5, 0xFFFFFF);
-	
+	sphere = create_sphere(0, 0, -90, 8, 0xFFFFFF);
+	light = create_light(0, -100, -90, 5, 0xFFFFFF);
 	origin = create_point(0, 0, 0);
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), 70);
 	vector = create_vector(*screen_point, *origin);
@@ -73,12 +69,15 @@ void render_pixel(int x, int y, t_data *data)
 	if (t)
 	{
 		//Calcular Nivel de luminosidad del pixel y color
-		color = hexa(get_brightness_level(sphere, light, create_point(0 + t * (screen_point->x - 0),  0 + t * (screen_point->y - 0), 0 + t * (screen_point->z - 0))));
+		double alpha = get_brightness_level(sphere, light, create_point(0 + t * (screen_point->x - 0),  0 + t * (screen_point->y - 0), 0 + t * (screen_point->z - 0)));
+		int rgb[] = {(int)alpha, (int)alpha, (int)alpha};
+		color = hexa(rgb);
+		if (color != 0)
+			printf("%x\n", color);
+		//color = 0xFFFFFF;
 	}
 	my_mlx_pixel_put(data, x, y, color);
 }
-
-
 
 
 int main()

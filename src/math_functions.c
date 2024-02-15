@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/15 13:33:21 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:50:34 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ int x_pos(int x)
 int y_pos(int y)
 {
     return (-y - WIN_HEIGHT / 2 + WIN_HEIGHT);
+}
+
+double module(t_vector v)
+{
+	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
 int hexa(int *rgb)
@@ -36,7 +41,6 @@ int hexa(int *rgb)
             rgb[i] = 255;
         i++;
     }
-    printf("%.2d %.2d %.2d\n", rgb[0], rgb[1], rgb[2]);
 	hexa = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
 	return (hexa);
 }

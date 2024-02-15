@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/15 12:07:25 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:25:25 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ t_light *create_light(int x, int y, int radius, int color)
 	t_light	*light;
 
 	light = malloc(sizeof(t_light));
-	light->x_origin = x;
-	light->y_origin = y;
+	light->o.x = x;
+	light->o.y = y;
+	light->o.z = z;
 	light->radius = radius;
 	light->color = rgb(color);
 	return (light);

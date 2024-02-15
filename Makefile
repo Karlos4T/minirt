@@ -11,7 +11,7 @@ BLUE	=	\033[1;34m
 LBLUE	=	\033[1;36m
 
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = #-Werror -Wextra -Wall
 MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 NAME = minirt
 SRC = main.c math_functions.c functions.c

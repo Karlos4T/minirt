@@ -64,12 +64,14 @@ t_vector	*create_vector(t_cords point1, t_cords point2);
 double		vector_x_sphere(t_sphere s, t_vector v);
 void		render_screen(t_data *data);
 t_cords 	*create_point(int x, int y, int z);
+t_light		*create_light(int x, int y, int z, int radius, int color);
 
 //MATH FUNCTIONS
 int		x_pos(int x);
 int		y_pos(int y);
 int		hexa(int *rgb);
 int		*rgb(int color);
+double 	module(t_vector v);
 
 
 //MAIN
