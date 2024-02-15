@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/13 14:48:05 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:07:25 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 
 
 
-void my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-    char    *dst;
 
-    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-    *(unsigned int *)dst = color;
-}
 
 int hexa(int *rgb)
 {
@@ -62,11 +56,6 @@ int *rgb(int color)
 	return (rgb);
 }
 
-double intensity(int x, int y, t_light *light)
-{
-	return(1 - vector_module(x, y, light->x_origin, light->y_origin) / light->radius);
-}
-
 t_sphere *create_sphere(int x, int y, int z, int radius, int color)
 {
 	t_sphere	*sphere;
@@ -96,29 +85,6 @@ t_light *create_light(int x, int y, int radius, int color)
 	light->radius = radius;
 	light->color = rgb(color);
 	return (light);
-}
-
-void	print_circle(t_data *data, t_sphere *sphere, t_light *light)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while(y < WIN_HEIGHT)
-	{
-		x = 0;
-		while(x < WIN_WIDTH)
-		{
-			if(vector_module(x, y, sphere->x_origin, sphere->y_origin) < sphere->radius)              
-			my_mlx_pixel_put(data, x, y, pixl_color(sphere, light, x, y));
-			if (x_pos(x) == sphere->x_origin)
-				my_mlx_pixel_put(data, x, y, 0x0000FF00);
-			if (y_pos(y) == sphere->y_origin)
-				my_mlx_pixel_put(data, x, y, 0x0000FF00);
-			x++;
-		}
-		y++;
-	}
 }
 
 t_camera *start_camera(int x, int y, int z, int fov)
