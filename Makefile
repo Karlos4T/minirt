@@ -12,13 +12,16 @@ LBLUE	=	\033[1;36m
 
 CC = gcc
 CFLAGS = #-Werror -Wextra -Wall
-MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 NAME = minirt
-SRC = main.c math_functions.c functions.c
+SRC = main.c math_functions.c functions.c scene.c
 SRCS = $(addprefix src/, $(SRC))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
-
+ifeq ($(shell uname), Linux)
+	MLXFLAGS = -lmlx -lXext -lX11 -lm -lz -L ./minilibx-linux -lpthread
+else
+	MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
+endif
 
 all: $(NAME)
 
@@ -29,7 +32,7 @@ $(OBJS_PATH)%.o: %.c | $(OBJS_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_PATH) $(OBJS)
-	$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(MLXFLAGS)
 	@clear
 	@echo "MINIRT COMPILED"
 

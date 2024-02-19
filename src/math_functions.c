@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/15 17:50:34 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/18 21:41:24 by user4t           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int hexa(int *rgb)
     i = 0;
     while (i < 3)
     {
-        if (rgb[i] < 0)
-            rgb[i] = 0;
+        if (rgb[i] < 50)
+            rgb[i] = 50;
         else if (rgb[i] > 255)
             rgb[i] = 255;
         i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/15 17:30:16 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:39:33 by user4t           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@ t_light *create_light(int x, int y, int z, int radius, int color)
 	light->o.x = x;
 	light->o.y = y;
 	light->o.z = z;
-	light->radius = radius;
+	light->intensity = radius;
 	light->color = rgb(color);
+
 	return (light);
 }
 
@@ -67,10 +68,11 @@ t_cords *create_point(int x, int y, int z)
 	point->x = x;
 	point->y = y;
 	point->z = z;
+
 	return (point);
 }
 
-void render_screen(t_data *data)
+void render_screen(t_data *data, t_scene *scene)
 {
 	int i;
 	int j;
@@ -81,7 +83,7 @@ void render_screen(t_data *data)
 		j = 0;
 		while (j < WIN_WIDTH)
 		{
-			render_pixel(i, j, data);
+			render_pixel(i, j, data, *scene);
 			j++;
 		}
 		i++;
