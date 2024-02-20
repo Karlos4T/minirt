@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
+/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/18 21:41:24 by user4t           ###   ########.fr       */
+/*   Updated: 2024/02/20 13:35:05 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,24 +25,6 @@ int y_pos(int y)
 double module(t_vector v)
 {
 	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-}
-
-int hexa(int *rgb)
-{
-	int hexa;
-    int i;
-    
-    i = 0;
-    while (i < 3)
-    {
-        if (rgb[i] < 50)
-            rgb[i] = 50;
-        else if (rgb[i] > 255)
-            rgb[i] = 255;
-        i++;
-    }
-	hexa = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
-	return (hexa);
 }
 
 double vector_x_sphere(t_sphere s, t_vector v)
@@ -66,18 +48,6 @@ double vector_x_sphere(t_sphere s, t_vector v)
 		return (t[1]);
 	}
 	return (0);
-}
-
-int *rgb(int color)
-{
-	int *rgb;
-
-	rgb = malloc(sizeof(int) * 3);
-	rgb[0] = (color) >> 16;
-	rgb[1] = (color) >> 8;
-	rgb[2] = (color);
-
-	return (rgb);
 }
 
 t_cords *get_screen_coord(int x, int y, int fov)

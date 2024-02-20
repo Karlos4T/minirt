@@ -39,12 +39,15 @@ typedef struct	s_camera {
 
 typedef struct s_sphere {
 	t_cords	o;
-	int	x;
-	int	y;
-	int z;
 	int radius;
 	int	*color;
 } t_sphere;
+
+typedef struct s_plane {
+	t_cords		o;
+	t_vector	v;
+	int			*color;
+} t_plane;
 
 typedef struct s_light {
 	t_cords	o;
@@ -57,6 +60,7 @@ typedef struct s_light {
 
 typedef struct s_objects {
 	t_sphere	**spheres;
+	t_plane		**planes;
 } t_objects;
 
 typedef struct s_scene {
@@ -72,8 +76,9 @@ t_vector	*create_vector(t_cords point1, t_cords point2);
 double		vector_x_sphere(t_sphere s, t_vector v);
 void		render_screen(t_data *data, t_scene *scene);
 t_cords 	*create_point(int x, int y, int z);
-t_light		*create_light(int x, int y, int z, int radius, int color);
+t_light		*create_light(int x, int y, int z, double intensity, int color);
 t_camera 	*start_camera(int x, int y, int z, int fov);
+t_plane		*create_plane(int x, int y, int z, int vx, int vy, int vz, int *color);
 
 //MATH FUNCTIONS
 int		x_pos(int x);
@@ -82,11 +87,17 @@ int		hexa(int *rgb);
 int		*rgb(int color);
 double 	module(t_vector v);
 
+//COLOR
+int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity);
+double 	get_brightness_level(t_sphere *s, t_light *l, t_cords *p);
+
 
 //MAIN
 void render_pixel(int x, int y, t_data *data, t_scene scene);
 t_cords	*get_screen_coord(int x, int y, int fov);
 t_scene *initialize_scene();
+
+
 
 
 #endif

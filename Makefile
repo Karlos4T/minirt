@@ -11,9 +11,9 @@ BLUE	=	\033[1;34m
 LBLUE	=	\033[1;36m
 
 CC = gcc
-CFLAGS = #-Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
-SRC = main.c math_functions.c functions.c scene.c
+SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
 SRCS = $(addprefix src/, $(SRC))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
