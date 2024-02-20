@@ -74,11 +74,12 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
 t_vector	*create_vector(t_cords point1, t_cords point2);
 double		vector_x_sphere(t_sphere s, t_vector v);
+double		vector_x_plane(t_plane pl, t_vector v);
 void		render_screen(t_data *data, t_scene *scene);
 t_cords 	*create_point(int x, int y, int z);
 t_light		*create_light(int x, int y, int z, double intensity, int color);
 t_camera 	*start_camera(int x, int y, int z, int fov);
-t_plane		*create_plane(int x, int y, int z, int vx, int vy, int vz, int *color);
+t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
 
 //MATH FUNCTIONS
 int		x_pos(int x);
@@ -90,6 +91,7 @@ double 	module(t_vector v);
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity);
 double 	get_brightness_level(t_sphere *s, t_light *l, t_cords *p);
+double 	get_brightness_level_plane(t_plane *s, t_light *l, t_cords *p);
 
 
 //MAIN

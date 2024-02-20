@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 14:09:51 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:45:19 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_scene *initialize_scene()
     scene->objects->spheres[3] = create_sphere(30, -30, -100, 20, 0x000000FF);
     scene->objects->spheres[4] = NULL;
     scene->objects->planes = malloc(sizeof(t_plane) * 2);
-    scene->objects->planes[0] = create_plane(-30, -30, -30, 1, 1, 1, 0x00FFFFFF);
+    scene->objects->planes[0] = create_plane(0, 0, -200, 0, 1, -0.2, 0x00FFFFFF);
     scene->objects->planes[1] = NULL;
     
     return scene;

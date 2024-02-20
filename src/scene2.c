@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 14:16:36 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:33:19 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ t_camera *start_camera(int x, int y, int z, int fov)
 	return camera;
 }
 
-t_plane *create_plane(int x, int y, int z, int vx, int vy, int vz, int *color)
+t_plane *create_plane(int x, int y, int z, double vx, double vy, double vz, int color)
 {
 	t_plane	*plane;
 
@@ -90,6 +90,6 @@ t_plane *create_plane(int x, int y, int z, int vx, int vy, int vz, int *color)
 	plane->v.x = vx;
 	plane->v.y = vy;
 	plane->v.z = vz;
-	plane->color = color;
+	plane->color = rgb(color);
 	return (plane);
 }

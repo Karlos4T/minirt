@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 13:39:30 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:42:41 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int *rgb(int color)
 	rgb[0] = (color) >> 16 & 0xFF;
 	rgb[1] = (color) >> 8 & 0xFF;
 	rgb[2] = (color) & 0xFF;
-	printf("%X : %d, %d, %d\n", color, rgb[0], rgb[1], rgb[2]);
 
 	return (rgb);
 }
@@ -45,15 +44,32 @@ int hexa(int *rgb)
 
 double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 {
-	t_vector *v1;
-	t_vector *v2;
-	double	alpha;
+	t_vector	*v1;
+	t_vector	*v2;
+	double		alpha;
 	
 	v1 = create_vector(s->o, *p);
 	v2 = create_vector(s->o, l->o);
 	
 	alpha = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 	alpha = (255 - s->radius * 2 * alpha / 255) * l->intensity;
+	return (alpha);
+}
+
+double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
+{
+	t_vector	*v1;
+	t_vector	v2;
+	double		alpha;
+
+	v1 = malloc(sizeof(t_vector));
+	v1->x = pl->v.x + pl->o.x;
+	v1->y = pl->v.y + pl->o.y;
+	v1->z = pl->v.z + pl->o.z;
+	v2 = *create_vector(*p, l->o);
+	alpha = v1->x * v2.x + v1->y * v2.y + v1->z * v2.z;
+	alpha = (255 - alpha / 255) * l->intensity;
+	printf("alpha = %f\n", alpha);
 	return (alpha);
 }
 
