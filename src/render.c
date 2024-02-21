@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 16:44:53 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:51:58 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 				break;
 			int rgb[] = {(int)alpha, (int)alpha, (int)alpha};
 			color = hexa(rgb);
-			//if (sqrt(pow(vector->x * t, 2) + pow(vector->y * t, 2) + pow(vector->z * t, 2)) < 500)
-			//	color = 0x000000FF;
 		}
 		i++;
 	}
@@ -47,8 +45,6 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		{
 			alpha = get_brightness_level(sc.objects->spheres[i], sc.lights, create_point(0 + t * (screen_point->x - 0),  0 + t * (screen_point->y - 0), 0 + t * (screen_point->z - 0)));
 			color = hexa(multiply_colors(sc.objects->spheres[i]->color, sc.lights->color, alpha, sc.lights->intensity)); 
-			//if (color != 0 && color < 0x00FFFFFF)
-			//	printf("%X\n", color);
 		}
 		i++;
 	}
@@ -62,10 +58,10 @@ void render_screen(t_data *data, t_scene *scene)
 	int j;
 
 	i = 0;
-	while (i < WIN_HEIGHT)
+	while (i < WIN_WIDTH)
 	{
 		j = 0;
-		while (j < WIN_WIDTH)
+		while (j < WIN_HEIGHT)
 		{
 			render_pixel(i, j, data, *scene);
 			j++;

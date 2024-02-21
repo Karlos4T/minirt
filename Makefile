@@ -1,4 +1,3 @@
-
 #COLORS
 NC		=	\033[0m
 LRED	=	\033[0;31m
@@ -13,8 +12,10 @@ LBLUE	=	\033[1;36m
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
+SHAPES = sphere.c
 SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
-SRCS = $(addprefix src/, $(SRC))
+SRCS = $(addprefix src/, $(SRC)) \
+		$(addprefix src/shapes/, $(SHAPES))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 ifeq ($(shell uname), Linux)

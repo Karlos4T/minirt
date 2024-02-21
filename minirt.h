@@ -2,8 +2,8 @@
 #ifndef MINIRT
 # define MINIRT
 
-#define WIN_WIDTH 1024
-#define WIN_HEIGHT 1024
+#define WIN_WIDTH 1440
+#define WIN_HEIGHT 1080
 
 # include <mlx.h>
 # include <math.h>

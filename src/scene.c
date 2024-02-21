@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 16:45:19 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:38:53 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_scene *initialize_scene()
 
     scene = malloc(sizeof(t_scene));
     scene->camera = start_camera(0, 0, 0, 90);
-    scene->lights = create_light(10, 100, -100, 0.5, 0x00FFFFFF);
+    scene->lights = create_light(100, 100, -100, 0.5, 0x00FFFFFF);
     scene->objects = malloc(sizeof(t_objects));
     scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
     scene->objects->spheres[0] = create_sphere(-30, -30, -150, 12, 0x00FFFFFF);

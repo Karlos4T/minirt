@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/20 13:40:56 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:50:22 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int main()
 	t_scene		*scene;
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, WIN_HEIGHT, WIN_WIDTH, "HOLA");
-	img.img = mlx_new_image(mlx, WIN_HEIGHT, WIN_WIDTH);
+	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "HOLA");
+	img.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	scene = initialize_scene();
 	render_screen(&img, scene);
