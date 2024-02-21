@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/21 13:23:04 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:21:54 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ t_light *create_light(int x, int y, int z, double intensity, int color)
 
 	return (light);
 }
-
 
 t_vector *create_vector(t_cords point1, t_cords point2)
 {
@@ -64,19 +63,4 @@ t_camera *start_camera(int x, int y, int z, int fov)
 	camera->fov = fov;
 
 	return camera;
-}
-
-t_plane *create_plane(int x, int y, int z, double vx, double vy, double vz, int color)
-{
-	t_plane	*plane;
-
-	plane = malloc(sizeof(t_plane));
-	plane->o.x = x;
-	plane->o.y = y;
-	plane->o.z = z;
-	plane->v.x = vx;
-	plane->v.y = vy;
-	plane->v.z = vz;
-	plane->color = rgb(color);
-	return (plane);
 }

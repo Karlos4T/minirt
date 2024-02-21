@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/21 13:38:19 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:24:20 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,38 +42,21 @@ int hexa(int *rgb)
 	return (hexa);
 }
 
-
-
-double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
-{
-	t_vector	*v1;
-	t_vector	v2;
-	double		alpha;
-
-	v1 = malloc(sizeof(t_vector));
-	v1->x = pl->v.x + pl->o.x;
-	v1->y = pl->v.y + pl->o.y;
-	v1->z = pl->v.z + pl->o.z;
-	v2 = *create_vector(*p, l->o);
-	alpha = v1->x * v2.x + v1->y * v2.y + v1->z * v2.z;
-	alpha = (255 - alpha / 255) * l->intensity;
-	//printf("alpha = %f\n", alpha);
-	return (alpha);
-}
-
 int *multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity)
 {
 	int *rgb;
 	int i;
-
+	(void) rgb2;
+	
 	i = 0;
 	rgb = malloc(sizeof(int) * 3);
 	while (i < 3)
 	{	
-		if (rgb2[i] > 0)
-			rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
-		else
-			rgb[i] = (rgb1[i] * intensity) * alpha / 255;
+		rgb[i] = rgb1[i] * alpha * intensity / 255;
+		//if (rgb2[i] > 0)
+		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
+		//else
+		//	rgb[i] = (rgb1[i] * intensity) * alpha / 255;
 		i++;
 	}
 	return (rgb);
