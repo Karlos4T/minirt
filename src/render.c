@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/21 17:07:06 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:16:41 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,20 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		t_plane *pl = sc.objects->planes[I];
 		
 		alpha = get_brightness_level_plane(pl, sc.lights, create_point(0 + T * (screen_point->x - 0),  0 + T * (screen_point->y - 0), 0 + T * (screen_point->z - 0)));
-		int rgb[] = {(int)alpha + pl->color[0] / 2, (int)alpha + pl->color[1] / 2, (int)alpha + pl->color[3] / 2};
+		int rgb[] = {(int)alpha + pl->color[0] / 2, (int)alpha + pl->color[1] / 2, (int)alpha + pl->color[2] / 2};
 		color = hexa(rgb);
 	}
 	i = 0;
-	//while (sc.objects->spheres[i] != NULL)
-	//{
-	//	t = vector_x_sphere(*sc.objects->spheres[i], *vector);
-	//	if (t)
-	//	{
-	//		alpha = get_brightness_level(sc.objects->spheres[i], sc.lights, create_point(0 + t * (screen_point->x - 0),  0 + t * (screen_point->y - 0), 0 + t * (screen_point->z - 0)));
-	//		color = hexa(multiply_colors(sc.objects->spheres[i]->color, sc.lights->color, alpha, sc.lights->intensity)); 
-	//	}
-	//	i++;
-	//}
+	while (sc.objects->spheres[i] != NULL)
+	{
+		t[0] = vector_x_sphere(*sc.objects->spheres[i], *vector);
+		if (t[0])
+		{
+			alpha = get_brightness_level(sc.objects->spheres[i], sc.lights, create_point(0 + t[0] * (screen_point->x - 0),  0 + t[0] * (screen_point->y - 0), 0 + t[0] * (screen_point->z - 0)));
+			color = hexa(multiply_colors(sc.objects->spheres[i]->color, sc.lights->color, alpha, sc.lights->intensity)); 
+		}
+		i++;
+	}
 
 	my_mlx_pixel_put(data, x, y, color);
 }

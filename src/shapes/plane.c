@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/21 16:21:37 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:15:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 	double		alpha;
 
 	v1 = malloc(sizeof(t_vector));
-	v1->x = pl->v.x + pl->o.x;
-	v1->y = pl->v.y + pl->o.y;
-	v1->z = pl->v.z + pl->o.z;
+	v1->x = pl->v.x + p->x;
+	v1->y = pl->v.y + p->y;
+	v1->z = pl->v.z + p->z;
 	v2 = *create_vector(*p, l->o);
 	alpha = v1->x * v2.x + v1->y * v2.y + v1->z * v2.z;
-	alpha = (255 - alpha / 255) * l->intensity;
+	//printf("alpha = %f\n", alpha);
+	alpha = (255 - alpha * 255 / 2000000.000000) * l->intensity;
 	//printf("alpha = %f\n", alpha);
 	return (alpha);
 }
