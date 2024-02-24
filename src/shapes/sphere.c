@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/21 16:42:52 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:12:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,30 @@ double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 	double		alpha;
 
 	v1 = create_vector(s->o, *p);
-	v2 = create_vector(s->o, l->o);
-	alpha = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
-	alpha = (255 - s->radius * 2 * alpha / 255);
+	v2 = create_vector(l->o, *p);
+	alpha = 1 / cos(v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
+	printf("alpha = %f; module v2 = %f\n", alpha, module(*v2));
+	alpha = (255 * alpha) * l->intensity;
 	return (alpha);
+}
+
+int *multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity)
+{
+	int	*rgb;
+	int	i;
+
+	(void) rgb2;
+	(void) intensity;
+	i = 0;
+	rgb = malloc(sizeof(int) * 3);
+	while (i < 3)
+	{	
+		rgb[i] = rgb1[i] * alpha / 255;
+		//if (rgb2[i] > 0)
+		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
+		//else
+		//	rgb[i] = (rgb1[i] * intensity) * alpha / 255;
+		i++;
+	}
+	return (rgb);
 }
