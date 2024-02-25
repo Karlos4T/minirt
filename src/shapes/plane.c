@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/24 13:05:57 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:28:49 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 	v1->y = pl->v.y + p->y;
 	v1->z = pl->v.z + p->z;
 	v2 = *create_vector(l->o, *p);
-	alpha = v1->x * v2.x + v1->y * v2.y + v1->z * v2.z;
-	//printf("alpha = %f\n", alpha);
-	alpha = (alpha * 255 / pow(module(*v1), 2)) * l->intensity * module(v2);
-	//printf("alpha = %f\n", alpha);
+	alpha = (v1->x * v2.x + v1->y * v2.y + v1->z * v2.z) / (module(*v1) * module(v2));
+	printf("angle = %f; alpha = %f\n", 1 / cos(alpha), alpha);
+	alpha = (1 - pow(alpha, 1000/module(v2))) * l->intensity;
+	printf("alpha = %f\n", alpha);
 	return (alpha);
 }

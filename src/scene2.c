@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/24 12:41:25 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/25 13:25:19 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ t_cords	*create_point(int x, int y, int z)
 	point->x = x;
 	point->y = y;
 	point->z = z;
-
 	return (point);
 }
 
