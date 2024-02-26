@@ -6,12 +6,11 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/26 13:31:19 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/26 16:52:03 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minirt.h"
-
 
 t_plane *create_plane(int x, int y, int z, double vx, double vy, double vz, int color)
 {
@@ -46,11 +45,13 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 	v1->x = pl->v.x + p->x;
 	v1->y = pl->v.y + p->y;
 	v1->z = pl->v.z + p->z;
+	//printf("p: (%f, %f, %f)\n", p->x, p->y, p->z);
 	v2 = *create_vector(l->o, *p);
-	alpha = (v1->x * v2.x + v1->y * v2.y + v1->z * v2.z) / (module(*v1) * module(v2));
-	if (alpha > 0.95)
-		printf("angle = %f; alpha = %f\n", 1 / cos(alpha), alpha);
-	alpha = (pow(alpha, 2) * (1 - module(v2) / 10000)) * l->intensity;
+	//alpha = (v1->x * v2.x + v1->y * v2.y + v1->z * v2.z)/* / (module(*v1) * module(v2))*/;
 	//printf("alpha = %f\n", alpha);
+	//alpha = (pow(alpha, 2) * (1 - module(v2) / 10000)) * l->intensity;
+	alpha = pow(10 / sqrt(module(v2)), 2) * l->intensity;
+	//if (module(v2) > 700)
+	printf("vector: (%f, %f, %f) modulev2 = %f\n", v2.x, v2.y, v2.z, module(v2));
 	return (alpha);
 }

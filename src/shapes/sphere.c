@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/25 13:01:25 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:03:02 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 	//alpha = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
 	alpha = module(*v2) - (module(*v3) - s->radius);
 	//alpha = (255 * s->radius * 2 * alpha) * l->intensity / module(*v2);
-	alpha = (1 - (alpha / s->radius)) * 0.5;
+	alpha = (1 - (alpha / s->radius)) * l->intensity;
 	//printf("alpha = %f; module v2 = %f\n", alpha, module(*v2));
 	return (alpha);
 }
@@ -78,8 +78,9 @@ int *multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity)
 	rgb = malloc(sizeof(int) * 3);
 	while (i < 3)
 	{	
-		rgb[i] = rgb1[i] * alpha;
-		
+		rgb[i] = sqrt(rgb1[i] * rgb2[i])  * alpha;
+		if (rgb[i] < 20)
+			rgb[i] = 20;
 		//if (rgb2[i] > 0)
 		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
 		//else

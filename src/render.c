@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/25 12:59:14 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:00:14 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		t = vector_x_plane(*sc.objects->planes[i], *vector);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
-			T[0] = t;
+			T[0] = fabs(t);
 			T[1] = 1;
 			T[2] = i;
 		}
@@ -54,8 +54,8 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		t_plane *pl = sc.objects->planes[(int)T[2]];
 		
 		alpha = get_brightness_level_plane(pl, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
-		int rgb[] = {alpha * pl->color[0], alpha * pl->color[1], alpha * pl->color[2]};
-		color = hexa(rgb);
+		//int rgb[] = {alpha * pl->color[0], alpha * pl->color[1], alpha * pl->color[2]};
+		color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.lights->intensity));
 	}
 	else if (T[1] == 2)
 	{
