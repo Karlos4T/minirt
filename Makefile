@@ -19,7 +19,7 @@ SRCS = $(addprefix src/, $(SRC)) \
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 ifeq ($(shell uname), Linux)
-	MLXFLAGS = -lmlx -lXext -lX11 -lm -lz -L ./minilibx-linux -lpthread
+	MLXFLAGS = -lmlx -lXext -lX11 -lm -lz -L ./mlx-linux -lpthread
 else
 	MLXFLAGS = -lmlx -framework OpenGL -framework AppKit
 endif
