@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/26 17:03:02 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:13:57 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,41 +51,29 @@ double	vector_x_sphere(t_sphere s, t_vector v)
 
 double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 {
-	t_vector	*v1;
-	t_vector	*v2;
-	t_vector	*v3;
+	t_vector	v1;
+	t_vector	v2;
+	t_vector	v3;
 	double		alpha;
 
-	v1 = create_vector(*p, s->o);
-	v2 = create_vector(l->o, *p);
-	v3 = create_vector(l->o, s->o);
-	//alpha = v1->x * v2->x + v1->y * v2->y + v1->z * v2->z;
-	alpha = module(*v2) - (module(*v3) - s->radius);
-	//alpha = (255 * s->radius * 2 * alpha) * l->intensity / module(*v2);
+	/*---- NO CAMBIAR ESTE BLOQUE ----*/
+	v1 = *create_vector(*p, s->o);
+	v2 = *create_vector(l->o, *p);
+	v3 = *create_vector(l->o, s->o);
+	alpha = module(v2) - module(v3) + s->radius;
 	alpha = (1 - (alpha / s->radius)) * l->intensity;
-	//printf("alpha = %f; module v2 = %f\n", alpha, module(*v2));
+	/*--------------------------------*/
+
+	//v1 = unit_vector(*create_vector(s->o, *p));
+	//v2 = unit_vector(*create_vector(*p, l->o));
+	//v3 = unit_vector(*create_vector(*p, l->o));
+	//alpha = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z / (module(v1) * module(v2));
+	////alpha = v1.x * v2.y + v2.x * v1.y + v1.y * v2.z + v2.y * v1.z + v1.z * v2.x + v2.z * v1.x;
+	//printf("v1: (%f, %f, %f), v2: (%f, %f, %f), alpha: %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, alpha);
+	//alpha = alpha * l->intensity;
+	////alpha = (255 * s->radius * 2 * alpha) * l->intensity / module(v2);
+	//printf("alpha = %f; module v2 = %f\n", alpha, module(v2));
 	return (alpha);
 }
 
-int *multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity)
-{
-	int	*rgb;
-	int	i;
 
-	(void) rgb2;
-	(void) intensity;
-	i = 0;
-	rgb = malloc(sizeof(int) * 3);
-	while (i < 3)
-	{	
-		rgb[i] = sqrt(rgb1[i] * rgb2[i])  * alpha;
-		if (rgb[i] < 20)
-			rgb[i] = 20;
-		//if (rgb2[i] > 0)
-		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
-		//else
-		//	rgb[i] = (rgb1[i] * intensity) * alpha / 255;
-		i++;
-	}
-	return (rgb);
-}

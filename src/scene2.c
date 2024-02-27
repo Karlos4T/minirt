@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/26 16:03:29 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:13:15 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ t_light	*create_light(int x, int y, int z, double intensity, int color)
 	light->intensity = intensity;
 	light->color = rgb(color);
 
+	return (light);
+}
+
+t_alight	*create_alight(double intensity, int color)
+{
+	t_alight	*light;
+
+	light = malloc(sizeof(t_alight));
+	light->intensity = intensity;
+	light->color = rgb(color);
 	return (light);
 }
 

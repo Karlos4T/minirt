@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/26 17:00:14 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:16:04 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_cords		*screen_point;
 	t_vector	*vector;
-	int color = 0X220022;
+	int color;
 	double	t;
 	double T[3];
 	int i;
@@ -55,14 +55,14 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		
 		alpha = get_brightness_level_plane(pl, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
 		//int rgb[] = {alpha * pl->color[0], alpha * pl->color[1], alpha * pl->color[2]};
-		color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.lights->intensity));
+		color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity));
 	}
 	else if (T[1] == 2)
 	{
 		t_sphere *sp = sc.objects->spheres[(int)T[2]];
 
 		alpha = get_brightness_level(sp, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
-		color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.lights->intensity)); 
+		color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
 	}
 	my_mlx_pixel_put(data, x, y, color);
 }

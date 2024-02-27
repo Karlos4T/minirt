@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/26 16:59:12 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:14:31 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,24 @@ int hexa(int *rgb)
 	return (hexa);
 }
 
+int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al)
+{
+	int	*rgb;
+	int	i;
 
+	(void) rgb2;
+	i = 0;
+	rgb = malloc(sizeof(int) * 3);
+	while (i < 3)
+	{	
+		rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;
+		if (rgb[i] < + al * rgb1[i])
+			rgb[i] = al * rgb1[i];
+		//if (rgb2[i] > 0)
+		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
+		//else
+		//	rgb[i] = (rgb1[i] * intensity) * alpha / 255;
+		i++;
+	}
+	return (rgb);
+}

@@ -20,7 +20,6 @@ typedef struct s_vector {
 	double x;
 	double	y;
 	double z;
-	
 } t_vector;
 
 typedef struct	s_data {
@@ -43,6 +42,14 @@ typedef struct s_sphere {
 	int	*color;
 } t_sphere;
 
+typedef struct s_cylinder {
+	t_cords		o;
+	t_vector	v;
+	double		radius;
+	double		height;
+	int	*color;
+} t_cylinder;
+
 typedef struct s_plane {
 	t_cords		o;
 	t_vector	v;
@@ -58,6 +65,11 @@ typedef struct s_light {
 	int	*color;
 } t_light;
 
+typedef struct s_alight {
+	double intensity;
+	int	*color;
+} t_alight;
+
 typedef struct s_objects {
 	t_sphere	**spheres;
 	t_plane		**planes;
@@ -67,6 +79,7 @@ typedef struct s_scene {
 	t_camera 	*camera;
 	t_objects	*objects;
 	t_light 	*lights;
+	t_alight 	*alight;
 } t_scene;
 
 //FUNCTIONS
@@ -80,16 +93,18 @@ t_cords 	*create_point(int x, int y, int z);
 t_light		*create_light(int x, int y, int z, double intensity, int color);
 t_camera 	*start_camera(int x, int y, int z, int fov);
 t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
+t_alight	*create_alight(double intensity, int color);
 
 //MATH FUNCTIONS
-int		x_pos(int x);
-int		y_pos(int y);
-int		hexa(int *rgb);
-int		*rgb(int color);
-double 	module(t_vector v);
+int			x_pos(int x);
+int			y_pos(int y);
+int			hexa(int *rgb);
+int			*rgb(int color);
+double		module(t_vector v);
+t_vector	unit_vector(t_vector v);
 
 //COLOR
-int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double intensity);
+int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);
 double 	get_brightness_level(t_sphere *s, t_light *l, t_cords *p);
 double 	get_brightness_level_plane(t_plane *s, t_light *l, t_cords *p);
 
