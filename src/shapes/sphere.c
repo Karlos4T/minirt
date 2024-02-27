@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 18:10:39 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:27:24 by user4t           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ double	vector_x_sphere(t_sphere s, t_vector v)
 
 double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 {
-	t_vector	v1;
+	//t_vector	v1;
 	t_vector	v2;
 	t_vector	v3;
 	double		alpha;
 
 	/*---- NO CAMBIAR ESTE BLOQUE ----*/
-	v1 = *create_vector(*p, s->o);
+	//v1 = *create_vector(*p, s->o);
 	v2 = *create_vector(l->o, *p);
 	v3 = *create_vector(l->o, s->o);
 	alpha = module(v2) - module(v3) + s->radius;

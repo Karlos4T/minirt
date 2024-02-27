@@ -9,6 +9,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include "./libft/include/libft.h"
 
 typedef struct s_cords {
 	double	x;
@@ -105,6 +106,7 @@ int			hexa(int *rgb);
 int			*rgb(int color);
 double		module(t_vector v);
 t_vector	unit_vector(t_vector v);
+int 		read_rt(char *filename);
 
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);

@@ -12,10 +12,14 @@ LBLUE	=	\033[1;36m
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
+LIBFT_PATH = libft/
+LIBFT = libft/libft.a
 SHAPES = sphere.c plane.c cylinder.c
+PARSE = reader.c
 SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
 SRCS = $(addprefix src/, $(SRC)) \
-		$(addprefix src/shapes/, $(SHAPES))
+		$(addprefix src/shapes/, $(SHAPES)) \
+		$(addprefix src/parse/, $(PARSE))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 ifeq ($(shell uname), Linux)
@@ -26,21 +30,24 @@ endif
 
 all: $(NAME)
 
+$(LIBFT):
+	make -C $(LIBFT_PATH)
+
 $(OBJS_PATH):
-	mkdir -p $(dir $(OBJS))
+	@mkdir -p $(dir $(OBJS))
 
 $(OBJS_PATH)%.o: %.c | $(OBJS_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS_PATH) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ $(MLXFLAGS)
+$(NAME): $(OBJS_PATH) $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@ $(MLXFLAGS)
 	@clear
 	@echo "MINIRT COMPILED"
 
 clean: 
 	rm -f *.o
 	rm -rf objs
-
+	make fclean -C $(LIBFT_PATH)
 fclean: clean
 	rm $(NAME)
 
