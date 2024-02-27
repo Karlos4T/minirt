@@ -12,7 +12,7 @@ LBLUE	=	\033[1;36m
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
-SHAPES = sphere.c plane.c
+SHAPES = sphere.c plane.c cylinder.c
 SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
 SRCS = $(addprefix src/, $(SRC)) \
 		$(addprefix src/shapes/, $(SHAPES))

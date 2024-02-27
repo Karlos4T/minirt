@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 13:12:23 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:11:38 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ t_scene *initialize_scene()
 
     scene = malloc(sizeof(t_scene));
     scene->camera = start_camera(0, 0, 0, 90);
-    scene->alight = create_alight(0.2, 0x00FFFFFF);
-    scene->lights = create_light(0, 0, -100, 1, 0x00FFFFFF);
+    scene->alight = create_alight(0.1, 0x00FFFFFF);
+    scene->lights = create_light(0, 0, -150, 1, 0x00FFFFFF);
     scene->objects = malloc(sizeof(t_objects));
+    scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
+    scene->objects->cylinders[0] = create_cylinder(0, 0, -150, 1, 0, 0, 3, 1, 0x00FFFFFF);
+    scene->objects->cylinders[0] = NULL;
     scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
     scene->objects->spheres[0] = create_sphere(-30, -30, -120, 12, 0x00AAAAAA);
     scene->objects->spheres[1] = create_sphere(30, 30, -120, 15, 0x00AA0000);
@@ -29,8 +32,9 @@ t_scene *initialize_scene()
     scene->objects->spheres[4] = NULL;
     scene->objects->planes = malloc(sizeof(t_plane) * 3);
     scene->objects->planes[0] = create_plane(0, 0, -250, 0, 0, -1, 0x00880088);
-    scene->objects->planes[1] = create_plane(0, 0, -200, 0, 1, 0.9, 0x00777777);
-    scene->objects->planes[2] = NULL;
+    scene->objects->planes[1] = create_plane(0, -100, -200, 0, 1, 0.3, 0x00777777);
+    scene->objects->planes[2] = create_plane(100, 0, -200, -1, 0, 0.1, 0x00007727);
+    scene->objects->planes[3] = NULL;
 
     return scene;
 }

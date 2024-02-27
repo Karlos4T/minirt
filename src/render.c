@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 13:16:04 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:12:06 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_cords		*screen_point;
 	t_vector	*vector;
-	int color;
+	int color = 0;
 	double	t;
 	double T[3];
 	int i;
@@ -49,6 +49,18 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		}
 		i++;
 	}
+	i = 0;
+	while (sc.objects->cylinders[i] != NULL)
+	{
+		t = vector_x_cylinder(*sc.objects->cylinders[i], *vector);
+		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
+		{
+			T[0] = t;
+			T[1] = 3;
+			T[2] = i;
+		}
+		i++;
+	}
 	if (T[1] == 1)
 	{
 		t_plane *pl = sc.objects->planes[(int)T[2]];
@@ -63,6 +75,13 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 
 		alpha = get_brightness_level(sp, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
 		color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
+	}
+	else if (T[1] == 3)
+	{
+		//t_sphere *cy = sc.objects->cylinders[(int)T[2]];
+
+		//alpha = get_brightness_level(cy, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
+		color = 0x00FFFFFF;//hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
 	}
 	my_mlx_pixel_put(data, x, y, color);
 }

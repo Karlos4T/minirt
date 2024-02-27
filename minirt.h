@@ -71,6 +71,7 @@ typedef struct s_alight {
 } t_alight;
 
 typedef struct s_objects {
+	t_cylinder	**cylinders;
 	t_sphere	**spheres;
 	t_plane		**planes;
 } t_objects;
@@ -94,6 +95,8 @@ t_light		*create_light(int x, int y, int z, double intensity, int color);
 t_camera 	*start_camera(int x, int y, int z, int fov);
 t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
 t_alight	*create_alight(double intensity, int color);
+t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double radius, double height, int color);
+double		vector_x_cylinder(t_cylinder cy, t_vector v);
 
 //MATH FUNCTIONS
 int			x_pos(int x);
