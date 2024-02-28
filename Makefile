@@ -14,6 +14,7 @@ CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
 LIBFT_PATH = libft/
 LIBFT = libft/libft.a
+LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c
 PARSE = reader.c
 SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
@@ -30,7 +31,7 @@ endif
 
 all: $(NAME)
 
-$(LIBFT):
+$(LINK_LIBFT):
 	make -C $(LIBFT_PATH)
 
 $(OBJS_PATH):
@@ -39,8 +40,8 @@ $(OBJS_PATH):
 $(OBJS_PATH)%.o: %.c | $(OBJS_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS_PATH) $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $@ $(MLXFLAGS)
+$(NAME): $(OBJS_PATH) $(OBJS) $(LINK_LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) $(LINK_LIBFT) -o $@ $(MLXFLAGS)
 	@clear
 	@echo "MINIRT COMPILED"
 

@@ -5,7 +5,7 @@ int eval_line(char *line)
     char **splitted_line;
     int i;
 
-    char **ab = ["A", "C", "L", "sp", "pl" "cy"];
+    //char **ab = {"A", "C", "L", "sp", "pl" "cy"};
 
     
 

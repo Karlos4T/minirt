@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
+/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 20:30:40 by user4t           ###   ########.fr       */
+/*   Updated: 2024/02/28 10:13:29 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_scene *initialize_scene()
     scene->lights = create_light(0, 0, -150, 1, 0x00FFFFFF);
     scene->objects = malloc(sizeof(t_objects));
     scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
-    //scene->objects->cylinders[0] = create_cylinder(0, 0, -150, 1, 0, 0, 3, 1, 0x00FFFFFF);
-    scene->objects->cylinders[0] = NULL;
+    scene->objects->cylinders[0] = create_cylinder(0, 0, -150, 1, 0, 0, 3, 1, 0x00FFFFFF);
+    scene->objects->cylinders[1] = NULL;
     scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
     scene->objects->spheres[0] = create_sphere(-30, -30, -120, 12, 0x00AAAAAA);
     scene->objects->spheres[1] = create_sphere(30, 30, -120, 15, 0x00AA0000);
