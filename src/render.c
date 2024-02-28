@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 18:12:06 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:56:42 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	double	alpha;
 
 	T[0] = 0;
+	T[1] = 0;
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera->fov);
 	vector = create_vector(*screen_point, *sc.camera->o);
 	i = 0;
@@ -78,10 +79,11 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	}
 	else if (T[1] == 3)
 	{
-		//t_sphere *cy = sc.objects->cylinders[(int)T[2]];
+		t_cylinder *cy = sc.objects->cylinders[(int)T[2]];
 
-		//alpha = get_brightness_level(cy, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
-		color = 0x00FFFFFF;//hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
+		alpha = get_brightness_level_cylinder(cy, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
+		printf("cilinder\n");
+		color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity)); 
 	}
 	my_mlx_pixel_put(data, x, y, color);
 }

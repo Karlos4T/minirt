@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 13:14:31 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:54:03 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int hexa(int *rgb)
         i++;
     }
 	hexa = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+	free(rgb);
 	return (hexa);
 }
 

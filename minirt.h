@@ -112,6 +112,7 @@ int 		read_rt(char *filename);
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);
 double 	get_brightness_level(t_sphere *s, t_light *l, t_cords *p);
 double 	get_brightness_level_plane(t_plane *s, t_light *l, t_cords *p);
+double 	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_cords *p);
 
 
 //MAIN

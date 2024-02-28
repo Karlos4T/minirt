@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user4t <user4t@student.42.fr>              +#+  +:+       +#+        */
+/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/27 20:27:24 by user4t           ###   ########.fr       */
+/*   Updated: 2024/02/28 10:43:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ double	vector_x_sphere(t_sphere s, t_vector v)
 	double	b;
 	double	c;
 	int	D;
-
+	
+	v = unit_vector(v);
 	a = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2);
 	b = 2 * (v.x * (s.o.x - v.x) + v.y * (s.o.y - v.y) + v.z * (s.o.z - v.z));
 	c = pow(s.o.x - v.x, 2) + pow(s.o.y - v.y, 2) + pow(s.o.z - v.z, 2) - pow(s.radius, 2);
