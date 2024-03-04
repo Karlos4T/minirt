@@ -4,6 +4,10 @@
 
 #define WIN_WIDTH 1440
 #define WIN_HEIGHT 1080
+#define ASSETS "A C L pl sp cy"
+#define ASSETS_PARAMS "A C L pl sp cy"
+#define TYPE_PARAMS "NCIRVPF"
+#define ASSETS_PARAMS_LEN "A C L pl sp cy"
 
 # include <mlx.h>
 # include <math.h>
@@ -106,7 +110,7 @@ int			hexa(int *rgb);
 int			*rgb(int color);
 double		module(t_vector v);
 t_vector	unit_vector(t_vector v);
-int 		read_rt(char *filename);
+int 		read_rt(char *filename, t_scene *scene);
 
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);

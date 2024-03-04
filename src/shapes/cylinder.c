@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/03 13:05:38 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:16:49 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,16 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 		return (t[1]);
 	}
 	return (0);
+}
+
+double plane_x_cylinder(t_cylinder cy, t_vector v)
+{
+	int		t;
+	t_plane	*pl;
+
+	pl = create_plane(cy.o.x + cy.height / 2 * cy.v.x,  cy.o.y + cy.height / 2 * cy.v.y, cy.o.z + cy.height / 2 * cy.v.z, cy.v.x, cy.v.y, cy.v.z, hexa(cy.color));
+	t = - (pl->o.x * cy.o.x + pl->o.y * cy.o.y + pl->o.z * cy.o.z + cy.height/2) / (pl->o.x * v.x + pl->o.y * v.y + pl->o.z * v.z);
+	return (t);
 }
 
 double	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_cords *p)
