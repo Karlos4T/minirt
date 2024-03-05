@@ -47,19 +47,20 @@ typedef struct s_sphere {
 	int	*color;
 } t_sphere;
 
-typedef struct s_cylinder {
-	t_cords		o;
-	t_vector	v;
-	double		radius;
-	double		height;
-	int	*color;
-} t_cylinder;
-
 typedef struct s_plane {
 	t_cords		o;
 	t_vector	v;
 	int			*color;
 } t_plane;
+
+typedef struct s_cylinder {
+	t_cords		o;
+	t_vector	v;
+	double		radius;
+	double		height;
+	int			*color;
+	t_plane		*covers[2];
+} t_cylinder;
 
 typedef struct s_light {
 	t_cords	o;
