@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/04 16:16:49 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:46:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 	double	b;
 	double	c;
 	double	D;
-	double v1[2];
-	double co[2];
+	//cdouble v1[2];
+	//cdouble co[2];
 	//dependiendo de la direccion que introduzca se cogera un valor u otro para operar
-	if(cy.v.y == 1)
+	/*if(cy.v.y == 1)
 	{
 		v1[0] = v.x;
 		v1[1] = v.z;
@@ -59,11 +59,24 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 		v1[1] = v.x;
 		co[0] = cy.o.y;
 		co[1] = cy.o.x;
-	}
+	}*/
 	//v = unit_vector(v); //esta linea curva el cilindro en funcion de x. Curioso
-	a = pow(v1[0], 2) + pow(v1[1], 2);
-	b = 2 * v1[0] * (/*origen vector*/ 1 - co[0]) + 2 * v1[1] * (/*origen vector*/ 1 - co[1]);
-	c = pow(v1[0], 2) + pow(co[0], 2)/* - 2 * cy.o.x * origen vector */ + pow(v1[1], 2) + pow(co[1], 2) - pow(cy.radius, 2);
+	
+	//TODOS LOS 0 SE DEBEN SUSTITUIR POR LAS CORDENADAS DEL ORIGEN DEL VECTOR, ES DECIR, LA CAMARA
+	
+	a = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2) \
+		 - (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
+	b = 2 * (v.x * (0 - cy.o.x) + v.y * (0 - cy.o.y) + v.z * (0 - cy.o.z)) \
+		;//- 2 * ((cy.v.x * 0 + cy.v.y * 0 + cy.v.z * 0) - (cy.o.x * cy.v.x * v.x + cy.o.y * cy.v.y * v.y + cy.o.z * cy.v.z * v.z));
+	
+	
+	//2 * v.x * (/*(origen vector) xo*/ 1 - cy.o.x) + 2 * v.y * (/*(origen vector) yo*/ 1 - cy.o.y) + 2 * v.z * (/*(origen vector) yo*/ 1 - cy.o.z)
+		//- (2 * (-(cy.o.x * cy.v.x * v.x + cy.o.y * cy.v.y * v.y + cy.o.z * cy.v.z * v.z) + (/*(origen vector) xo*/0 * cy.v.x + /*(origen vector) xo*/0 * cy.v.y + /*(origen vector) xo*/0 * cy.v.z)) );
+	c = pow(0 - cy.o.x, 2) + pow(0 - cy.o.y, 2) + (pow(0 - cy.o.z, 2)) - pow(cy.radius, 2) \
+		;// - (pow(cy.o.x, 2) + pow(cy.o.y, 2) + pow(cy.o.z, 2) + 2 * (cy.o.x * cy.o.y + cy.o.x * cy.o.z + cy.o.y * cy.o.z) - (pow(cy.v.x, 2) * pow(0, 2) * pow(cy.v.y, 2) * pow(0, 2) * pow(cy.v.z, 2) * pow(0, 2)));
+	//-2 * (cy.o.x * cy.o.y + cy.o.x * cy.o.z + cy.o.y * cy.o.z) - pow(cy.radius, 2);
+	
+	
 	if (cy.height / 2 + cy.o.y)
 		D = b * b - (4 * a * c);
 	else

@@ -44,6 +44,7 @@ int eval_line(char *line)
         //if (ft_strstr(ASSETS, str) > 0)
             //add_asset(s_line, &sc);
         free(str);
+        str = NULL;
         i++;
     }
     printf("%s\n", line);
