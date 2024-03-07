@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/05 17:54:54 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/07 14:04:03 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,30 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 	return (cy);
 }
 
+
+int cut_cylinder(t_cylinder cy, t_vector v, double t[2])
+{
+	if (cy.v.x)
+		if (v.x * t[0] > cy.o.x + cy.height / 2 || v.x * t[0] < cy.o.x - cy.height / 2 )
+			return 0;
+	if (cy.v.y)
+		if (v.y * t[0] > cy.o.y + cy.height / 2 || v.y * t[0] < cy.o.y - cy.height / 2 )
+			return 0;
+	if (cy.v.z)
+		if (v.z * t[0] > cy.o.z + cy.height / 2 || v.z * t[0] < cy.o.z - cy.height / 2 )
+			return 0;
+	return 1;
+}
+
 double	vector_x_cylinder(t_cylinder cy, t_vector v)
 {
 	double	t[2];
 	double	a;
+	double	a1;
 	double	b;
+	double	b1;
 	double	c;
+	double	c1;
 	double	D;
 	//cdouble v1[2];
 	//cdouble co[2];
@@ -46,29 +64,37 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 	//TODOS LOS 0 SE DEBEN SUSTITUIR POR LAS CORDENADAS DEL ORIGEN DEL VECTOR, ES DECIR, LA CAMARA
 
 	a = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2) \
-		 - (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
+		- (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
+	
 	b = 2 * (v.x * (0 - cy.o.x) + v.y * (0 - cy.o.y) + v.z * (0 - cy.o.z)) \
-		- 2 * ((cy.v.x * 0 + cy.v.y * 0 + cy.v.z * 0) - (cy.o.x * cy.v.x * v.x + cy.o.y * cy.v.y * v.y + cy.o.z * cy.v.z * v.z));
+		- 2 * (-pow(cy.v.x, 2) * 0 + pow(cy.v.x, 2) * v.x * cy.o.x - pow(cy.v.y, 2) * 0 + pow(cy.v.y, 2) * v.y * cy.o.y - pow(cy.v.z, 2) * 0 + pow(cy.v.z, 2) * v.z * cy.o.z);
 
-	//2 * v.x * (/*(origen vector) xo*/ 1 - cy.o.x) + 2 * v.y * (/*(origen vector) yo*/ 1 - cy.o.y) + 2 * v.z * (/*(origen vector) yo*/ 1 - cy.o.z)
-		//- (2 * (-(cy.o.x * cy.v.x * v.x + cy.o.y * cy.v.y * v.y + cy.o.z * cy.v.z * v.z) + (/*(origen vector) xo*/0 * cy.v.x + /*(origen vector) xo*/0 * cy.v.y + /*(origen vector) xo*/0 * cy.v.z)) );
-	c = pow(0 - cy.o.x, 2) + /*pow(0 - cy.o.y, 2)*/ + (pow(0 - cy.o.z, 2)) - pow(cy.radius, 2) \
-		;// - (pow(cy.o.x, 2) + pow(cy.o.y, 2) + pow(cy.o.z, 2) + 2 * (cy.o.x * cy.o.y + cy.o.x * cy.o.z + cy.o.y * cy.o.z) - (pow(cy.v.x, 2) * pow(0, 2) * pow(cy.v.y, 2) * pow(0, 2) * pow(cy.v.z, 2) * pow(0, 2)));
-	//-2 * (cy.o.x * cy.o.y + cy.o.x * cy.o.z + cy.o.y * cy.o.z) - pow(cy.radius, 2);
+	c = (pow(0 - cy.o.x, 2) + pow(0 - cy.o.y, 2) + pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
+		- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
+	
 
-	D = b * b - (4 * a * c);
+	a1 = pow(v.x, 2) /*+ pow(v.y, 2)*/ + pow(v.z, 2) \
+		;//- (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
+	
+	b1 = 2 * (v.x * (0 - cy.o.x) + /*v.y * (0 - cy.o.y) +*/ v.z * (0 - cy.o.z)) \
+		;//- 2 * (-pow(cy.v.x, 2) * 0 + pow(cy.v.x, 2) * v.x * cy.o.x - pow(cy.v.y, 2) * 0 + pow(cy.v.y, 2) * v.y * cy.o.y - pow(cy.v.z, 2) * 0 + pow(cy.v.z, 2) * v.z * cy.o.z);
+
+	c1 = (pow(0 - cy.o.x, 2) + /*pow(0 - cy.o.y, 2) +*/ pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
+		;//- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
+
+	printf ("a:%f a1: %f, b: %f b1: %f, c: %f c1: %f\n", a, a1, b, b1, c,  c1);
+	
+	//D = b * b - (4 * a * c);
+	//B Y B1 varian cuando el cilindro pasa por debajo del plano
+	D = b1 * b1 - (4 * a1 * c1);
 
 	if (D >= 0)
 	{
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
-		double a = vector_x_plane(*cy.covers[0], v);
-		if (v.y * t[0] > cy.o.y + cy.height / 2 || v.y * t[0] < cy.o.y - cy.height / 2 )
-		{
-			if ((fabs(a) < fabs(t[0]) || fabs(a) < fabs(t[1])) && v.y * a == cy.o.y + cy.height / 2)
-				return fabs(a);
-			return 0;
-		}
+		//double a = vector_x_plane(*cy.covers[0], v);
+		if (!cut_cylinder(cy, v, t))
+			return (0);
 		if (fabs(t[0]) < fabs(t[1]))
 			return (fabs(t[0]));
 		return (fabs(t[1]));
@@ -78,6 +104,7 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 	}
 	return (0);
 }
+
 
 double plane_x_cylinder(t_cylinder cy, t_vector v)
 {
