@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/03 11:55:27 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:58:31 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,14 @@ int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al)
 	int	i;
 
 	(void) rgb2;
+	(void) al;
 	i = 0;
 	rgb = malloc(sizeof(int) * 3);
 	while (i < 3)
 	{	
-		rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;
-		if (rgb[i] < + al * rgb1[i])
-			rgb[i] = al * rgb1[i];
+		rgb[i] = rgb1[i] * alpha;
+		//if (rgb[i] < + al * rgb1[i])
+		//	rgb[i] = al * rgb1[i];
 		//if (rgb2[i] > 0)
 		//	rgb[i] = (rgb1[i] + rgb2[i] * intensity) * alpha / 255;
 		//else

@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/03 12:02:54 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:59:24 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ double	vector_x_sphere(t_sphere s, t_vector v)
 	double	c;
 	int	D;
 	
-	v = unit_vector(v);
-	a = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2);
+	v = normalize(v);
+	a = dot(v, v);
 	b = 2 * (v.x * (s.o.x - v.x) + v.y * (s.o.y - v.y) + v.z * (s.o.z - v.z));
 	c = pow(s.o.x - v.x, 2) + pow(s.o.y - v.y, 2) + pow(s.o.z - v.z, 2) - pow(s.radius, 2);
 	D = b * b - (4 * a * c);
@@ -52,20 +52,30 @@ double	vector_x_sphere(t_sphere s, t_vector v)
 
 double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 {
-	//t_vector	v1;
-	t_vector	*v2;
-	t_vector	*v3;
+	t_vector	v1;
+	t_vector	v2;
+	//t_vector	*v3;
 	double		alpha;
 
 	/*---- NO CAMBIAR ESTE BLOQUE ----*/
 	//v1 = *create_vector(*p, s->o);
-	v2 = create_vector(l->o, *p);
+	/*v2 = create_vector(l->o, *p);
 	v3 = create_vector(l->o, s->o);
 	alpha = module(*v2) - module(*v3) + s->radius;
-	alpha = (1 - (alpha / s->radius)) * l->intensity;
+	alpha = (1 - (alpha / s->radius)) * l->intensity;*/
 	/*--------------------------------*/
 
-	free(v2);
+	/*---- NO CAMBIAR ESTE BLOQUE ----*/
+	v1 = normalize(*create_vector(s->o, *p));
+	v2 = normalize(*create_vector(*p, l->o));
+	//v3 = normalize(*create_vector(l->o, s->o));
+	alpha = dot(v1, v2) * 0.5 + 0.5;
+	printf("alpha = %f\n", alpha);
+	//alpha = module(v2) - module(v3) + s->radius;
+	//alpha = (1 - (alpha / s->radius)) * l->intensity;
+	/*--------------------------------*/
+	
+	//free(v2);
 	//free(v3);
 	//v1 = unit_vector(*create_vector(s->o, *p));
 	//v2 = unit_vector(*create_vector(*p, l->o));

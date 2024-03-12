@@ -110,8 +110,9 @@ int			y_pos(int y);
 int			hexa(int *rgb);
 int			*rgb(int color);
 double		module(t_vector v);
-t_vector	unit_vector(t_vector v);
+t_vector	normalize(t_vector v);
 int 		read_rt(char *filename, t_scene *scene);
+double		dot(t_vector v1, t_vector v2);
 
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);

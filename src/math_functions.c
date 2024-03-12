@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/02/28 10:54:32 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:47:55 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,17 @@ double module(t_vector v)
 	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-t_vector unit_vector(t_vector v)
+t_vector normalize(t_vector v)
 {
 	v.x = v.x / module(v);
 	v.y = v.y / module(v);
 	v.z = v.z / module(v);
 	return(v);
+}
+
+double dot(t_vector v1, t_vector v2)
+{
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
 t_cords *get_screen_coord(int x, int y, int fov)

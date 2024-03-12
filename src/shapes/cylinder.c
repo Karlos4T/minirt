@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/07 14:04:03 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:46:01 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 	double	D;
 	//cdouble v1[2];
 	//cdouble co[2];
-	//v = unit_vector(v); //esta linea curva el cilindro en funcion de x. Curioso
+	//v = normalize(v); //esta linea curva el cilindro en funcion de x. Curioso
 
 	//TODOS LOS 0 SE DEBEN SUSTITUIR POR LAS CORDENADAS DEL ORIGEN DEL VECTOR, ES DECIR, LA CAMARA
 
@@ -73,20 +73,20 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 		- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
 	
 
-	a1 = pow(v.x, 2) /*+ pow(v.y, 2)*/ + pow(v.z, 2) \
+	a1 = /*pow(v.x, 2) +*/ pow(v.y, 2) + pow(v.z, 2) \
 		;//- (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
 	
-	b1 = 2 * (v.x * (0 - cy.o.x) + /*v.y * (0 - cy.o.y) +*/ v.z * (0 - cy.o.z)) \
+	b1 = 2 * (/*v.x * (0 - cy.o.x) + */v.y * (0 - cy.o.y) + v.z * (0 - cy.o.z)) \
 		;//- 2 * (-pow(cy.v.x, 2) * 0 + pow(cy.v.x, 2) * v.x * cy.o.x - pow(cy.v.y, 2) * 0 + pow(cy.v.y, 2) * v.y * cy.o.y - pow(cy.v.z, 2) * 0 + pow(cy.v.z, 2) * v.z * cy.o.z);
 
-	c1 = (pow(0 - cy.o.x, 2) + /*pow(0 - cy.o.y, 2) +*/ pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
+	c1 = (/*pow(0 - cy.o.x, 2) + */pow(0 - cy.o.y, 2) + pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
 		;//- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
 
 	printf ("a:%f a1: %f, b: %f b1: %f, c: %f c1: %f\n", a, a1, b, b1, c,  c1);
 	
-	//D = b * b - (4 * a * c);
+	D = b * b - (4 * a * c);
 	//B Y B1 varian cuando el cilindro pasa por debajo del plano
-	D = b1 * b1 - (4 * a1 * c1);
+	//D = b1 * b1 - (4 * a1 * c1);
 
 	if (D >= 0)
 	{
