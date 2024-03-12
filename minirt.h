@@ -22,9 +22,9 @@ typedef struct s_cords {
 }	t_cords;
 
 typedef struct s_vector {
-	double x;
+	double	x;
 	double	y;
-	double z;
+	double	z;
 } t_vector;
 
 typedef struct	s_data {
@@ -93,7 +93,7 @@ typedef struct s_scene {
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
 t_vector	*create_vector(t_cords point1, t_cords point2);
-double		vector_x_sphere(t_sphere s, t_vector v);
+double		vector_x_sphere(t_sphere s, t_vector v, t_cords vo);
 double		vector_x_plane(t_plane pl, t_vector v);
 void		render_screen(t_data *data, t_scene *scene);
 t_cords 	*create_point(int x, int y, int z);
@@ -113,6 +113,9 @@ double		module(t_vector v);
 t_vector	normalize(t_vector v);
 int 		read_rt(char *filename, t_scene *scene);
 double		dot(t_vector v1, t_vector v2);
+t_vector 	neg(t_vector v);
+
+int			check_shadow(t_cords p, t_cords l, t_sphere **sphere);
 
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);

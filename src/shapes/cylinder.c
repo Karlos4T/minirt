@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 13:46:01 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:39:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 	c1 = (/*pow(0 - cy.o.x, 2) + */pow(0 - cy.o.y, 2) + pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
 		;//- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
 
-	printf ("a:%f a1: %f, b: %f b1: %f, c: %f c1: %f\n", a, a1, b, b1, c,  c1);
+	//printf ("a:%f a1: %f, b: %f b1: %f, c: %f c1: %f\n", a, a1, b, b1, c,  c1);
 	
 	D = b * b - (4 * a * c);
 	//B Y B1 varian cuando el cilindro pasa por debajo del plano

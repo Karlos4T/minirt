@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 13:58:07 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:48:17 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	T[0] = 0;
 	T[1] = 0;
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera->fov);
-	vector = create_vector(*screen_point, *sc.camera->o);
+	vector = create_vector(*sc.camera->o, *screen_point);
 	i = 0;
 	while (sc.objects->planes[i] != NULL)
 	{
@@ -41,7 +41,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	i = 0;
 	while (sc.objects->spheres[i] != NULL)
 	{
-		t = vector_x_sphere(*sc.objects->spheres[i], *vector);
+		t = vector_x_sphere(*sc.objects->spheres[i], *vector, *sc.camera->o);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = t;
@@ -65,10 +65,13 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	if (T[1] == 1)
 	{
 		t_plane *pl = sc.objects->planes[(int)T[2]];
+		t_cords *p;
+		
+		p = create_point(0 + T[0] * (vector->x - 0),  0 + T[0] * (vector->y - 0), 0 + T[0] * (vector->z - 0));
+		alpha = get_brightness_level_plane(pl, sc.lights, p);
 
-		alpha = get_brightness_level_plane(pl, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
 		//int rgb[] = {alpha * pl->color[0], alpha * pl->color[1], alpha * pl->color[2]};
-		color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity));
+		color = (1 - check_shadow(*p, sc.lights[0].o, sc.objects->spheres)) * hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity));
 	}
 	else if (T[1] == 2)
 	{

@@ -17,10 +17,12 @@ LIBFT = libft/libft.a
 LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c
 PARSE = reader.c
-SRC = main.c math_functions.c functions.c scene.c scene2.c colors.c render.c
+MATH = math_functions.c
+SRC = main.c functions.c scene.c scene2.c colors.c render.c
 SRCS = $(addprefix src/, $(SRC)) \
 		$(addprefix src/shapes/, $(SHAPES)) \
-		$(addprefix src/parse/, $(PARSE))
+		$(addprefix src/parse/, $(PARSE)) \
+		$(addprefix src/math/, $(MATH))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 ifeq ($(shell uname), Linux)

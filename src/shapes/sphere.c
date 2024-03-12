@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 13:59:24 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:33:23 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,26 @@ t_sphere	*create_sphere(int x, int y, int z, int radius, int color)
 	return sphere;
 }
 
-double	vector_x_sphere(t_sphere s, t_vector v)
+double	vector_x_sphere(t_sphere s, t_vector v, t_cords vo)
 {
 	double	t[2];
 	double	a;
 	double	b;
 	double	c;
-	int	D;
+	double	D;
 	
-	v = normalize(v);
+	//v = normalize(v);
 	a = dot(v, v);
-	b = 2 * (v.x * (s.o.x - v.x) + v.y * (s.o.y - v.y) + v.z * (s.o.z - v.z));
-	c = pow(s.o.x - v.x, 2) + pow(s.o.y - v.y, 2) + pow(s.o.z - v.z, 2) - pow(s.radius, 2);
+	b = 2 * (v.x * (vo.x - s.o.x) + v.y * (vo.y - s.o.y) + v.z * (vo.z - s.o.z));
+	c = pow(vo.x - s.o.x, 2) + pow(vo.y - s.o.y, 2) + pow(vo.z - s.o.z, 2) - pow(s.radius, 2);
+	
 	D = b * b - (4 * a * c);
 	if (D >= 0)
 	{
+		printf("v(%f, %f, %f) D = %f\n", v.x, v.y, v.z, D);
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
-		if (t[0] < t[1])
+		if (fabs(t[0]) < fabs(t[1]))
 			return (t[0]);
 		return (t[1]);
 	}
@@ -65,15 +67,15 @@ double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 	alpha = (1 - (alpha / s->radius)) * l->intensity;*/
 	/*--------------------------------*/
 
-	/*---- NO CAMBIAR ESTE BLOQUE ----*/
 	v1 = normalize(*create_vector(s->o, *p));
-	v2 = normalize(*create_vector(*p, l->o));
-	//v3 = normalize(*create_vector(l->o, s->o));
-	alpha = dot(v1, v2) * 0.5 + 0.5;
-	printf("alpha = %f\n", alpha);
+	v2 = normalize(*create_vector(l->o, s->o));
+	alpha = dot(v1, neg(v2));
+	if (alpha < 0)
+		return (0);
+	//if (alpha < 0)
+	//printf("v1(%f, %f, %f) v2(%f, %f, %f) alpha_norm = %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, alpha);
 	//alpha = module(v2) - module(v3) + s->radius;
 	//alpha = (1 - (alpha / s->radius)) * l->intensity;
-	/*--------------------------------*/
 	
 	//free(v2);
 	//free(v3);

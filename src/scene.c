@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 13:13:41 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:47:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_scene	*initialize_scene()
 	scene = malloc(sizeof(t_scene));
 	scene->camera = start_camera(0, 0, 0, 90);
 	scene->alight = create_alight(0.3, 0x00FFFFFF);
-	scene->lights = create_light(100, 100, -100, 1, 0x00FFFFFF);
+	scene->lights = create_light(100, 40, -100, 1, 0x00FFFFFF);
 	scene->objects = malloc(sizeof(t_objects));
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
 	scene->objects->cylinders[0] = create_cylinder(0, 0, -160, 1, 1, 0, 10, 70, 0x0000FFFF);

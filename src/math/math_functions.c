@@ -6,11 +6,11 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 13:47:55 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:48:52 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
 int x_pos(int x)
 {
@@ -27,6 +27,14 @@ double module(t_vector v)
 	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
+t_vector producto_escalar(t_vector v, double n)
+{
+	v.x = v.x * n;
+	v.y = v.y * n;
+	v.z = v.z * n;
+	return (v);
+}
+
 t_vector normalize(t_vector v)
 {
 	v.x = v.x / module(v);
@@ -34,6 +42,15 @@ t_vector normalize(t_vector v)
 	v.z = v.z / module(v);
 	return(v);
 }
+
+t_vector neg(t_vector v)
+{
+	v.x = -v.x;
+	v.y = -v.y;
+	v.z = -v.z;
+	return (v);
+}
+
 
 double dot(t_vector v1, t_vector v2)
 {
