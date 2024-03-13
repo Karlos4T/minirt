@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 13:24:28 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:51:40 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		t_plane *pl = sc.objects->planes[(int)T[2]];
 		t_cords *p;
 		
-		p = create_point(0 + T[0] * (vector->x - 0),  0 + T[0] * (vector->y - 0), 0 + T[0] * (vector->z - 0));
+		p = create_point(sc.camera->o.x + T[0] * (vector->x - sc.camera->o.x),  sc.camera->o.y + T[0] * (vector->y - sc.camera->o.y), sc.camera->o.z + T[0] * (vector->z - sc.camera->o.z));
 		alpha = get_brightness_level_plane(pl, sc.lights, p);
 
 		//int rgb[] = {alpha * pl->color[0], alpha * pl->color[1], alpha * pl->color[2]};
@@ -77,7 +77,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	{
 		t_sphere *sp = sc.objects->spheres[(int)T[2]];
 
-		alpha = get_brightness_level(sp, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
+		alpha = get_brightness_level(sp, sc.lights, create_point(sc.camera->o.x + T[0] * (screen_point->x - sc.camera->o.x),  sc.camera->o.y + T[0] * (screen_point->y - sc.camera->o.y), sc.camera->o.z + T[0] * (screen_point->z - sc.camera->o.z)));
 		color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
 	}
 	else if (T[1] == 3)
