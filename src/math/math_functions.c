@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 16:14:08 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 18:08:22 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,21 @@ t_cords *get_screen_coord(int x, int y, t_camera *camera)
 {
 	t_cords	*coords;
 	double	limit;
-	
+	(void)x;
+	(void)y;
 	limit = fabs(tan(camera->fov/2));
 	coords = malloc(sizeof(t_cords));
-	coords->x = x * limit / WIN_HEIGHT + camera->o.x - camera->v.x;
-	coords->y = y * limit / WIN_HEIGHT + camera->o.y - camera->v.y;
-	coords->z = camera->o.z - camera->v.z;
-	if (!camera->v.z)
+	printf("%f\n", x * limit / WIN_HEIGHT);
+	/*
+		LOS PUNTOS X E Y QUE RECIBIMOS NO SON LOS MISMOS PUNTOS EN EL PLANO 3D
+		ES DECIR TIENEN COMPONENTES EN x, y, z.
+		EL PUNTO XY DE LA PANTALLA ES EL PUNTO xyz del plano
+	*/
+	coords->x = x * limit / WIN_HEIGHT + camera->o.x + camera->v.x;
+	coords->y = y * limit / WIN_HEIGHT + camera->o.y + camera->v.y;
+	coords->z = x * limit / WIN_HEIGHT + camera->o.z + camera->v.z;
+	if (!camera->v.x && !camera->v.y)
 		coords->z = camera->o.z - 1;
-		
+
 	return(coords);
 }

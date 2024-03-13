@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 16:18:28 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:29:46 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	T[1] = 0;
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera);
 	vector = create_vector(sc.camera->o, *screen_point);
+	//printf("v(%f, %f, %f)\n", vector->x, vector->y, vector->z);
 	i = 0;
 	while (sc.objects->planes[i] != NULL)
 	{
