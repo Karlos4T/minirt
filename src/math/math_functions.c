@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 16:48:52 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:30:51 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ double dot(t_vector v1, t_vector v2)
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_cords *get_screen_coord(int x, int y, int fov)
+t_cords *get_screen_coord(int x, int y, t_camera *camera)
 {
 	t_cords	*coords;
 	double	limit;
 	
-	limit = tan(fov/2);	
+	limit = tan(camera->fov/2);	
 	coords = malloc(sizeof(t_cords));
-	coords->x = x * limit / 1080;
-	coords->y = y * limit / 1080;
-	coords->z = -1;
+	coords->x = x * limit / 1080 + camera->o.x;
+	coords->y = y * limit / 1080 + camera->o.y;
+	coords->z = camera->o.z - 1;
 	return(coords);
 }

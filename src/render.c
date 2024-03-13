@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 17:48:17 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:24:28 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 
 	T[0] = 0;
 	T[1] = 0;
-	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera->fov);
-	vector = create_vector(*sc.camera->o, *screen_point);
+	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera);
+	vector = create_vector(sc.camera->o, *screen_point);
 	i = 0;
 	while (sc.objects->planes[i] != NULL)
 	{
@@ -41,7 +41,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	i = 0;
 	while (sc.objects->spheres[i] != NULL)
 	{
-		t = vector_x_sphere(*sc.objects->spheres[i], *vector, *sc.camera->o);
+		t = vector_x_sphere(*sc.objects->spheres[i], *vector, sc.camera->o);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = t;

@@ -47,7 +47,7 @@ int eval_line(char *line)
         str = NULL;
         i++;
     }
-    printf("%s\n", line);
+    //printf("%s\n", line);
     return 0;
 }
 
