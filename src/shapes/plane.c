@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 13:54:00 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:58:44 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 //	//printf("vector: (%f, %f, %f) modulev2 = %f\n", v2.x, v2.y, v2.z, module(v2));
 	
 	/*NEW FORM*/
-	v1 = normalize(*create_vector(l->o, pl->o));
-	alpha = dot(v1, neg(pl->v)) * 0.5 + 0.5;
+	v1 = normalize(*create_vector(l->o, *p));
+	alpha = dot(v1, pl->v) / (module(v1) * module(pl->v)) * 0.5 + 0.5;
 
-	printf("%f\n", alpha);
+	//printf("v1(%f, %f, %f) %f\n", v1.x, v1.y, v1.z, alpha);
 	if (alpha < 0)
 		return (0);
 	

@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 13:00:37 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:57:15 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_cords	*create_point(int x, int y, int z)
 	return (point);
 }
 
-t_camera	*start_camera(int x, int y, int z, int vx, int vy, int vz, int fov)
+t_camera	*start_camera(double x, double y, double z, double vx, double vy, double vz, int fov)
 {
 	t_camera	*camera;
 

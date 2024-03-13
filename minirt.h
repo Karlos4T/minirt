@@ -98,7 +98,7 @@ double		vector_x_plane(t_plane pl, t_vector v);
 void		render_screen(t_data *data, t_scene *scene);
 t_cords 	*create_point(int x, int y, int z);
 t_light		*create_light(int x, int y, int z, double intensity, int color);
-t_camera	*start_camera(int x, int y, int z, int vx, int vy, int vz, int fov);
+t_camera	*start_camera(double x, double y, double z, double vx, double vy, double vz, int fov);
 t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
 t_alight	*create_alight(double intensity, int color);
 t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double radius, double height, int color);

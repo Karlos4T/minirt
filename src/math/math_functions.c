@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 13:44:45 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:14:08 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ t_cords *get_screen_coord(int x, int y, t_camera *camera)
 	
 	limit = fabs(tan(camera->fov/2));
 	coords = malloc(sizeof(t_cords));
-	coords->x = x * limit / 1080 + camera->o.x;
-	coords->y = y * limit / 1080 + camera->o.y;
-	coords->z = camera->o.z - 1;
+	coords->x = x * limit / WIN_HEIGHT + camera->o.x - camera->v.x;
+	coords->y = y * limit / WIN_HEIGHT + camera->o.y - camera->v.y;
+	coords->z = camera->o.z - camera->v.z;
+	if (!camera->v.z)
+		coords->z = camera->o.z - 1;
+		
 	return(coords);
 }
