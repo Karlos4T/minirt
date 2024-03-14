@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 16:49:39 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/04 17:06:09 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:45:59 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int is_color(char *c)
     return (1);
 }
 
-int is_vector(char *c)
+int is_vec(char *c)
 {
     char **s;
     int i;

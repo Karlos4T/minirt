@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 15:58:44 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:30:56 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ t_plane *create_plane(int x, int y, int z, double vx, double vy, double vz, int 
 	return (plane);
 }
 
-double vector_x_plane(t_plane pl, t_vector v)
+double vector_x_plane(t_plane pl, t_vec v)
 {
 	double t;
-
-	t = (pl.v.x * pl.o.x + pl.v.y * pl.o.y + pl.v.z * pl.o.z) / (pl.v.x * v.x + pl.v.y * v.y + pl.v.z * v.z);
+	
+	//t = -(pl.v.x * v.x + pl.v.y * v.y + pl.v.z * v.z - (pl.v.x * pl.o.x + pl.v.y * pl.o.y + pl.v.z * pl.o.z)) / (pl.v.x * pl.v.x + pl.v.y * pl.v.y + pl.v.z * pl.v.z);
+	t = -(pl.v.x * pl.o.x + pl.v.y * pl.o.y + pl.v.z * pl.o.z) / (pl.v.x * v.x + pl.v.y * v.y + pl.v.z * v.z);
 	return (t);
 }
 
-double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
+double get_brightness_level_plane(t_plane *pl, t_light *l, t_vec *p)
 {
-	t_vector	v1;
+	t_vec	v1;
 	//t_vector	v2;
 	double		alpha;
 
@@ -58,7 +59,7 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 	
 	/*NEW FORM*/
 	v1 = normalize(*create_vector(l->o, *p));
-	alpha = dot(v1, pl->v) / (module(v1) * module(pl->v)) * 0.5 + 0.5;
+	alpha = dot(v1, neg(pl->v)) / (module(v1) * module(pl->v)) * 0.5 + 0.5;
 
 	//printf("v1(%f, %f, %f) %f\n", v1.x, v1.y, v1.z, alpha);
 	if (alpha < 0)
@@ -69,9 +70,9 @@ double get_brightness_level_plane(t_plane *pl, t_light *l, t_cords *p)
 	return (alpha);
 }
 
-int check_shadow(t_cords p, t_cords l, t_sphere **s)
+int check_shadow(t_vec p, t_vec l, t_sphere **s)
 {
-	t_vector 	*v;
+	t_vec 	*v;
 	int			i;
 
 	i = 0;

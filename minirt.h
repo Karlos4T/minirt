@@ -15,17 +15,11 @@
 # include <stdio.h>
 # include "./libft/include/libft.h"
 
-typedef struct s_cords {
+typedef struct s_vec {
 	double	x;
 	double	y;
 	double	z;
-}	t_cords;
-
-typedef struct s_vector {
-	double	x;
-	double	y;
-	double	z;
-} t_vector;
+}	t_vec;
 
 typedef struct	s_data {
 	void	*img;
@@ -36,26 +30,26 @@ typedef struct	s_data {
 } t_data;
 
 typedef struct	s_camera {
-	t_cords	o;
-	t_vector v;
+	t_vec	o;
+	t_vec v;
 	int fov;
 }	t_camera;
 
 typedef struct s_sphere {
-	t_cords	o;
+	t_vec	o;
 	int radius;
 	int	*color;
 } t_sphere;
 
 typedef struct s_plane {
-	t_cords		o;
-	t_vector	v;
+	t_vec		o;
+	t_vec	v;
 	int			*color;
 } t_plane;
 
 typedef struct s_cylinder {
-	t_cords		o;
-	t_vector	v;
+	t_vec		o;
+	t_vec	v;
 	double		radius;
 	double		height;
 	int			*color;
@@ -63,7 +57,7 @@ typedef struct s_cylinder {
 } t_cylinder;
 
 typedef struct s_light {
-	t_cords	o;
+	t_vec	o;
 	int	x_origin;
 	int	y_origin;
 	int z_origin;
@@ -92,41 +86,42 @@ typedef struct s_scene {
 //FUNCTIONS
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
-t_vector	*create_vector(t_cords point1, t_cords point2);
-double		vector_x_sphere(t_sphere s, t_vector v, t_cords vo);
-double		vector_x_plane(t_plane pl, t_vector v);
+t_vec	*create_vector(t_vec point1, t_vec point2);
+double		vector_x_sphere(t_sphere s, t_vec v, t_vec vo);
+double		vector_x_plane(t_plane pl, t_vec v);
 void		render_screen(t_data *data, t_scene *scene);
-t_cords 	*create_point(int x, int y, int z);
+t_vec 	*create_point(int x, int y, int z);
 t_light		*create_light(int x, int y, int z, double intensity, int color);
 t_camera	*start_camera(double x, double y, double z, double vx, double vy, double vz, int fov);
 t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
 t_alight	*create_alight(double intensity, int color);
 t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double radius, double height, int color);
-double		vector_x_cylinder(t_cylinder cy, t_vector v);
+double		vector_x_cylinder(t_cylinder cy, t_vec v);
 
 //MATH FUNCTIONS
 int			x_pos(int x);
 int			y_pos(int y);
 int			hexa(int *rgb);
 int			*rgb(int color);
-double		module(t_vector v);
-t_vector	normalize(t_vector v);
+double		module(t_vec v);
+t_vec	normalize(t_vec v);
 int 		read_rt(char *filename, t_scene *scene);
-double		dot(t_vector v1, t_vector v2);
-t_vector 	neg(t_vector v);
+double		dot(t_vec v1, t_vec v2);
+t_vec 	neg(t_vec v);
+t_vec 	*vec(double x, double y, double z);
 
-int			check_shadow(t_cords p, t_cords l, t_sphere **sphere);
+int			check_shadow(t_vec p, t_vec l, t_sphere **sphere);
 
 //COLOR
 int 	*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);
-double 	get_brightness_level(t_sphere *s, t_light *l, t_cords *p);
-double 	get_brightness_level_plane(t_plane *s, t_light *l, t_cords *p);
-double 	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_cords *p);
+double 	get_brightness_level(t_sphere *s, t_light *l, t_vec *p);
+double 	get_brightness_level_plane(t_plane *s, t_light *l, t_vec *p);
+double 	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec *p);
 
 
 //MAIN
 void render_pixel(int x, int y, t_data *data, t_scene scene);
-t_cords	*get_screen_coord(int x, int y, t_camera *camera);
+t_vec	*get_screen_coord(int x, int y, t_camera *camera);
 t_scene *initialize_scene();
 
 

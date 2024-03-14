@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/12 17:39:13 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:45:53 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 }
 
 
-int cut_cylinder(t_cylinder cy, t_vector v, double t[2])
+int cut_cylinder(t_cylinder cy, t_vec v, double t[2])
 {
 	if (cy.v.x)
 		if (v.x * t[0] > cy.o.x + cy.height / 2 || v.x * t[0] < cy.o.x - cy.height / 2 )
@@ -47,7 +47,7 @@ int cut_cylinder(t_cylinder cy, t_vector v, double t[2])
 	return 1;
 }
 
-double	vector_x_cylinder(t_cylinder cy, t_vector v)
+double	vector_x_cylinder(t_cylinder cy, t_vec v)
 {
 	double	t[2];
 	double	a;
@@ -106,7 +106,7 @@ double	vector_x_cylinder(t_cylinder cy, t_vector v)
 }
 
 
-double plane_x_cylinder(t_cylinder cy, t_vector v)
+double plane_x_cylinder(t_cylinder cy, t_vec v)
 {
 	int		t;
 	t_plane	*pl;
@@ -116,11 +116,11 @@ double plane_x_cylinder(t_cylinder cy, t_vector v)
 	return (t);
 }
 
-double	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_cords *p)
+double	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec *p)
 {
-	//t_vector	*v1;
-	t_vector	*v2;
-	t_vector	*v3;
+	//t_vec	*v1;
+	t_vec	*v2;
+	t_vec	*v3;
 	double		alpha;
 
 	//v1 = create_vector(c->o, *p);

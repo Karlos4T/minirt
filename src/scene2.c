@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 15:57:15 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:00:24 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,33 @@ t_alight	*create_alight(double intensity, int color)
 	return (light);
 }
 
-t_vector	*create_vector(t_cords p1, t_cords p2)
+t_vec *vec(double x, double y, double z)
 {
-	t_vector	*vector;
+	t_vec	*v;
 
-	vector = malloc(sizeof(t_vector));
+	v = malloc(sizeof(t_vec));
+	v->x = x;
+	v->y = y;
+	v->z = z;
+	return (v);
+}
+
+t_vec	*create_vector(t_vec p1, t_vec p2)
+{
+	t_vec	*vector;
+
+	vector = malloc(sizeof(t_vec));
 	vector->x = p2.x - p1.x;
 	vector->y = p2.y - p1.y;
 	vector->z = p2.z - p1.z;
 	return (vector);
 }
 
-t_cords	*create_point(int x, int y, int z)
+t_vec	*create_point(int x, int y, int z)
 {
-	t_cords	*point;
+	t_vec	*point;
 
-	point = malloc(sizeof(t_cords));
+	point = malloc(sizeof(t_vec));
 	point->x = x;
 	point->y = y;
 	point->z = z;

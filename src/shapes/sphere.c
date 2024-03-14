@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 12:40:47 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:45:53 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_sphere	*create_sphere(int x, int y, int z, int radius, int color)
 	return sphere;
 }
 
-double	vector_x_sphere(t_sphere s, t_vector v, t_cords vo)
+double	vector_x_sphere(t_sphere s, t_vec v, t_vec vo)
 {
 	double	t[2];
 	double	a;
@@ -52,10 +52,10 @@ double	vector_x_sphere(t_sphere s, t_vector v, t_cords vo)
 	return (0);
 }
 
-double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
+double get_brightness_level(t_sphere *s, t_light *l, t_vec *p)
 {
-	t_vector	v1;
-	t_vector	v2;
+	t_vec	v1;
+	t_vec	v2;
 	double		alpha;
 
 	/*---- NO CAMBIAR ESTE BLOQUE ----*/
@@ -78,9 +78,9 @@ double get_brightness_level(t_sphere *s, t_light *l, t_cords *p)
 	
 	//free(v2);
 	//free(v3);
-	//v1 = unit_vector(*create_vector(s->o, *p));
-	//v2 = unit_vector(*create_vector(*p, l->o));
-	//v3 = unit_vector(*create_vector(*p, l->o));
+	//v1 = unit_vec(*create_vector(s->o, *p));
+	//v2 = unit_vec(*create_vector(*p, l->o));
+	//v3 = unit_vec(*create_vector(*p, l->o));
 	//alpha = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z / (module(v1) * module(v2));
 	////alpha = v1.x * v2.y + v2.x * v1.y + v1.y * v2.z + v2.y * v1.z + v1.z * v2.x + v2.z * v1.x;
 	//printf("v1: (%f, %f, %f), v2: (%f, %f, %f), alpha: %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, alpha);

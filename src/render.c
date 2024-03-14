@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/13 16:29:46 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:45:53 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void render_pixel(int x, int y, t_data *data, t_scene sc)
 {
-	t_cords		*screen_point;
-	t_vector	*vector;
+	t_vec		*screen_point;
+	t_vec	*vector;
 	int color = 0;
 	double	t;
 	double T[3];
@@ -66,7 +66,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	if (T[1] == 1)
 	{
 		t_plane *pl = sc.objects->planes[(int)T[2]];
-		t_cords *p;
+		t_vec *p;
 		
 		p = create_point(sc.camera->o.x + T[0] * (vector->x - sc.camera->o.x),  sc.camera->o.y + T[0] * (vector->y - sc.camera->o.y), sc.camera->o.z + T[0] * (vector->z - sc.camera->o.z));
 		alpha = get_brightness_level_plane(pl, sc.lights, p);
