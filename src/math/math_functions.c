@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/14 13:49:34 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:12:45 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,6 @@ t_vec *get_screen_coord(int x, int y, t_camera *c)
 	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
 	coords->z = c->o.z - 1;
 	
-	printf("v(%f, %f, %f)\n", coords->x, coords->y, coords->z);
+	//printf("v(%f, %f, %f)\n", coords->x, coords->y, coords->z);
 	return(coords);
 }
