@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/15 13:21:52 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:31:07 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ t_vec *cross_prod(t_vec v1, t_vec v2)
 	v->y = v1.x * v2.z + v1.z * v2.x;
 	v->z = v1.x * v2.y + v1.y * v2.x;
 	return (v);
+}
+
+t_vec	vec_add(t_vec v1, t_vec v2)
+{
+	v1.x = v1.x + v2.x;
+	v1.y = v1.y + v2.y;
+	v1.z = v1.z + v2.z;
+	return(v1);
 }
 
 t_vec	*vec_sub(t_vec v1, t_vec v2)

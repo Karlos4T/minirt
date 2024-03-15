@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/15 14:22:03 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:12:33 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,24 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 
 int cut_cylinder(t_cylinder cy, t_vec v, double t)
 {
-	t_vec *cyax;
 	t_vec *p;
 	double t1, t2;
 	
 	t1 = ((cy.o.x - 0) * cy.v.y - (cy.o.y - 0) * cy.v.x) / (v.x * cy.v.y - v.y * cy.v.x);
     t2 = ((0 - cy.o.x) * v.y - (0 - cy.o.y) * v.x) / (cy.v.x * v.y - cy.v.y * v.x);
-	cyax = malloc(sizeof(t_vec));
+	/*RESTAR EL RADIO AL PUNTO DE CORTE, CHEQUEAR QUE SEA UN 
+	PUNTO EN EL EJE Y HACER EL VECTOR DESDE ESE PUNTO AL CENTRO*/
 	p = malloc(sizeof(t_vec));
 	p->x = cy.o.x + t2 * cy.v.x;
 	p->y = cy.o.y + t2 * cy.v.y;
 	p->z = cy.o.z + t2 * cy.v.z;
-	printf("v(%f, %f, %f)\n", p->x, p->y, p->z);
-	if (module(*p) < cy.height)
+	if (p->y == 50)
+	{
+		printf("v(%f, %f, %f)\n", p->x, p->y, p->z);
+	}	
+	//printf("%f, %f)\n", module(*p), cy.height);
+
+	if (module(*p) > cy.height/2)
 		return (0);
 	return t;
 }
@@ -66,8 +71,8 @@ double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 	v = cross_prod(*v, cy.v);
 	a = dot_prod(*u, *u);
 	b = 2 * dot_prod(*u, *v);
-	c = dot_prod(*v, *v) - cy.radius;
-	return (cut_cylinder(cy, *v, quadratic(a, b, c)));
+	c = dot_prod(*v, *v) - cy.radius * cy.radius;
+	return (cut_cylinder(cy, r, quadratic(a, b, c)));
 }
 
 

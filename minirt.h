@@ -113,6 +113,8 @@ t_vec 		*cross_prod(t_vec v1, t_vec v2);
 t_vec		*vec_sub(t_vec a, t_vec b);
 int			check_shadow(t_vec p, t_vec l, t_sphere **sphere);
 double 		quadratic(double a, double b, double c);
+t_vec		vec_add(t_vec v1, t_vec v2);
+t_vec 		producto_escalar(t_vec v, double n);
 
 //COLOR
 int 		*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);
