@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/14 11:45:53 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:22:03 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,76 +33,41 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 }
 
 
-int cut_cylinder(t_cylinder cy, t_vec v, double t[2])
+int cut_cylinder(t_cylinder cy, t_vec v, double t)
 {
-	if (cy.v.x)
-		if (v.x * t[0] > cy.o.x + cy.height / 2 || v.x * t[0] < cy.o.x - cy.height / 2 )
-			return 0;
-	if (cy.v.y)
-		if (v.y * t[0] > cy.o.y + cy.height / 2 || v.y * t[0] < cy.o.y - cy.height / 2 )
-			return 0;
-	if (cy.v.z)
-		if (v.z * t[0] > cy.o.z + cy.height / 2 || v.z * t[0] < cy.o.z - cy.height / 2 )
-			return 0;
-	return 1;
+	t_vec *cyax;
+	t_vec *p;
+	double t1, t2;
+	
+	t1 = ((cy.o.x - 0) * cy.v.y - (cy.o.y - 0) * cy.v.x) / (v.x * cy.v.y - v.y * cy.v.x);
+    t2 = ((0 - cy.o.x) * v.y - (0 - cy.o.y) * v.x) / (cy.v.x * v.y - cy.v.y * v.x);
+	cyax = malloc(sizeof(t_vec));
+	p = malloc(sizeof(t_vec));
+	p->x = cy.o.x + t2 * cy.v.x;
+	p->y = cy.o.y + t2 * cy.v.y;
+	p->z = cy.o.z + t2 * cy.v.z;
+	printf("v(%f, %f, %f)\n", p->x, p->y, p->z);
+	if (module(*p) < cy.height)
+		return (0);
+	return t;
 }
 
-double	vector_x_cylinder(t_cylinder cy, t_vec v)
+double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 {
-	double	t[2];
-	double	a;
-	double	a1;
-	double	b;
-	double	b1;
-	double	c;
-	double	c1;
-	double	D;
-	//cdouble v1[2];
-	//cdouble co[2];
-	//v = normalize(v); //esta linea curva el cilindro en funcion de x. Curioso
 
-	//TODOS LOS 0 SE DEBEN SUSTITUIR POR LAS CORDENADAS DEL ORIGEN DEL VECTOR, ES DECIR, LA CAMARA
+	t_vec		*u;
+	t_vec		*v;
+	double		a;
+	double		b;
+	double		c;
 
-	a = pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2) \
-		- (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
-	
-	b = 2 * (v.x * (0 - cy.o.x) + v.y * (0 - cy.o.y) + v.z * (0 - cy.o.z)) \
-		- 2 * (-pow(cy.v.x, 2) * 0 + pow(cy.v.x, 2) * v.x * cy.o.x - pow(cy.v.y, 2) * 0 + pow(cy.v.y, 2) * v.y * cy.o.y - pow(cy.v.z, 2) * 0 + pow(cy.v.z, 2) * v.z * cy.o.z);
-
-	c = (pow(0 - cy.o.x, 2) + pow(0 - cy.o.y, 2) + pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
-		- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
-	
-
-	a1 = /*pow(v.x, 2) +*/ pow(v.y, 2) + pow(v.z, 2) \
-		;//- (pow(cy.v.x, 2) * pow(v.x, 2) + pow(cy.v.y, 2) * pow(v.y, 2) + pow(cy.v.z, 2) * pow(v.z, 2));
-	
-	b1 = 2 * (/*v.x * (0 - cy.o.x) + */v.y * (0 - cy.o.y) + v.z * (0 - cy.o.z)) \
-		;//- 2 * (-pow(cy.v.x, 2) * 0 + pow(cy.v.x, 2) * v.x * cy.o.x - pow(cy.v.y, 2) * 0 + pow(cy.v.y, 2) * v.y * cy.o.y - pow(cy.v.z, 2) * 0 + pow(cy.v.z, 2) * v.z * cy.o.z);
-
-	c1 = (/*pow(0 - cy.o.x, 2) + */pow(0 - cy.o.y, 2) + pow(0 - cy.o.z, 2) - pow(cy.radius, 2)) \
-		;//- (pow(cy.v.x, 2) * pow(cy.o.x, 2) + pow(cy.v.y, 2) * pow(cy.o.y, 2) + pow(cy.v.z, 2) * pow(cy.o.z, 2));
-
-	//printf ("a:%f a1: %f, b: %f b1: %f, c: %f c1: %f\n", a, a1, b, b1, c,  c1);
-	
-	D = b * b - (4 * a * c);
-	//B Y B1 varian cuando el cilindro pasa por debajo del plano
-	//D = b1 * b1 - (4 * a1 * c1);
-
-	if (D >= 0)
-	{
-		t[0] = (- b + sqrt(D)) / (2 * a);
-		t[1] = (- b - sqrt(D)) / (2 * a);
-		//double a = vector_x_plane(*cy.covers[0], v);
-		if (!cut_cylinder(cy, v, t))
-			return (0);
-		if (fabs(t[0]) < fabs(t[1]))
-			return (fabs(t[0]));
-		return (fabs(t[1]));
-		if (t[0] < t[1])
-			return (t[0]);
-		return (t[1]);
-	}
-	return (0);
+	u = cross_prod(r, cy.v);
+	v = vec_sub(cy.o, o);
+	v = cross_prod(*v, cy.v);
+	a = dot_prod(*u, *u);
+	b = 2 * dot_prod(*u, *v);
+	c = dot_prod(*v, *v) - cy.radius;
+	return (cut_cylinder(cy, *v, quadratic(a, b, c)));
 }
 
 
@@ -116,20 +81,3 @@ double plane_x_cylinder(t_cylinder cy, t_vec v)
 	return (t);
 }
 
-double	get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec *p)
-{
-	//t_vec	*v1;
-	t_vec	*v2;
-	t_vec	*v3;
-	double		alpha;
-
-	//v1 = create_vector(c->o, *p);
-	v2 = create_vector(l->o, *p);
-	v3 = create_vector(l->o, c->o);
-	alpha = module(*v2) - module(*v3) + c->radius;
-	alpha = (1 - (alpha / c->radius)) * l->intensity;
-	//free(v1);
-	free(v2);
-	free(v3);
-	return (alpha);
-}

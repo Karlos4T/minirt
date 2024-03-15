@@ -18,7 +18,7 @@ LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c
 PARSE = reader.c
 MATH = math_functions.c
-SRC = main.c functions.c scene.c scene2.c colors.c render.c
+SRC = main.c functions.c scene.c scene2.c colors.c render.c lights.c
 SRCS = $(addprefix src/, $(SRC)) \
 		$(addprefix src/shapes/, $(SHAPES)) \
 		$(addprefix src/parse/, $(PARSE)) \
