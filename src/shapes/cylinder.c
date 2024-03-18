@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/16 14:04:23 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:02:33 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 	cy->v.z = vz;
     cy->radius = radius;
     cy->height = height;
-	cy->covers[0] = create_plane(cy->o.x + cy->height / 2 * cy->v.x, cy->o.y + cy->height / 2 * cy->v.y, cy->o.z + cy->height / 2 * cy->v.z, cy->v.x, cy->v.y, cy->v.z, 0X00FFFFFF);
-	cy->covers[1] = create_plane(cy->o.x - cy->height / 2 * cy->v.x, cy->o.y - cy->height / 2 * cy->v.y, cy->o.z - cy->height / 2 * cy->v.z, cy->v.x, cy->v.y, cy->v.z, 0X00FFFFFF);
+	cy->covers[0] = create_plane(cy->o.x + (cy->height / 2) * cy->v.x, cy->o.y + (cy->height / 2) * cy->v.y, cy->o.z + (cy->height / 2) * cy->v.z, cy->v.x, cy->v.y, cy->v.z, color);
+	cy->covers[1] = create_plane(cy->o.x - cy->height / 2 * cy->v.x, cy->o.y - cy->height / 2 * cy->v.y, cy->o.z - cy->height / 2 * cy->v.z, cy->v.x, cy->v.y, cy->v.z, color);
 	cy->color = rgb(color);
 	return (cy);
 }
@@ -37,43 +37,24 @@ int cut_cylinder(t_cylinder cy, t_vec v, double t)
 {
 	t_vec *pc;
 	t_vec *po;
-
 	double hip;
-	//double t1, t2;
-	
+
 	pc = vec(0 + t*v.x, 0 + t*v.y, 0 + t*v.z);
 	po = vec(pc->x + cy.o.x, pc->y + cy.o.y, pc->z + cy.o.z);
 	hip = module(*po);
-	printf("pc(%f, %f, %f)\n", pc->x, pc->y, pc->z);
-	printf("po(%f, %f, %f)\n", po->x, po->y, po->z);
-	
+	//printf("pc(%f, %f, %f)\n", pc->x, pc->y, pc->z);
+	//printf("po(%f, %f, %f)\n", po->x, po->y, po->z);
+
 	//printf("%f, %f\n", hip, sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)));
+	//if(hip < sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
+	//	return (0);
+	
 	if(hip > sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
 		return (0);
-	else
-		return (t);
-
-	////printf("%f\n", t);
-	//printf("pc (%f, %f) v(%f, %f, %f)\n", module(per), cy.radius, pc->x, pc->y, pc->z);
-	//printf("po (%f, %f) v(%f, %f, %f)\n", module(per), cy.radius, po->x, po->y, po->z);
-	////printf("op (%f, %f) v(%f, %f, %f)\n", module(per), cy.radius, per.x, per.y, per.z);
-	//t1 = ((cy.o.x - 0) * cy.v.y - (cy.o.y - 0) * cy.v.x) / (v.x * cy.v.y - v.y * cy.v.x);
-    //t2 = ((0 - cy.o.x) * v.y - (0 - cy.o.y) * v.x) / (cy.v.x * v.y - cy.v.y * v.x);
-	///*RESTAR EL RADIO AL PUNTO DE CORTE, CHEQUEAR QUE SEA UN 
-	//PUNTO EN EL EJE Y HACER EL VECTOR DESDE ESE PUNTO AL CENTRO*/
-	//p = malloc(sizeof(t_vec));
-	//p->x = cy.o.x + t2 * cy.v.x;
-	//p->y = cy.o.y + t2 * cy.v.y;
-	//p->z = cy.o.z + t2 * cy.v.z;
-	//if (p->y == 50)
+	//if (hip == sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
 	//{
-	//	printf("v(%f, %f, %f)\n", p->x, p->y, p->z);
-	//}	
-	////printf("%f, %f)\n", module(*p), cy.height);
-//
-	//if (module(*p) > cy.height/2)
-	//	return (0);
-	//return t;
+	//}
+	return (0);
 }
 
 double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
@@ -81,6 +62,9 @@ double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 
 	t_vec		*u;
 	t_vec		*v;
+
+	t_vec		*cp;
+
 	double		a;
 	double		b;
 	double		c;
@@ -91,6 +75,22 @@ double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 	a = dot_prod(*u, *u);
 	b = 2 * dot_prod(*u, *v);
 	c = dot_prod(*v, *v) - cy.radius * cy.radius;
+	int tp = vector_x_plane(*cy.covers[0], r);
+	if(tp)
+	{
+		cp = vec(r.x * tp, r.y * tp, r.z * tp);
+		//printf("v(%f, %f, %f)\n", r.x, r.y, r.z);
+		//printf("cp(%f, %f, %f)\n", cp->x, cp->y, cp->z);
+		//printf("o(%f, %f, %f)\n", cy.covers[0]->o.x, cy.covers[0]->o.y, cy.covers[0]->o.z);
+		//printf("v(%f, %f, %f)\n", cy.covers[0]->v.x, cy.covers[0]->v.y, cy.covers[0]->v.z);
+		//printf("%f\n", module(*create_vector(*cp, cy.covers[0]->o)));
+		if (module(*create_vector(*cp, cy.covers[0]->o)) <= cy.radius)
+		{
+			printf("Corta el plano");
+			return (tp);
+		}
+		return(0);
+	}
 	if (quadratic(a, b, c))
 		return (cut_cylinder(cy, r, quadratic(a, b, c)));
 	return 0;

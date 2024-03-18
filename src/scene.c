@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/16 14:05:09 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:34:08 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_scene	*initialize_scene()
 	scene->lights = create_light(200, 150, -200, 1, 0x00FFFFFF);
 	scene->objects = malloc(sizeof(t_objects));
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
-	scene->objects->cylinders[0] = create_cylinder(200, 0, -400, 1, 1, 0, 20, 200, 0x0000FFFF);
+	scene->objects->cylinders[0] = create_cylinder(0, -200, -400, 0, 1, 0, 20, 200, 0x0000FFFF);
 	scene->objects->cylinders[1] = NULL;
 	scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
 	scene->objects->spheres[0] = create_sphere(-30, -30, -400, 40, 0x00AAAAAA);
