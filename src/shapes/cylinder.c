@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/19 13:42:37 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:08:48 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,54 @@ double cylinder_covers(t_cylinder cy, t_vec v)
 	}
 	return (0);
 }
-
+t_vec	multi_vect(const t_vec vect, const double x)
+{
+	return (*vec(vect.x * x, vect.y * x, vect.z * x));
+}
+t_vec	sub_vect(const t_vec vect1, const t_vec vect2)
+{
+	return (*vec(vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z));
+}
+double	dot_product(const t_vec vect1, const t_vec vect2)
+{
+	return (vect1.x * vect2.x + vect1.y * vect2.y + vect1.z *vect2.z);
+}
 double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 {
 	t_vec		u;
 	t_vec		v;
+	double		a1, b1, c1;
 
 	double		a;
 	double		b;
 	double		c;
 	double		t[2];
-
-	//printf("v(%f,%f,%f)\n", r.x, r.y, r.z);
+	
 	u = cross_prod(r, cy.v);
 	v = vec_sub(cy.o, o);
 	v = cross_prod(v, cy.v);
 	a = dot_prod(u, u);
 	b = 2 * dot_prod(u, v);
-	c = dot_prod(v, v) - cy.radius * cy.radius; 
+	c = dot_prod(v, v) - cy.radius * cy.radius;
+ 
+	v = multi_vect(cy.v, dot_product(r, cy.v));
+	v = sub_vect(r, v);
+	u = multi_vect(cy.v, dot_product(sub_vect(o, cy.o), cy.v));
+	u = sub_vect(sub_vect(o, cy.o), u);
+	a1 = dot_product(v, v);
+	b1 = 2 * dot_product(v, u);
+	c1 = dot_product(u, u) - pow(cy.radius, 2);
+	if(a != a1 || b != b1 || c != c1)
+	{
+		printf("r(%f,%f,%f)", r.x, r.y, r.z);
+		printf("Datos de u: x=%f, y=%f, z=%f | Datos de v: x=%f, y=%f, z=%f | Datos de t_quadratic q: a=%f, b=%f, c=%f\n", u.x, u.y, u.z, v.x, v.y, v.z, a, b, c);
+		printf("2r(%f,%f,%f)", r.x, r.y, r.z);
+		printf("Datos de u: x=%f, y=%f, z=%f | Datos de v: x=%f, y=%f, z=%f | Datos de t_quadratic q: a=%f, b=%f, c=%f\n", u.x, u.y, u.z, v.x, v.y, v.z, a1, b1, c1);
+	}
 	t[0] = cylinder_covers(cy, r);
 	if (quadratic(a, b, c))
+		return quadratic(a, b, c);
+	return(0);
 		t[1] = cut_cylinder(cy, r, quadratic(a, b, c));
 	if (t[0] && t[0] < t[1])
 		return t[0];
