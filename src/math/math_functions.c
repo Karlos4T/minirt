@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/15 16:31:07 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:44:38 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,14 @@ t_vec neg(t_vec v)
 	return (v);
 }
 
-t_vec *cross_prod(t_vec v1, t_vec v2)
+t_vec	cross_prod(t_vec u, t_vec v)
 {
-	t_vec *v;
-	v = malloc(sizeof(t_vec));
+	t_vec	dst;
 
-	v->x = v1.y * v2.z + v1.z * v2.y;
-	v->y = v1.x * v2.z + v1.z * v2.x;
-	v->z = v1.x * v2.y + v1.y * v2.x;
-	return (v);
+	dst.x = u.y * v.z - u.z * v.y;
+	dst.y = u.z * v.x - u.x * v.z;
+	dst.z = u.x * v.y - u.y * v.x;
+	return (dst);
 }
 
 t_vec	vec_add(t_vec v1, t_vec v2)
@@ -70,14 +69,13 @@ t_vec	vec_add(t_vec v1, t_vec v2)
 	return(v1);
 }
 
-t_vec	*vec_sub(t_vec v1, t_vec v2)
+t_vec	vec_sub(t_vec v1, t_vec v2)
 {
-	t_vec	*v;
-	v = malloc(sizeof(t_vec));
+	t_vec	v;
 	
-	v->x = v1.x - v2.x;
-	v->y = v1.y - v2.y;
-	v->z = v1.z - v2.z;
+	v.x = v2.x - v1.x;
+	v.y = v2.y - v1.y;
+	v.z = v2.z - v1.z;
 	return (v);
 }
 
@@ -98,8 +96,8 @@ double quadratic(double a, double b, double c)
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
 		if (fabs(t[0]) < fabs(t[1]))
-			return (t[0]);
-		return (t[1]);
+			return (fabs(t[0]));
+		return (fabs(t[1]));
 	}
 	return (0);
 }

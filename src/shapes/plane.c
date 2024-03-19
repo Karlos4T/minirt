@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/15 10:14:37 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:36:58 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ double vector_x_plane(t_plane pl, t_vec v)
 	//printf("v(%f, %f, %f)\n", v.x, v.y, v.z);
 	
 	//t = -(pl.v.x * v.x + pl.v.y * v.y + pl.v.z * v.z - (pl.v.x * pl.o.x + pl.v.y * pl.o.y + pl.v.z * pl.o.z)) / (pl.v.x * pl.v.x + pl.v.y * pl.v.y + pl.v.z * pl.v.z);
-	d = pl.v.x * v.x + pl.v.y * v.y + v.z * pl.v.z;
+	d = dot_prod(pl.v, v);
 	if (!d)
 		return (0);
 	t = -(pl.v.x * pl.o.x + pl.v.y * pl.o.y + pl.v.z * pl.o.z) / (pl.v.x * v.x + pl.v.y * v.y + v.z * pl.v.z);
