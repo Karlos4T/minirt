@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/19 18:04:19 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/02 17:50:20 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ t_scene	*initialize_scene()
 	scene->lights = create_light(200, 150, -200, 1, 0x00FFFFFF);
 	scene->objects = malloc(sizeof(t_objects));
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
-	scene->objects->cylinders[0] = create_cylinder(30, 0, -400, 1, 1, 0, 20, 31, 0x0000FFFF);
-	scene->objects->cylinders[1] = create_cylinder(-30, 50, -400, 1, 0, 0, 20, 31, 0x0000FFFF);
-	scene->objects->cylinders[2] = create_cylinder(30, 50, -400, 0, 0, 1, 20, 31, 0x0000FFFF);
-	scene->objects->cylinders[3] = create_cylinder(-30, 50, -400, 1, 1, 0, 20, 31, 0x0000FFFF);
-	scene->objects->cylinders[2] = NULL;
+	scene->objects->cylinders[0] = create_cylinder(0, 0, -400, 1, 1, 0, 40, 100, 0x0000FFFF);
+	scene->objects->cylinders[1] = create_cylinder(-200, -200, -400, 1, 1, 0, 40, 400, 0x0000FFFF);
+	scene->objects->cylinders[2] = create_cylinder(50, 50, -400, -1, 0, 1, 40, 40, 0x0000FFFF);
+	scene->objects->cylinders[3] = create_cylinder(-50, 50, -400, 1, 1, 0, 40, 40, 0x0000FFFF);
+	scene->objects->cylinders[4] = NULL;
 	scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
-	scene->objects->spheres[0] = create_sphere(-30, -30, -400, 40, 0x00AAAAAA);
-	scene->objects->spheres[1] = create_sphere(0, 0, -400, 50, 0x00AA0000);
+	scene->objects->spheres[0] = create_sphere(-30, -30, -400, 20, 0x00AAAAAA);
+	scene->objects->spheres[1] = create_sphere(30, -30, -400, 20, 0x00AA0000);
 	scene->objects->spheres[2] = create_sphere(-30, 100, -400, 17, 0x0000AA00);
 	scene->objects->spheres[3] = create_sphere(30, -30, -400, 20, 0x000000AA);
 	scene->objects->spheres[0] = NULL;

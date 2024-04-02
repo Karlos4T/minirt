@@ -51,6 +51,7 @@ typedef struct s_cylinder {
 	t_vec		o;
 	t_vec	v;
 	double		radius;
+	double		r2;
 	double		height;
 	int			*color;
 	t_plane		*covers[2];
