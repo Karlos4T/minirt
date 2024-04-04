@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/02 17:50:58 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/04 15:57:56 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 		cy->o.z - dot_prod(cy->v, *vec(0, 0, 1)) / (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2), \
 		cy->v.x, cy->v.y, cy->v.z, color);
 	cy->covers[0] = create_plane(cy->o.x + (cy->height / 2) * cy->v.x, cy->o.y + (cy->height / 2) * cy->v.y, cy->o.z + (cy->height / 2) * cy->v.z, cy->v.x, cy->v.y, cy->v.z, color);
-	cy->covers[1] = create_plane(cy->o.x - cy->height / 2 * cy->v.x, cy->o.y - cy->height / 2 * cy->v.y, cy->o.z - cy->height / 2 * cy->v.z, cy->v.x, cy->v.y, cy->v.z, color);
+	cy->covers[1] = create_plane(cy->o.x - cy->height / 2 * cy->v.x, cy->o.y - cy->height / 2 * cy->v.y, cy->o.z - cy->height / 2 * cy->v.z, -cy->v.x, -cy->v.y, -cy->v.z, color);
 	cy->color = rgb(color);
 	return (cy);
 }
-
 
 int cut_cylinder(t_cylinder cy, t_vec v, double t)
 {
@@ -84,18 +83,22 @@ double cylinder_covers(t_cylinder cy, t_vec v)
 	}
 	return (0);
 }
+
 t_vec	multi_vect(const t_vec vect, const double x)
 {
 	return (*vec(vect.x * x, vect.y * x, vect.z * x));
 }
+
 t_vec	sub_vect(const t_vec vect1, const t_vec vect2)
 {
 	return (*vec(vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z));
 }
+
 double	dot_product(const t_vec vect1, const t_vec vect2)
 {
 	return (vect1.x * vect2.x + vect1.y * vect2.y + vect1.z *vect2.z);
 }
+
 double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 {
 	t_vec		u;
@@ -107,18 +110,31 @@ double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 	double		c;
 	double		t[2];
 
+	r = normalize(r);
 	//printf("v(%f, %f, %f)\n ", r.x, r.y, r.z);
-	u = cross_prod(r, normalize(cy.v));
-	v = vec_sub(cy.o, o);
-	v = cross_prod(v, normalize(cy.v));
+	printf("cy(%f, %f, %f)\n ", cy.v.x, cy.v.y, cy.v.z);
+	u = cross_prod(r, cy.v);
+	v = vec_sub(o, cy.o);
+	//if(r.x == 0 && r.y == 0)
+	//{
+	//	printf("v1(%f, %f, %f) ", v.x, v.y, v.z);	
+	//}
+	v = cross_prod(v, cy.v);
 	a = dot_prod(u, u);
 	b = 2 * dot_prod(u, v);
 	c = dot_prod(v, v) - cy.r2;
+	
+	//if(a == 1 && r.x == 0 && r.y == 0)
+	//{
+	//	printf("v2(%f, %f, %f) ", v.x, v.y, v.z);	
+	//	printf("u(%f, %f, %f) ", u.x, u.y, u.z);	
+	//	printf("a = %f b = %f c = %f\n", a, b, c);
+	//}
 
 	v = multi_vect(cy.v, dot_product(r, cy.v));
 	v = sub_vect(r, v);
 	u = multi_vect(cy.v, dot_product(sub_vect(o, cy.o), cy.v));
-	u = sub_vect(sub_vect(o, cy.o), u);
+	u = sub_vect(u, sub_vect(o, cy.o));
 	a1 = dot_product(v, v);
 	b1 = 2 * dot_product(v, u);
 	c1 = dot_product(u, u) - pow(cy.radius, 2) * 0.25;
@@ -135,7 +151,8 @@ double	vector_x_cylinder(t_cylinder cy, t_vec r, t_vec o)
 	//	return quadratic(a, b, c);
 	//return(0);
 	t[1] = cut_cylinder(cy, r, quadratic(a, b, c));
-	//return (t[1]);
+	t[1] = quadratic(a, b, c);
+	return (t[1]);
 
 	if(t[0] || t[1])
 		printf("t0 = %f, t1 = %f\n", t[0], t[1]);

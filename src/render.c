@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/02 17:49:08 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/04 13:48:05 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		t_cylinder *cy = sc.objects->cylinders[(int)T[2]];
 
 		alpha = get_brightness_level_cylinder(cy, sc.lights, create_point(0 + T[0] * (screen_point->x - 0),  0 + T[0] * (screen_point->y - 0), 0 + T[0] * (screen_point->z - 0)));
-		color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity)); 
+		color = hexa(cy->color); 
 	}
 	my_mlx_pixel_put(data, x, y, color);
 }
