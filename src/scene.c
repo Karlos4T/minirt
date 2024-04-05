@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/04 15:58:25 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:17:42 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,18 @@ t_scene	*initialize_scene()
 	scene->objects->cylinders[1] = create_cylinder(-300, 200, -400, 0, 1, 0, 40, 100, 0x0000FFFF);
 	scene->objects->cylinders[2] = create_cylinder(300, 50, -400, -1, 1, 0, 40, 40, 0x0000FFFF);
 	scene->objects->cylinders[3] = create_cylinder(-50, 50, -400, 1, 1, 0, 40, 40, 0x0000FFFF);
-	scene->objects->cylinders[1] = NULL;
+	scene->objects->cylinders[4] = NULL;
 	scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
 	scene->objects->spheres[0] = create_sphere(-30, -30, -400, 20, 0x00AAAAAA);
 	scene->objects->spheres[1] = create_sphere(30, -30, -400, 20, 0x00AA0000);
 	scene->objects->spheres[2] = create_sphere(-30, 100, -400, 17, 0x0000AA00);
 	scene->objects->spheres[3] = create_sphere(30, -30, -400, 20, 0x000000AA);
-	scene->objects->spheres[0] = NULL;
+	scene->objects->spheres[4] = NULL;
 	scene->objects->planes = malloc(sizeof(t_plane) * 3);
 	scene->objects->planes[0] = create_plane(0, -500, 0, 0, 1, 0, 0x00880088);
 	scene->objects->planes[1] = create_plane(0, 0, -3000, 0, 0, 1, 0x00177717);
 	scene->objects->planes[2] = create_plane(-300, 0, 0, 1, 0, 0, 0x00007727);
-	scene->objects->planes[0] = NULL;
+	scene->objects->planes[3] = NULL;
 
 	return scene;
 }

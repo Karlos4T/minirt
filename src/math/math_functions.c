@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/04 15:43:12 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:37:08 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@ int y_pos(int y)
 double module(t_vec v)
 {
 	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
+
+t_vec get_point(t_ray r, int t)
+{
+	t_vec v;
+	
+	v.x = r.o.x + r.v.x * t;
+	v.y = r.o.y + r.v.y * t;
+	v.z = r.o.z + r.v.z * t;
+	return v;
 }
 
 t_vec producto_escalar(t_vec v, double n)

@@ -21,6 +21,11 @@ typedef struct s_vec {
 	double	z;
 }	t_vec;
 
+typedef struct s_ray {
+	t_vec o;
+	t_vec v;
+}	t_ray;
+
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -31,7 +36,8 @@ typedef struct	s_data {
 
 typedef struct	s_camera {
 	t_vec	o;
-	t_vec v;
+	t_vec	v;
+	t_ray	*r;
 	int fov;
 }	t_camera;
 
@@ -116,6 +122,8 @@ int			check_shadow(t_vec p, t_vec l, t_sphere **sphere);
 double 		quadratic(double a, double b, double c);
 t_vec		vec_add(t_vec v1, t_vec v2);
 t_vec 		producto_escalar(t_vec v, double n);
+t_vec		get_point(t_ray r, int t);
+
 
 //COLOR
 int 		*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);

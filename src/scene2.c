@@ -6,11 +6,21 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/03/14 13:00:24 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 13:01:16 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
+
+t_ray *create_ray(t_camera *cam)
+{
+	t_ray *ray;
+
+	ray = malloc(sizeof(t_ray));
+	ray->o = cam->o;
+	ray->v = cam->v;
+	return ray;
+}
 
 t_light	*create_light(int x, int y, int z, double intensity, int color)
 {
