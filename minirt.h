@@ -55,11 +55,12 @@ typedef struct s_plane {
 
 typedef struct s_cylinder {
 	t_vec		o;
-	t_vec	v;
+	t_vec		v;
 	double		radius;
 	double		r2;
 	double		height;
 	int			*color;
+	int			is_cover;
 	t_plane		*covers[2];
 } t_cylinder;
 
@@ -103,7 +104,7 @@ t_camera	*start_camera(double x, double y, double z, double vx, double vy, doubl
 t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
 t_alight	*create_alight(double intensity, int color);
 t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double radius, double height, int color);
-double		vector_x_cylinder(t_cylinder cy, t_vec v, t_vec o);
+double		vector_x_cylinder(t_cylinder *cy, t_ray r);
 
 //MATH FUNCTIONS
 int			x_pos(int x);

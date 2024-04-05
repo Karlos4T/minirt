@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/05 13:37:08 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:30:45 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ double quadratic(double a, double b, double c)
 	D = b * b - (4 * a * c);
 	if (D >= 0)
 	{
-		//printf("v(%f, %f, %f) D = %f\n", v.x, v.y, v.z, D);
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
 		if (fabs(t[0]) < fabs(t[1]))

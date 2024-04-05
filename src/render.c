@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/05 13:55:33 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:50:10 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ double *get_closest_object(t_scene sc)
 	i = 0;
 	while (sc.objects->cylinders[i] != NULL)
 	{
-		t = vector_x_cylinder(*sc.objects->cylinders[i], r.v, sc.camera->o);
+		t = vector_x_cylinder(sc.objects->cylinders[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = fabs(t);
@@ -61,7 +61,6 @@ double *get_closest_object(t_scene sc)
 		}
 		i++;
 	}
-	//printf("%f, %f, %f\n", T[0], T[1], T[2]);
 	return T;
 }
 
@@ -100,8 +99,10 @@ int render_cylinder(t_scene sc, double *T)
 
 	p = get_point(*sc.camera->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.lights, &p);
-	color = hexa(cy->color);
-	return color;
+	(void)color;
+
+	//color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity));
+	return 0x00FF00FF * alpha;
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/05 13:17:42 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/05 17:10:20 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ t_scene	*initialize_scene()
 	scene->objects = malloc(sizeof(t_objects));
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
 	scene->objects->cylinders[0] = create_cylinder(0, 0, -400, 1, 1, 0, 40, 100, 0x0000FFFF);
-	scene->objects->cylinders[1] = create_cylinder(-300, 200, -400, 0, 1, 0, 40, 100, 0x0000FFFF);
-	scene->objects->cylinders[2] = create_cylinder(300, 50, -400, -1, 1, 0, 40, 40, 0x0000FFFF);
+	scene->objects->cylinders[1] = create_cylinder(0, 200, -400, 0, 1, 0, 40, 100, 0x0000FFFF);
+	scene->objects->cylinders[2] = create_cylinder(200, 200, -400, 0, 1, 0, 40, 40, 0x0000FFFF);
 	scene->objects->cylinders[3] = create_cylinder(-50, 50, -400, 1, 1, 0, 40, 40, 0x0000FFFF);
 	scene->objects->cylinders[4] = NULL;
 	scene->objects->spheres = malloc(sizeof(t_sphere) * 5);
@@ -35,7 +35,7 @@ t_scene	*initialize_scene()
 	scene->objects->spheres[4] = NULL;
 	scene->objects->planes = malloc(sizeof(t_plane) * 3);
 	scene->objects->planes[0] = create_plane(0, -500, 0, 0, 1, 0, 0x00880088);
-	scene->objects->planes[1] = create_plane(0, 0, -3000, 0, 0, 1, 0x00177717);
+	scene->objects->planes[1] = create_plane(0, 0, -1000, 0, 0, 1, 0x00177717);
 	scene->objects->planes[2] = create_plane(-300, 0, 0, 1, 0, 0, 0x00007727);
 	scene->objects->planes[3] = NULL;
 
