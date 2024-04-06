@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/05 17:10:20 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:05:56 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ t_scene	*initialize_scene()
 	scene = malloc(sizeof(t_scene));
 	scene->camera = start_camera(0, 0, 0, 0, 0, -1, 90);
 	scene->alight = create_alight(0.3, 0x00FFFFFF);
-	scene->lights = create_light(200, 150, -200, 1, 0x00FFFFFF);
+	scene->lights = create_light(-100, 100, 0, 1, 0x00FFFFFF);
 	scene->objects = malloc(sizeof(t_objects));
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
 	scene->objects->cylinders[0] = create_cylinder(0, 0, -400, 1, 1, 0, 40, 100, 0x0000FFFF);
-	scene->objects->cylinders[1] = create_cylinder(0, 200, -400, 0, 1, 0, 40, 100, 0x0000FFFF);
-	scene->objects->cylinders[2] = create_cylinder(200, 200, -400, 0, 1, 0, 40, 40, 0x0000FFFF);
+	scene->objects->cylinders[1] = create_cylinder(0, 200, -400, 0, 1, -1, 40, 80, 0x0000FFFF);
+	scene->objects->cylinders[2] = create_cylinder(200, 200, -400, 0, 1, 0, 100, 100, 0x0000FFFF);
 	scene->objects->cylinders[3] = create_cylinder(-50, 50, -400, 1, 1, 0, 40, 40, 0x0000FFFF);
 	scene->objects->cylinders[4] = NULL;
 	scene->objects->spheres = malloc(sizeof(t_sphere) * 5);

@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/05 17:47:50 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/06 13:45:06 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz
 
 int cut_cylinder(t_cylinder cy, t_ray r, double t)
 {
-	t_vec *pc;
+	t_vec pc;
 	t_vec po;
 	double hip;
 
-	pc = vec(r.o.x + t*r.v.x, r.o.y + t*r.v.y, r.o.z + t*r.v.z);
-	po = vec_sub(*pc, cy.o);
+	pc = get_point(r, t);
+	po = vec_sub(pc, cy.o);
 	hip = module(po);
-	if(hip > sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
+	if(hip-1 > sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
 		return (0);
 	return (t);
 }
-
+/*
 double cylinder_covers(t_cylinder *cy, t_vec v)
 {
 	t_vec		*cp;
@@ -70,13 +70,39 @@ double cylinder_covers(t_cylinder *cy, t_vec v)
 			cp = vec(0 - v.x * tp, 0 - v.y * tp, 0 - v.z * tp);
 			if (module(vec_sub(*cp, cy->covers[i]->o)) <= cy->radius)
 			{
-				cy->is_cover = i + 1;	
+				cy->is_cover = i + 1;
+				printf("%f\n", tp);
 				return (tp);
 			}
 		}
 		i++;
 	}
 	return (0);
+}
+*/
+
+double cylinder_covers(t_cylinder *cy, t_ray r)
+{
+	t_vec		cp;
+	int			i;
+	double 		tp[2];
+
+	i = 0;
+	while (i < 2)
+	{
+		tp[i] = vector_x_plane(*cy->covers[i], r.v);
+		i++;
+	}
+	i = 0;
+	if(fabs(tp[1]) < fabs(tp[0]))
+		i = 1;
+	cp = get_point(r, fabs(tp[i]));
+	if (module(vec_sub(cp, cy->covers[i]->o)) <= cy->radius)
+	{	
+		cy->is_cover = i + 1;
+		return (tp[i]);
+	}
+	return 0;
 }
 
 double	vector_x_cylinder(t_cylinder *cy, t_ray r)
@@ -94,7 +120,7 @@ double	vector_x_cylinder(t_cylinder *cy, t_ray r)
 	a = dot_prod(u, u);
 	b = 2 * dot_prod(u, v);
 	c = dot_prod(v, v) - cy->r2;
-	t[0] = cylinder_covers(cy, r.v);
+	t[0] = cylinder_covers(cy, r);
 	t[1] = cut_cylinder(*cy, r, quadratic(a, b, c));
 	if (t[1])
 	{

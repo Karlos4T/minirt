@@ -95,7 +95,7 @@ typedef struct s_scene {
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
 t_vec		*create_vector(t_vec point1, t_vec point2);
-double		vector_x_sphere(t_sphere s, t_vec v, t_vec vo);
+double		vector_x_sphere(t_sphere s, t_ray r);
 double		vector_x_plane(t_plane pl, t_vec v);
 void		render_screen(t_data *data, t_scene *scene);
 t_vec 		*create_point(int x, int y, int z);
@@ -119,7 +119,7 @@ t_vec 		neg(t_vec v);
 t_vec 		*vec(double x, double y, double z);
 t_vec 		cross_prod(t_vec v1, t_vec v2);
 t_vec		vec_sub(t_vec a, t_vec b);
-int			check_shadow(t_vec p, t_vec l, t_sphere **sphere);
+int			check_shadow(t_vec p, t_vec l, t_objects *ob);
 double 		quadratic(double a, double b, double c);
 t_vec		vec_add(t_vec v1, t_vec v2);
 t_vec 		producto_escalar(t_vec v, double n);
