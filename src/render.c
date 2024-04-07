@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/06 14:01:22 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/07 12:44:13 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int render_cylinder(t_scene sc, double *T)
 	p = get_point(*sc.camera->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.lights, &p);
 	(void)color;
-
 	color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity));
+	cy->is_cover = 0;
 	return color;
 }
 

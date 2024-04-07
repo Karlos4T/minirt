@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/06 13:45:06 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:15:09 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 {
 	t_vec		cp;
 	int			i;
-	double 		tp[2];
+	double		tp[2];
 
 	i = 0;
 	while (i < 2)
@@ -97,8 +97,14 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	if(fabs(tp[1]) < fabs(tp[0]))
 		i = 1;
 	cp = get_point(r, fabs(tp[i]));
+	if (module(r.o) != 0 && tp[i])
+	{
+		printf("%f\n", module(vec_sub(cp, cy->covers[i]->o)));
+	}
 	if (module(vec_sub(cp, cy->covers[i]->o)) <= cy->radius)
-	{	
+	{
+		if (module(r.o) != 0 && tp[i])
+			printf("r.o(%f, %f, %f) -> %f\n", r.v.x, r.v.y, r.v.z, tp[i]);
 		cy->is_cover = i + 1;
 		return (tp[i]);
 	}

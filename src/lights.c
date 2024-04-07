@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:13:12 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/06 14:06:39 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/07 12:36:56 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,7 @@ int check_shadow(t_vec p, t_vec l, t_objects *ob)
 	while (ob->cylinders[i])
 	{
 		if (vector_x_cylinder(ob->cylinders[i], *r))
-		{
-
 			return (1);
-		}
 		i++;
 	}
 	return (0);
