@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/06 13:02:55 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:10:16 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int hexa(int *rgb)
 	return (hexa);
 }
 
-int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al)
+int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow)
 {
 	int	*rgb;
 	int	i;
@@ -54,7 +54,13 @@ int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al)
 	rgb = malloc(sizeof(int) * 3);
 	while (i < 3)
 	{	
-		rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;
+		if (is_shadow)
+		{
+			printf("%d\n", is_shadow);
+			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * al;
+		}
+		else
+			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;
 		if (rgb[i] < + al * rgb1[i])
 			rgb[i] = al * rgb1[i];
 		//if (rgb2[i] > 0)

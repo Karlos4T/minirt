@@ -96,7 +96,7 @@ void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
 t_vec		*create_vector(t_vec point1, t_vec point2);
 double		vector_x_sphere(t_sphere s, t_ray r);
-double		vector_x_plane(t_plane pl, t_vec v);
+double		vector_x_plane(t_plane pl, t_ray r);
 void		render_screen(t_data *data, t_scene *scene);
 t_vec 		*create_point(int x, int y, int z);
 t_light		*create_light(int x, int y, int z, double intensity, int color);
@@ -127,10 +127,10 @@ t_vec		get_point(t_ray r, int t);
 
 
 //COLOR
-int 		*multiply_colors(int *rgb1, int *rgb2, double alpha, double al);
+int 		*multiply_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
 double 		get_brightness_level(t_sphere *s, t_light *l, t_vec *p);
-double 		get_brightness_level_plane(t_plane *s, t_light *l, t_vec *p);
-double 		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec *p);
+double 		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
+double 		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
 
 
 //MAIN

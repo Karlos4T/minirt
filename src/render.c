@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/07 12:44:13 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:13:05 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double *get_closest_object(t_scene sc)
 	i = 0;
 	while (sc.objects->planes[i] != NULL)
 	{
-		t = vector_x_plane(*sc.objects->planes[i], r.v);
+		t = vector_x_plane(*sc.objects->planes[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]) && t < 0)
 		{
 			T[0] = fabs(t);
@@ -72,8 +72,8 @@ int	render_plane(t_scene sc, double *T)
 	double alpha;
 	
 	p = get_point(*sc.camera->r, T[0]);
-	alpha = get_brightness_level_plane(pl, sc.lights, &p);
-	color = (1 - check_shadow(p, sc.lights[0].o, sc.objects)) * hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity));
+	alpha = get_brightness_level_plane(pl, sc.lights, p);
+	color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity, check_shadow(p, sc.lights[0].o, sc.objects)));
 	return color;
 }
 
@@ -86,7 +86,7 @@ int	render_sphere(t_scene sc, double *T)
 
 	p = get_point(*sc.camera->r, T[0]);
 	alpha = get_brightness_level(sp, sc.lights, &p);
-	color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity)); 
+	color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity, 0)); 
 	return color;
 }
 
@@ -98,9 +98,9 @@ int render_cylinder(t_scene sc, double *T)
 	t_vec p;
 
 	p = get_point(*sc.camera->r, T[0]);
-	alpha = get_brightness_level_cylinder(cy, sc.lights, &p);
+	alpha = get_brightness_level_cylinder(cy, sc.lights, p);
 	(void)color;
-	color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity));
+	color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity, 0));
 	cy->is_cover = 0;
 	return color;
 }

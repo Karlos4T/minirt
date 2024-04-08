@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/07 13:15:09 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/08 16:59:06 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,25 +86,25 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	t_vec		cp;
 	int			i;
 	double		tp[2];
-
+	t_vec		v;
+	
 	i = 0;
 	while (i < 2)
 	{
-		tp[i] = vector_x_plane(*cy->covers[i], r.v);
+		tp[i] = vector_x_plane(*cy->covers[i], r);
 		i++;
 	}
 	i = 0;
 	if(fabs(tp[1]) < fabs(tp[0]))
 		i = 1;
 	cp = get_point(r, fabs(tp[i]));
-	if (module(r.o) != 0 && tp[i])
-	{
-		printf("%f\n", module(vec_sub(cp, cy->covers[i]->o)));
-	}
+	v = vec_sub(neg(cp), cy->covers[i]->o);
+	//if (module(r.o) != 0 && tp[i])
+	//	printf("%d\n", i);
+		//printf("r(%f, %f, %f)\n", r.v.x, r.v.y, r.v.z);
+	//	printf("r.o(%f, %f, %f) -> %f\n", v.x, v.y, v.z, tp[i]);
 	if (module(vec_sub(cp, cy->covers[i]->o)) <= cy->radius)
 	{
-		if (module(r.o) != 0 && tp[i])
-			printf("r.o(%f, %f, %f) -> %f\n", r.v.x, r.v.y, r.v.z, tp[i]);
 		cy->is_cover = i + 1;
 		return (tp[i]);
 	}

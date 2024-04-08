@@ -6,7 +6,7 @@
 /*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:13:12 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/07 12:36:56 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/04/08 17:12:04 by carlosga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ double get_brightness_level(t_sphere *s, t_light *l, t_vec *p)
 	return (alpha);
 }
 
-double get_brightness_level_plane(t_plane *pl, t_light *l, t_vec *p)
+double get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
 {
 	t_vec	v1;
 	double		alpha;
 
-	v1 = normalize(*create_vector(l->o, *p));
+	v1 = normalize(*create_vector(l->o, p));
 	alpha = dot_prod(v1, neg(pl->v)) / (module(v1) * module(pl->v));
 	if (alpha < 0)
 		return (0);
 	return (alpha);
 }
 
-double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec *p)
+double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
 {
 	t_vec		v1;
 	t_vec		v2;
@@ -54,8 +54,8 @@ double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec *p)
 	}
 	else
 		return(0.6);
-	v1 = normalize(*create_vector(cy->o, *p));
-	v2 = normalize(*create_vector(*p, l->o));
+	v1 = normalize(*create_vector(cy->o, p));
+	v2 = normalize(*create_vector(p, l->o));
 	alpha = sqrt(dot_prod(v1, v2) / (module(v1) * module(v2)));
 	if (alpha < 0)
 		return (0);
