@@ -9,7 +9,7 @@
 #define TYPE_PARAMS "NCIRVPF"
 #define ASSETS_PARAMS_LEN "A C L pl sp cy"
 
-# include <mlx.h>
+# include "./mlx-linux/mlx.h"
 # include <math.h>
 # include <stdlib.h>
 # include <stdio.h>

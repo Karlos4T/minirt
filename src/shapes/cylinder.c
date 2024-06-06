@@ -86,7 +86,6 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	t_vec		cp;
 	int			i;
 	double		tp[2];
-	t_vec		v;
 	
 	i = 0;
 	while (i < 2)
@@ -98,7 +97,6 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	if(fabs(tp[1]) < fabs(tp[0]))
 		i = 1;
 	cp = get_point(r, fabs(tp[i]));
-	v = vec_sub(neg(cp), cy->covers[i]->o);
 	//if (module(r.o) != 0 && tp[i])
 	//	printf("%d\n", i);
 		//printf("r(%f, %f, %f)\n", r.v.x, r.v.y, r.v.z);
