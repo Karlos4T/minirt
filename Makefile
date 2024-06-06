@@ -13,6 +13,7 @@ CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 NAME = minirt
 LIBFT_PATH = libft/
+MLX_PATH = mlx-linux/
 LIBFT = libft/libft.a
 LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c
@@ -35,6 +36,7 @@ all: $(NAME)
 
 $(LINK_LIBFT):
 	make -C $(LIBFT_PATH)
+	make -C $(MLX_PATH)
 
 $(OBJS_PATH):
 	@mkdir -p $(dir $(OBJS))
