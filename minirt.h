@@ -15,45 +15,52 @@
 # include <stdio.h>
 # include "./libft/include/libft.h"
 
-typedef struct s_vec {
+typedef struct s_vec
+{
 	double	x;
 	double	y;
 	double	z;
 }	t_vec;
 
-typedef struct s_ray {
-	t_vec o;
-	t_vec v;
+typedef struct s_ray
+{
+	t_vec	o;
+	t_vec	v;
 }	t_ray;
 
-typedef struct	s_data {
+typedef struct s_data
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-} t_data;
+}	t_data;
 
-typedef struct	s_camera {
+typedef struct s_camera
+{
 	t_vec	o;
 	t_vec	v;
 	t_ray	*r;
-	int fov;
+	int		fov;
 }	t_camera;
 
-typedef struct s_sphere {
+typedef struct s_sphere
+{
 	t_vec	o;
-	int radius;
-	int	*color;
-} t_sphere;
+	int		radius;
+	int		*color;
+}	t_sphere;
 
-typedef struct s_plane {
-	t_vec		o;
+typedef struct s_plane
+{
+	t_vec	o;
 	t_vec	v;
-	int			*color;
-} t_plane;
+	int		*color;
+}	t_plane;
 
-typedef struct s_cylinder {
+typedef struct s_cylinder
+{
 	t_vec		o;
 	t_vec		v;
 	double		radius;
@@ -62,34 +69,38 @@ typedef struct s_cylinder {
 	int			*color;
 	int			is_cover;
 	t_plane		*covers[2];
-} t_cylinder;
+}	t_cylinder;
 
-typedef struct s_light {
+typedef struct s_light
+{
 	t_vec	o;
-	int	x_origin;
-	int	y_origin;
-	int z_origin;
-	double intensity;
-	int	*color;
-} t_light;
+	int		x_origin;
+	int		y_origin;
+	int		z_origin;
+	double	intensity;
+	int		*color;
+}	t_light;
 
-typedef struct s_alight {
-	double intensity;
-	int	*color;
-} t_alight;
+typedef struct s_alight
+{
+	double	intensity;
+	int		*color;
+}	t_alight;
 
-typedef struct s_objects {
+typedef struct s_objects
+{
 	t_cylinder	**cylinders;
 	t_sphere	**spheres;
 	t_plane		**planes;
-} t_objects;
+}	t_objects;
 
-typedef struct s_scene {
-	t_camera 	*camera;
+typedef struct s_scene
+{
+	t_camera	*camera;
 	t_objects	*objects;
-	t_light 	*lights;
-	t_alight 	*alight;
-} t_scene;
+	t_light		*lights;
+	t_alight	*alight;
+}	t_scene;
 
 //FUNCTIONS
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
