@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/08 17:13:05 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:17:12 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ double *get_closest_object(t_scene sc)
 	//T[2]: la posicion del objeto dentro de la array de objetos (esfera 1, esfera 2, cilindro 6...)
 	
 	T = malloc(sizeof(double) * 3);
-	r = *sc.camera->r;
+	r = *sc.cam->r;
 	i = 0;
-	while (sc.objects->planes[i] != NULL)
+	while (sc.obj->pla[i] != NULL)
 	{
-		t = vector_x_plane(*sc.objects->planes[i], r);
+		t = vector_x_plane(*sc.obj->pla[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]) && t < 0)
 		{
 			T[0] = fabs(t);
@@ -38,9 +38,9 @@ double *get_closest_object(t_scene sc)
 		i++;
 	}
 	i = 0;
-	while (sc.objects->spheres[i] != NULL)
+	while (sc.obj->sph[i] != NULL)
 	{
-		t = vector_x_sphere(*sc.objects->spheres[i], *sc.camera->r);
+		t = vector_x_sphere(*sc.obj->sph[i], *sc.cam->r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = fabs(t);
@@ -50,9 +50,9 @@ double *get_closest_object(t_scene sc)
 		i++;
 	}
 	i = 0;
-	while (sc.objects->cylinders[i] != NULL)
+	while (sc.obj->cyl[i] != NULL)
 	{
-		t = vector_x_cylinder(sc.objects->cylinders[i], r);
+		t = vector_x_cylinder(sc.obj->cyl[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = fabs(t);
@@ -66,41 +66,41 @@ double *get_closest_object(t_scene sc)
 
 int	render_plane(t_scene sc, double *T)
 {
-	t_plane *pl = sc.objects->planes[(int)T[2]];
+	t_plane *pl = sc.obj->pla[(int)T[2]];
 	t_vec p;
 	int color;
 	double alpha;
 	
-	p = get_point(*sc.camera->r, T[0]);
-	alpha = get_brightness_level_plane(pl, sc.lights, p);
-	color = hexa(multiply_colors(pl->color, sc.lights->color, alpha, sc.alight->intensity, check_shadow(p, sc.lights[0].o, sc.objects)));
+	p = get_point(*sc.cam->r, T[0]);
+	alpha = get_brightness_level_plane(pl, sc.light, p);
+	color = hexa(multiply_colors(pl->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
 	return color;
 }
 
 int	render_sphere(t_scene sc, double *T)
 {
-	t_sphere *sp = sc.objects->spheres[(int)T[2]];
+	t_sphere *sp = sc.obj->sph[(int)T[2]];
 	int color;
 	double alpha;
 	t_vec p;
 
-	p = get_point(*sc.camera->r, T[0]);
-	alpha = get_brightness_level(sp, sc.lights, &p);
-	color = hexa(multiply_colors(sp->color, sc.lights->color, alpha, sc.alight->intensity, 0)); 
+	p = get_point(*sc.cam->r, T[0]);
+	alpha = get_brightness_level(sp, sc.light, &p);
+	color = hexa(multiply_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, 0)); 
 	return color;
 }
 
 int render_cylinder(t_scene sc, double *T)
 {
-	t_cylinder *cy = sc.objects->cylinders[(int)T[2]];
+	t_cylinder *cy = sc.obj->cyl[(int)T[2]];
 	double alpha;
 	int color;
 	t_vec p;
 
-	p = get_point(*sc.camera->r, T[0]);
-	alpha = get_brightness_level_cylinder(cy, sc.lights, p);
+	p = get_point(*sc.cam->r, T[0]);
+	alpha = get_brightness_level_cylinder(cy, sc.light, p);
 	(void)color;
-	color = hexa(multiply_colors(cy->color, sc.lights->color, alpha, sc.alight->intensity, 0));
+	color = hexa(multiply_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, 0));
 	cy->is_cover = 0;
 	return color;
 }
@@ -114,10 +114,10 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	t_vec	*screen_point;
 	
 	r = malloc(sizeof(t_ray));
-	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.camera);
-	r->v = vec_sub(sc.camera->o, *screen_point);
-	r->o = sc.camera->o;
-	sc.camera->r = r;
+	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
+	r->v = vec_sub(sc.cam->o, *screen_point);
+	r->o = sc.cam->o;
+	sc.cam->r = r;
 	
 	T = get_closest_object(sc);
 

@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 22:01:40 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:13:23 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,19 +85,30 @@ typedef struct s_alight
 	int		*color;
 }	t_alight;
 
+/**
+ * @param cyl Cylinders
+ * @param sph Spheres
+ * @param pla Planes
+ */
 typedef struct s_objects
 {
-	t_cylinder	**cylinders;
-	t_sphere	**spheres;
-	t_plane		**planes;
+	t_cylinder	**cyl;
+	t_sphere	**sph;
+	t_plane		**pla;
 }	t_objects;
 
+/**
+ * @param cam Camera
+ * @param obj Objects
+ * @param light Point light
+ * @param amb Ambient light
+ */
 typedef struct s_scene
 {
-	t_camera	*camera;
-	t_objects	*objects;
-	t_light		*lights;
-	t_alight	*alight;
+	t_camera	*cam;
+	t_objects	*obj;
+	t_light		*light;
+	t_alight	*amb;
 }	t_scene;
 
 #endif
