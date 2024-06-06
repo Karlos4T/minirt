@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 22:07:19 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:12:54 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,12 @@
 
 //FUNCTIONS
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
-t_sphere	*create_sphere(int x, int y, int z, int radius, int color);
+
 t_vec		*create_vector(t_vec point1, t_vec point2);
 double		vector_x_sphere(t_sphere s, t_ray r);
 double		vector_x_plane(t_plane pl, t_ray r);
 void		render_screen(t_data *data, t_scene *scene);
 t_vec		*create_point(int x, int y, int z);
-t_light		*create_light(int x, int y, int z, double intensity, int color);
-t_camera	*start_camera(double x, double y, double z, double vx, double vy, double vz, int fov);
-t_plane		*create_plane(int x, int y, int z, double vx, double vy, double vz, int color);
-t_alight	*create_alight(double intensity, int color);
-t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double radius, double height, int color);
 double		vector_x_cylinder(t_cylinder *cy, t_ray r);
 
 //MATH FUNCTIONS
