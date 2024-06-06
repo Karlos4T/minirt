@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:04:50 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:07:21 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_scene	*initialize_scene()
 	scene->objects->spheres[0] = create_sphere(c_vec(-30, -30, -400), 20, 0x00AAAAAA);
 	scene->objects->spheres[1] = create_sphere(c_vec(30, -30, -400), 20, 0x00AA0000);
 	scene->objects->spheres[2] = create_sphere(c_vec(-30, 100, -400), 17, 0x0000AA00);
-	scene->objects->spheres[3] = create_sphere(c_vec(-30, 30, -400), 20, 0x000000AA);
+	scene->objects->spheres[3] = create_sphere(c_vec(30, -30, -400), 20, 0x000000AA);
 	scene->objects->spheres[4] = NULL;
 
 
