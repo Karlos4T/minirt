@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 23:13:23 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:22:55 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,19 @@ typedef struct s_ray
 	t_vec	v;
 }	t_ray;
 
+/**
+ * @param img Image
+ * @param addr Address
+ * @param bpp Bits-per-pixel
+ * @param length Line length
+ * @param endian Endian
+ */
 typedef struct s_data
 {
 	void	*img;
 	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
+	int		bpp;
+	int		length;
 	int		endian;
 }	t_data;
 
