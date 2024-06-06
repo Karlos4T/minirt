@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:37:33 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 22:54:15 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:04:50 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,18 @@ t_scene	*initialize_scene()
 	scene->objects = malloc(sizeof(t_objects));
 
 	scene->objects->cylinders = malloc(sizeof(t_cylinder) * 2);
-	scene->objects->cylinders[0] = create_cylinder(c_vec(0, 0, -400), c_vec(-1, 0, 1), 40, 100, 0x0000FFFF);
-	scene->objects->cylinders[1] = create_cylinder(c_vec(0, 200, -400), c_vec(0, 1, -1), 40, 80, 0x0000FFFF);
-	scene->objects->cylinders[2] = create_cylinder(c_vec(200, 200, -400), c_vec(0, 1, 0), 100, 100, 0x0000FFFF);
-	scene->objects->cylinders[3] = create_cylinder(c_vec(-50, 50, -400), c_vec(1, 1, 0), 40, 40, 0x0000FFFF);
+
+	t_cylinder_p cy1 = {c_vec(0, 0, -400), c_vec(-1, 0, 1), 40, 100, 0x0000FFFF};
+	scene->objects->cylinders[0] = create_cylinder(cy1);
+
+	t_cylinder_p cy2 = {c_vec(0, 200, -400), c_vec(0, 1, -1), 40, 80, 0x0000FFFF};
+	scene->objects->cylinders[1] = create_cylinder(cy2);
+
+	t_cylinder_p cy3 = {c_vec(200, 200, -400), c_vec(0, 1, 0), 100, 100, 0x0000FFFF};
+	scene->objects->cylinders[2] = create_cylinder(cy3);
+
+	t_cylinder_p cy4 = {c_vec(-50, 50, -400), c_vec(1, 1, 0), 40, 40, 0x0000FFFF};
+	scene->objects->cylinders[3] = create_cylinder(cy4);
 	scene->objects->cylinders[4] = NULL;
 
 

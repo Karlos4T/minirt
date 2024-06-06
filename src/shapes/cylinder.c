@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 22:56:13 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:02:09 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,22 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 	return (create_plane(o, cy->v, color));
 }
 
-t_cylinder	*create_cylinder(t_vec o, t_vec v, double diameter, double height, int color)
+t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 {
 	t_cylinder	*cy;
 
 	cy = malloc(sizeof(t_cylinder));
-	cy->o = o;
-	cy->v = v;
-	cy->radius = diameter / 2;
+	cy->o = cylinder.o;
+	cy->v = cylinder.v;
+	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
-	cy->r2 = diameter * diameter * 0.25;
+	cy->r2 = cylinder.diameter * cylinder.diameter * 0.25;
 	if (module(cy->v) > 1)
-		cy->r2 = diameter * diameter * 0.50;
-	cy->height = height;
-	cy->covers[0] = create_cover(cy, color, 0);
-	cy->covers[1] = create_cover(cy, color, 1);
-	cy->color = rgb(color);
+		cy->r2 = cylinder.diameter * cylinder.diameter * 0.50;
+	cy->height = cylinder.height;
+	cy->covers[0] = create_cover(cy, cylinder.color, 0);
+	cy->covers[1] = create_cover(cy, cylinder.color, 1);
+	cy->color = rgb(cylinder.color);
 	return (cy);
 }
 
