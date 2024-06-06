@@ -1,13 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/06 16:05:50 by dximenez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef MINIRT
-# define MINIRT
+#ifndef MINIRT_H
+# define MINIRT_H
 
-#define WIN_WIDTH 1440
-#define WIN_HEIGHT 1080
-#define ASSETS "A C L pl sp cy"
-#define ASSETS_PARAMS "A C L pl sp cy"
-#define TYPE_PARAMS "NCIRVPF"
-#define ASSETS_PARAMS_LEN "A C L pl sp cy"
+# define WIN_WIDTH 1440
+# define WIN_HEIGHT 1080
 
 # include "./mlx-linux/mlx.h"
 # include <math.h>
