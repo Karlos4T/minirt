@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 16:05:50 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/06 16:17:41 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "./libft/include/libft.h"
+
+typedef enum e_types
+{
+	ERR=-1,
+	AMB,
+	CAM,
+	LIG,
+	SPH,
+	PLA,
+	CYL
+}	t_types;
 
 typedef struct s_vec
 {
