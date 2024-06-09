@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:02:09 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:19:09 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	i = 0;
 	while (i < 2)
 	{
-		tp[i] = vector_x_plane(*cy->covers[i], r);
+		tp[i] = vector_x_plane(cy->covers[i], r);
 		i++;
 	}
 	i = 0;

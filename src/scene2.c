@@ -6,21 +6,11 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 22:54:07 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:28:13 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
-
-t_ray *create_ray(t_camera *cam)
-{
-	t_ray *ray;
-
-	ray = malloc(sizeof(t_ray));
-	ray->o = cam->o;
-	ray->v = cam->v;
-	return ray;
-}
 
 t_light	*create_light(t_vec o, double intensity, int color)
 {
@@ -64,17 +54,6 @@ t_vec	*create_vector(t_vec p1, t_vec p2)
 	vector->y = p2.y - p1.y;
 	vector->z = p2.z - p1.z;
 	return (vector);
-}
-
-t_vec	*create_point(int x, int y, int z)
-{
-	t_vec	*point;
-
-	point = malloc(sizeof(t_vec));
-	point->x = x;
-	point->y = y;
-	point->z = z;
-	return (point);
 }
 
 t_camera	*create_camera(t_vec o, t_vec v, int fov)

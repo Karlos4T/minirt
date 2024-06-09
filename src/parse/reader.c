@@ -1,72 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reader.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/08 13:16:53 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/08 15:51:16 by dximenez         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minirt.h"
-/*
-int add_asset(char **l, t_scene **sc)
+
+static int	check_format(char *f)
 {
-    int i;
+	int	len;
 
-    i = -1;
-    if (l[0] == "A")
-        i = 1;
-    //    if (ft_matrix_len(l) != 3)
-    //        ft_printf("Invalid n of arguments in \"A\" (ambient light) line\n");
-    //else if (l[0] == "C")
-    //    if (ft_matrix_len(l) != 4)
-    //        ft_printf("Invalid n of arguments in \"C\" (camera) line\n");
-    //else if (l[0] == "L")
-    //    if (ft_matrix_len(l) != 4)
-    //        ft_printf("Invalid n of arguments in \"C\" (camera) line\n");
-    //else if (ft_strstr(l[0], "sp"))
-    //    if (ft_matrix_len(l) != 4)
-    //        ft_printf("Invalid n of arguments in \"C\" (camera) line\n");
-    //else if (ft_strstr(l[0], "cy"))
-    //    if (ft_matrix_len(l) != 4)
-    //        ft_printf("Invalid n of arguments in \"C\" (camera) line\n");
-    //else if (ft_strstr(l[0], "pl"))
-
-    return 1;
-}
-*/
-
-
-int eval_line(char *line)
-{
-    char **s_line;
-    char *str;
-    int i;
-
-    if (!line)
-        return 0;
-    i = 0;
-    s_line = ft_split(line, ' ');
-    while (s_line[i])
-    {
-        str = ft_strjoin(s_line[i], " ");
-        //if (ft_strstr(ASSETS, str) > 0)
-            //add_asset(s_line, &sc);
-        free(str);
-        str = NULL;
-        i++;
-    }
-    //printf("%s\n", line);
-    return 0;
+	len = ft_strlen(f);
+	if (f[len - 3] == '.' && f[len - 2] == 'r' && f[len - 1] == 't')
+		return (1);
+	return (0);
 }
 
-
-int read_rt(char *filename, t_scene *sc)
+void	open_rt(char *filename, t_scene *scene)
 {
-    int fd = -1;
-    char *line = "";
-    (void) sc;
-    if (!ft_strstr(filename, ".rt"))
-        return(ft_printf("ERROR AL PROCESAR .RT"), 0);
-    fd = open(filename, O_RDONLY);
-    if (fd < 0)
-        ft_printf("Error al abrir %s \n", filename);
-    while (line)
-    {
-        line = get_next_line(fd);
-        eval_line(line);
-    }
-    
-    return 0;
+	int	fd;
+
+	if (!check_format(filename))
+		ft_error("Invalid file format (must end in .rt)");
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		ft_error("Invalid file");
+	scene->obj = malloc(sizeof(t_objects));
+	if (scene->obj == NULL)
+		ft_error("Malloc error");
+	scene->obj->n_sph = 0;
+	scene->obj->n_pla = 0;
+	scene->obj->n_cyl = 0;
+	parse(fd, scene);
 }

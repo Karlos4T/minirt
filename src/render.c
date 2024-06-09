@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:17:12 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:17:21 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ double *get_closest_object(t_scene sc)
 	i = 0;
 	while (sc.obj->pla[i] != NULL)
 	{
-		t = vector_x_plane(*sc.obj->pla[i], r);
+		t = vector_x_plane(sc.obj->pla[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]) && t < 0)
 		{
 			T[0] = fabs(t);
@@ -40,7 +40,7 @@ double *get_closest_object(t_scene sc)
 	i = 0;
 	while (sc.obj->sph[i] != NULL)
 	{
-		t = vector_x_sphere(*sc.obj->sph[i], *sc.cam->r);
+		t = vector_x_sphere(sc.obj->sph[i], r);
 		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
 		{
 			T[0] = fabs(t);

@@ -17,12 +17,14 @@ MLX_PATH = mlx-linux/
 LIBFT = libft/libft.a
 LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c
-PARSE = reader.c
+PARSE = reader.c parser.c parsers.c
+UTILS = ft_haschar.c ft_splitlen.c ft_error.c converters.c ft_is_normalized.c print_scene.c ft_is_empty.c
 MATH = math_functions.c
 SRC = main.c functions.c scene.c scene2.c colors.c render.c lights.c
 SRCS = $(addprefix src/, $(SRC)) \
 		$(addprefix src/shapes/, $(SHAPES)) \
 		$(addprefix src/parse/, $(PARSE)) \
+		$(addprefix src/utils/, $(UTILS)) \
 		$(addprefix src/math/, $(MATH))
 OBJS_PATH = objs/
 OBJS = $(addprefix $(OBJS_PATH), $(SRCS:.c=.o))

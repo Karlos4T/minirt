@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:13:12 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:15:49 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:18:54 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 	i = 0;
 	while (ob->sph[i])
 	{
-		if (vector_x_sphere(*ob->sph[i], *r))
+		if (vector_x_sphere(ob->sph[i], *r))
 			return (1);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/08 17:10:16 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/06/08 14:47:59 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int *multiply_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shado
 	{	
 		if (is_shadow)
 		{
-			printf("%d\n", is_shadow);
+			// printf("%d\n", is_shadow);		//TODO muestra 1 por consola
 			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * al;
 		}
 		else

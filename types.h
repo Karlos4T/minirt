@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 23:22:55 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:06:53 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_camera
 typedef struct s_sphere
 {
 	t_vec	o;
-	int		radius;
+	int		diameter;
 	int		*color;
 }	t_sphere;
 
@@ -99,9 +99,12 @@ typedef struct s_alight
  */
 typedef struct s_objects
 {
-	t_cylinder	**cyl;
-	t_sphere	**sph;
-	t_plane		**pla;
+	int			n_cyl;
+	int			n_sph;
+	int			n_pla;
+	t_cylinder	*cyl[20];
+	t_sphere	*sph[20];
+	t_plane		*pla[20];
 }	t_objects;
 
 /**

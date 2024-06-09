@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/06 22:12:54 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:18:22 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,20 @@
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 
 t_vec		*create_vector(t_vec point1, t_vec point2);
-double		vector_x_sphere(t_sphere s, t_ray r);
-double		vector_x_plane(t_plane pl, t_ray r);
+double		vector_x_sphere(t_sphere *s, t_ray r);
+double		vector_x_plane(t_plane *pl, t_ray r);
 void		render_screen(t_data *data, t_scene *scene);
-t_vec		*create_point(int x, int y, int z);
 double		vector_x_cylinder(t_cylinder *cy, t_ray r);
+
+//UTILS
+int			ft_haschar(char *s, char c);
+int			ft_splitlen(char **split);
+void		ft_error(char *s);
+int			rgb_to_int(char *str);
+t_vec		str_to_vec(char *str);
+int			ft_is_normalized(t_vec v);
+void		print_scene(t_scene *scene);
+int			ft_is_empty(char *line);
 
 //MATH FUNCTIONS
 int			x_pos(int x);
@@ -66,8 +75,6 @@ double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
 void		render_pixel(int x, int y, t_data *data, t_scene scene);
 t_vec		*get_screen_coord(int x, int y, t_camera *camera);
 t_scene		*initialize_scene();
-
-
 
 
 #endif
