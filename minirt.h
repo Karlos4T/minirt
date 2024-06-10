@@ -66,7 +66,7 @@ t_vec		get_point(t_ray r, int t);
 
 
 //COLOR
-int 		*multiply_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
+int 		*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
 double		get_brightness_level(t_sphere *s, t_light *l, t_vec *p);
 double		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
 double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);

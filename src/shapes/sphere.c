@@ -18,7 +18,7 @@ t_sphere	*create_sphere(t_vec v3, int diameter, int color)
 
 	sphere = malloc(sizeof(t_sphere));
 	sphere->o = v3;
-	sphere->diameter = diameter;
+	sphere->radius = diameter;
 	sphere->color = rgb(color);
 	return (sphere);
 }
@@ -34,7 +34,7 @@ double	vector_x_sphere(t_sphere *s, t_ray r)
 	b = 2 * (r.v.x * (r.o.x - s->o.x)
 			+ r.v.y * (r.o.y - s->o.y) + r.v.z * (r.o.z - s->o.z));
 	c = pow(r.o.x - s->o.x, 2) + pow(r.o.y - s->o.y, 2)
-		+ pow(r.o.z - s->o.z, 2) - pow(s->diameter, 2);
+		+ pow(r.o.z - s->o.z, 2) - pow(s->radius, 2);
 	return (quadratic(a, b, c));
 }
 

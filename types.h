@@ -53,7 +53,7 @@ typedef struct s_camera
 typedef struct s_sphere
 {
 	t_vec	o;
-	int		diameter;
+	int		radius;
 	int		*color;
 }	t_sphere;
 

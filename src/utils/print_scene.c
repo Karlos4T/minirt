@@ -42,7 +42,7 @@ static void	print_spheres(t_scene *scene)
 	{
 		printf("Sphere\n");
 		printf("Origin:\t\t%f %f %f\n", s[i]->o.x, s[i]->o.y, s[i]->o.z);
-		printf("Radius:\t\t%d\n", s[i]->diameter);
+		printf("Radius:\t\t%d\n", s[i]->radius);
 		printf("Color:\t\t%x\n\n", *(s[i]->color));
 		i++;
 	}

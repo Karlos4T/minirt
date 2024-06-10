@@ -73,7 +73,7 @@ int	render_plane(t_scene sc, double *T)
 	
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_plane(pl, sc.light, p);
-	color = hexa(multiply_colors(pl->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
+	color = hexa(mult_colors(pl->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
 	return color;
 }
 
@@ -86,7 +86,7 @@ int	render_sphere(t_scene sc, double *T)
 
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level(sp, sc.light, &p);
-	color = hexa(multiply_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, 0)); 
+	color = hexa(mult_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, 0)); 
 	return color;
 }
 
@@ -100,7 +100,7 @@ int render_cylinder(t_scene sc, double *T)
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
 	(void)color;
-	color = hexa(multiply_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, 0));
+	color = hexa(mult_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, 0));
 	cy->is_cover = 0;
 	return color;
 }
