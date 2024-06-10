@@ -3,55 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: carlosga <carlosga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/04/08 16:59:06 by carlosga         ###   ########.fr       */
+/*   Updated: 2024/06/09 22:19:09 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minirt.h"
 
-t_cylinder	*create_cylinder(int x, int y, int z, double vx, double vy, double vz, double diameter, double height, int color)
+
+static t_plane	*create_cover(t_cylinder *cy, int color, int type)
+{
+	t_vec	o;
+
+	if (type == 0)
+	{
+		o.x = cy->o.x + dot_prod(cy->v, *vec(1, 0, 0))
+			/ (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2);
+		o.y = cy->o.y + dot_prod(cy->v, *vec(0, 1, 0))
+			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
+		o.z = cy->o.z + dot_prod(cy->v, *vec(0, 0, 1))
+			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+	}
+	else
+	{
+		o.x = cy->o.x - dot_prod(cy->v, *vec(1, 0, 0))
+			/ (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2);
+		o.y = cy->o.y - dot_prod(cy->v, *vec(0, 1, 0))
+			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
+		o.z = cy->o.z - dot_prod(cy->v, *vec(0, 0, 1))
+			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+	}
+	return (create_plane(o, cy->v, color));
+}
+
+t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 {
 	t_cylinder	*cy;
-	
-	cy = malloc(sizeof(t_cylinder));
 
-	cy->o.x = x;
-	cy->o.y = y;
-	cy->o.z = z;
-	cy->v.x = vx;
-	cy->v.y = vy;
-	cy->v.z = vz;
-    cy->radius = diameter / 2;
+	cy = malloc(sizeof(t_cylinder));
+	cy->o = cylinder.o;
+	cy->v = cylinder.v;
+	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
-	cy->r2 = diameter * diameter * 0.25;
+	cy->r2 = cylinder.diameter * cylinder.diameter * 0.25;
 	if (module(cy->v) > 1)
-    	cy->r2 = diameter * diameter * 0.50;
-    cy->height = height;
-	cy->covers[0] = create_plane(cy->o.x + dot_prod(cy->v, *vec(1, 0, 0)) / (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2), \
-		cy->o.y + dot_prod(cy->v, *vec(0, 1, 0)) / (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2), \
-		cy->o.z + dot_prod(cy->v, *vec(0, 0, 1)) / (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2), \
-		cy->v.x, cy->v.y, cy->v.z, color);
-	cy->covers[1] = create_plane(cy->o.x - dot_prod(cy->v, *vec(1, 0, 0)) / (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2), \
-		cy->o.y - dot_prod(cy->v, *vec(0, 1, 0)) / (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2), \
-		cy->o.z - dot_prod(cy->v, *vec(0, 0, 1)) / (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2), \
-		-cy->v.x, -cy->v.y, -cy->v.z, color);
-	cy->color = rgb(color);
+		cy->r2 = cylinder.diameter * cylinder.diameter * 0.50;
+	cy->height = cylinder.height;
+	cy->covers[0] = create_cover(cy, cylinder.color, 0);
+	cy->covers[1] = create_cover(cy, cylinder.color, 1);
+	cy->color = rgb(cylinder.color);
 	return (cy);
 }
 
-int cut_cylinder(t_cylinder cy, t_ray r, double t)
+int	cut_cylinder(t_cylinder cy, t_ray r, double t)
 {
-	t_vec pc;
-	t_vec po;
-	double hip;
+	t_vec	pc;
+	t_vec	po;
+	double	hip;
 
 	pc = get_point(r, t);
 	po = vec_sub(pc, cy.o);
 	hip = module(po);
-	if(hip-1 > sqrt(pow(cy.height/2, 2) + pow(cy.radius, 2)))
+	if (hip - 1 > sqrt(pow(cy.height / 2, 2) + pow(cy.radius, 2)))
 		return (0);
 	return (t);
 }
@@ -90,7 +105,7 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	i = 0;
 	while (i < 2)
 	{
-		tp[i] = vector_x_plane(*cy->covers[i], r);
+		tp[i] = vector_x_plane(cy->covers[i], r);
 		i++;
 	}
 	i = 0;
@@ -129,19 +144,26 @@ double	vector_x_cylinder(t_cylinder *cy, t_ray r)
 	if (t[1])
 	{
 		cy->is_cover = 0;
-		return t[1];
+		return (t[1]);
 	}
 	else if (t[0])
-		return t[0];
-	return 0;
+		return (t[0]);
+	return (0);
 }
 
-double plane_x_cylinder(t_cylinder cy, t_vec v)
-{
-	int			t;
-	t_plane		*pl;
+// double	plane_x_cylinder(t_cylinder cy, t_vec v)
+// {
+// 	int			t;
+// 	t_plane		*pl;
+// 	t_vec		o;
 
-	pl = create_plane(cy.o.x + cy.height / 2 * cy.v.x,  cy.o.y + cy.height / 2 * cy.v.y, cy.o.z + cy.height / 2 * cy.v.z, cy.v.x, cy.v.y, cy.v.z, hexa(cy.color));
-	t = - (pl->o.x * cy.o.x + pl->o.y * cy.o.y + pl->o.z * cy.o.z + cy.height/2) / (pl->o.x * v.x + pl->o.y * v.y + pl->o.z * v.z);
-	return (t);
-}
+// 	o.x = cy.o.x + cy.height / 2 * cy.v.x;
+// 	o.y = cy.o.y + cy.height / 2 * cy.v.y;
+// 	o.z = cy.o.z + cy.height / 2 * cy.v.z;
+
+// 	pl = create_plane(o, cy.v, hexa(cy.color));
+// 	t = -(pl->o.x * cy.o.x + pl->o.y * cy.o.y + pl->o.z * cy.o.z
+// 			+ (cy.height / 2))
+// 		/ (pl->o.x * v.x + pl->o.y * v.y + pl->o.z * v.z);
+// 	return (t);
+// }

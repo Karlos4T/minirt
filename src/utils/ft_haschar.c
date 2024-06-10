@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_haschar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:23:12 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/08 14:04:52 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/08 14:14:56 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	ft_haschar(char *s, char c)
 {
-	char	*dst;
+	int	i;
 
-	dst = data->addr + (y * data->length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+	if (s == NULL)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_splitlen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:23:12 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/08 14:53:31 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/08 14:53:38 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	ft_splitlen(char **split)
 {
-	char	*dst;
+	int	i;
 
-	dst = data->addr + (y * data->length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+	i = 0;
+	while (split[i] != NULL)
+		i++;
+	return (i);
 }

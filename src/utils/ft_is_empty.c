@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_is_empty.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:23:12 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/09 21:45:40 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/09 21:48:31 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+static int	ft_isspace(char c)
 {
-	char	*dst;
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
+}
 
-	dst = data->addr + (y * data->length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+int	ft_is_empty(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (!ft_isspace(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

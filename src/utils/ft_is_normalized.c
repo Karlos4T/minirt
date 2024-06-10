@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_is_normalized.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:23:12 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/08 15:42:07 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/08 15:42:32 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+int	ft_is_normalized(t_vec v)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+	return (v.x >= -1 && v.x <= 1 && v.y >= -1
+		&& v.y <= 1 && v.z >= -1 && v.z <= 1);
 }

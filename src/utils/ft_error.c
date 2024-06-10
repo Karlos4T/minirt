@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/15 12:07:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/06 23:23:12 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/08 14:54:51 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/08 14:59:06 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+/**
+ * @brief Prints "Error: " followed by the message and a newline,
+ * then exits the program with status 1.
+ */
+void	ft_error(char *msg)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->length + x * (data->bpp / 8));
-	*(unsigned int *)dst = color;
+	printf("Error: %s\n", msg);
+	exit(1);
 }
