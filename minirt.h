@@ -44,6 +44,7 @@ t_vec		str_to_vec(char *str);
 int			ft_is_normalized(t_vec v);
 void		print_scene(t_scene *scene);
 int			ft_is_empty(char *line);
+double	    ft_atod(char *s);
 
 //MATH FUNCTIONS
 int			x_pos(int x);

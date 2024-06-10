@@ -86,7 +86,8 @@ t_sphere	*parse_sphere(char *line)
 	if (ft_splitlen(split) < 4)			//TODO check if it has to be exactly 4
 		ft_error("Invalid sphere format");
 	v = str_to_vec(split[1]);
-	diameter = ft_atof(split[2]);
+	diameter = ft_atod(split[2]);
+	printf("(%s) %f\n", split[2], ft_atod(split[2]));
 	color = rgb_to_int(split[3]);
 	ft_free_matrix(split);
 	if (diameter < 0)

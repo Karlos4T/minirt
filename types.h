@@ -65,6 +65,7 @@ typedef struct s_plane
 }	t_plane;
 
 typedef struct s_cylinder
+
 {
 	t_vec		o;
 	t_vec		v;

@@ -124,10 +124,14 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	if (T[1] == 1)
 		color = render_plane(sc, T);
 	else if (T[1] == 2)
+	{
 		color = render_sphere(sc, T);
+	}
 	else if (T[1] == 3)
 		color = render_cylinder(sc, T);
+
 	free(T);
+
 	my_mlx_pixel_put(data, x, y, color);
 }
 
