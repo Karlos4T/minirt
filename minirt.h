@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:18:22 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:11:12 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_vec		str_to_vec(char *str);
 int			ft_is_normalized(t_vec v);
 void		print_scene(t_scene *scene);
 int			ft_is_empty(char *line);
-double	    ft_atod(char *s);
+double		ft_atod(char *s);
 
 //MATH FUNCTIONS
 int			x_pos(int x);

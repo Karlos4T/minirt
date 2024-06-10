@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 14:37:55 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:07:24 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:11:53 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_alight	*parse_ambient(t_scene *scene, char *line)
 	split = ft_split(line, ' ');
 	if (ft_splitlen(split) != 3)
 		ft_error("Invalid ambient light format");
-	intensity = ft_atof(split[1]);
+	intensity = ft_atod(split[1]);
 	color = rgb_to_int(split[2]);
 	ft_free_matrix(split);
 	if (intensity < 0 || intensity > 1)
@@ -67,7 +67,7 @@ t_light	*parse_light(t_scene *scene, char *line)
 	if (ft_splitlen(split) != 4)
 		ft_error("Invalid light format");
 	o = str_to_vec(split[1]);
-	intensity = ft_atof(split[2]);
+	intensity = ft_atod(split[2]);
 	color = rgb_to_int(split[3]);
 	ft_free_matrix(split);
 	if (intensity < 0 || intensity > 1)
@@ -83,7 +83,7 @@ t_sphere	*parse_sphere(char *line)
 	int		color;
 
 	split = ft_split(line, ' ');
-	if (ft_splitlen(split) < 4)			//TODO check if it has to be exactly 4
+	if (ft_splitlen(split) != 4)
 		ft_error("Invalid sphere format");
 	v = str_to_vec(split[1]);
 	diameter = ft_atod(split[2]);
@@ -123,8 +123,8 @@ t_cylinder	*parse_cylinder(char *line)
 		ft_error("Invalid cylinder format");
 	cy.o = str_to_vec(split[1]);
 	cy.v = str_to_vec(split[2]);
-	cy.diameter = ft_atof(split[3]);
-	cy.height = ft_atof(split[4]);
+	cy.diameter = ft_atod(split[3]);
+	cy.height = ft_atod(split[4]);
 	cy.color = rgb_to_int(split[5]);
 	ft_free_matrix(split);
 	if (cy.diameter < 0 || cy.height < 0)
