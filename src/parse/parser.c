@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:45:48 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:12:12 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:01:17 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static t_types	get_object_type(char *line)
 		return (PLA);
 	else if (ft_strncmp(line, "cy ", 3) == 0)
 		return (CYL);
+	else if (ft_strncmp(line, "#", 1) == 0)
+		return (CMT);
 	else
 		return (ERR);
 }
@@ -53,7 +55,7 @@ void	parse_line(t_scene *scene, char *line)
 		scene->obj->cyl[(scene->obj->n_cyl)++] = parse_cylinder(line);
 		scene->obj->cyl[scene->obj->n_cyl] = NULL;
 	}
-	else
+	else if (get_object_type(line) == ERR)
 		ft_error("Invalid object type");
 }
 
