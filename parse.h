@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:54:39 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/08 15:51:46 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:00:04 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 typedef enum e_types
 {
+	CMT=-2,
 	ERR=-1,
 	AMB,
 	CAM,

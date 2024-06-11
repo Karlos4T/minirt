@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 15:07:30 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/08 15:24:00 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:11:27 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ t_vec	str_to_vec(char *str)
 	split = ft_split(str, ',');
 	if (ft_splitlen(split) != 3)
 		ft_error("Invalid vector format");
-	v.x = ft_atof(split[0]);
-	v.y = ft_atof(split[1]);
-	v.z = ft_atof(split[2]);
+	v.x = ft_atod(split[0]);
+	v.y = ft_atod(split[1]);
+	v.z = ft_atod(split[2]);
 	ft_free_matrix(split);
 	return (v);
 }
