@@ -99,7 +99,6 @@ int render_cylinder(t_scene sc, double *T)
 
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
-	(void)color;
 	color = hexa(mult_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, 0));
 	cy->is_cover = 0;
 	return color;
@@ -131,6 +130,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 		color = render_cylinder(sc, T);
 
 	free(T);
+	free(r);
 
 	my_mlx_pixel_put(data, x, y, color);
 }

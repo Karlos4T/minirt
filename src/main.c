@@ -30,7 +30,9 @@ int	main(int argc, char **argv)
 	mlx_win = mlx_new_window(mlx, WIN_WIDTH, WIN_HEIGHT, "MiniRT");
 	img.img = mlx_new_image(mlx, WIN_WIDTH, WIN_HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.length, &img.endian);
+	printf("Rendering scene...\n");
 	render_screen(&img, scene);
+	printf("Scene rendered succesfully\n");
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 	return (0);
