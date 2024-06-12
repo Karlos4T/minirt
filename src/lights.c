@@ -56,20 +56,20 @@ double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
     t_vec axis_point = vec_add(cy->o, producto_escalar(cy->v, t_proj));
 
 	//Calcula el rayo perpendicular al eje del cilindro que cruza con el origen del rayo
-    t_vec oc = vec_sub(cy->o, l->o);
-    double projection_length = dot_prod(oc, normalize(cy->v));
-    t_vec q = vec_add(cy->o, producto_escalar(normalize(cy->v), projection_length));
+    //t_vec oc = vec_sub(cy->o, l->o);
+    //double projection_length = dot_prod(oc, normalize(cy->v));
+    //t_vec q = vec_add(cy->o, producto_escalar(normalize(cy->v), projection_length));
 
     // Vector perpendicular
-    v2 = normalize(vec_sub(l->o, q));
-	v1 = normalize(*create_vector(axis_point, p));
+    v2 = normalize(vec_sub(l->o, p));
+	v1 = normalize(vec_sub(axis_point, p));
 	
-	//printf("v1(%f, %f, %f) --- v2(%f, %f, %f) --- %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, dot_prod(v1, v2));
-	double d = dot_prod(v1, neg(v2)) / (module(v1) * module(v2));
+	printf("v1(%f, %f, %f) --- v2(%f, %f, %f) --- %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, dot_prod(v1, v2));
+	double d = dot_prod(v1, v2) / (module(v1) * module(v2));
 	if (d < 0)
 		return 0;
 	alpha = sqrt(d);
-	printf("%f, %f\n", dot_prod(v1, v2) / (module(v1)* module(v2)), alpha);
+	//printf("%f, %f\n", dot_prod(v1, v2) / (module(v1)* module(v2)), alpha);
 	if (alpha < 0)
 		return (0);
 	if (alpha > 1)
@@ -77,6 +77,22 @@ double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
 
 	return (alpha);
 }
+
+t_point get_axis_at_intersection_height(t_cylinder cylinder,
+        t_point cylinder_intersect, double *scalar_in_axis)
+{
+    t_plane cylinder_ortho_plane;
+    t_ray   cylinder_axis;
+    t_point result;
+    cylinder_ortho_plane.direction = cylinder.direction;
+    cylinder_ortho_plane.origin = cylinder_intersect;
+    cylinder_axis.origin = cylinder.center;
+    cylinder_axis.direction = cylinder.direction;
+    intersection_ray_plane(cylinder_axis, cylinder_ortho_plane, scalar_in_axis);
+    result = get_point_in_ray_scalar(cylinder_axis, *scalar_in_axis);
+    return (result);
+}
+
 
 int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 {
