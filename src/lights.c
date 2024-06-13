@@ -50,78 +50,33 @@ double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
 		cy->is_cover = 0;
 		return (alpha);
 	}
+
 	//Calcula el punto del eje a la altura del punto de impacto del rayo en el cilindro
-	t_vec h = vec_sub(cy->o, p);
+    t_vec h = vec_sub(cy->o, p);
     double t_proj = dot_prod(h, cy->v);
     t_vec axis_point = vec_add(cy->o, producto_escalar(cy->v, t_proj));
-
-	//Calcula el rayo perpendicular al eje del cilindro que cruza con el origen del rayo
-    /*t_vec oc = vec_sub(cy->o, l->o);
-    double projection_length = dot_prod(oc, normalize(cy->v));
-    t_vec q = vec_add(cy->o, producto_escalar(normalize(cy->v), projection_length));
-*/
-    // Vector perpendicular
+    
+	// Vector perpendicular
     v2 = normalize(vec_sub(p, l->o));
 	v1 = normalize(vec_sub(axis_point, p));
 	
-	printf("v1(%f, %f, %f) --- v2(%f, %f, %f) --- %f\n", v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, dot_prod(v1, v2));
-	double d = dot_prod(v1, v2);
-	if (d < 0)
-		return 0;
-	alpha = sqrt(d);
-	//printf("%f, %f\n", dot_prod(v1, v2) / (module(v1)* module(v2)), alpha);
-	if (alpha < 0)
-		return (0);
+	alpha = (dot_prod(v1, v2));
+	if ((module(v1) * module(v2)) != 0)
+		alpha = alpha / (module(v1) * module(v2));
+	
+	if (alpha == 0)
+	{
+		printf("ap(%f, %f, %f) --- ", axis_point.x, axis_point.y, axis_point.z);
+		printf("p(%f, %f, %f) --- ", p.x, p.y, p.z);
+		printf("cyo(%f, %f, %f) --- cyv(%f, %f, %f) --- %f\n", cy->o.x, cy->o.y, cy->o.z, cy->v.x, cy->v.y, cy->v.z, dot_prod(v1, v2));
+	}
+	//return ((alpha + 1) / 2);
+	return (alpha);
+	printf("%f, %f\n", dot_prod(v1, v2) / (module(v1)* module(v2)), alpha);
 	if (alpha > 1)
 		printf("alpha: %f", alpha);
 
-	return (alpha);
 }
-/*
-t_point get_axis_at_intersection_height(t_cylinder cylinder,t_point cylinder_intersect, double *scalar_in_axis)
-{
-    t_plane cylinder_ortho_plane;
-    t_ray   cylinder_axis;
-    t_point result;
-
-    cylinder_ortho_plane.direction = cylinder.direction;
-    cylinder_ortho_plane.origin = cylinder_intersect;
-    cylinder_axis.origin = cylinder.center;
-    cylinder_axis.direction = cylinder.direction;
-    intersection_ray_plane(cylinder_axis, cylinder_ortho_plane, scalar_in_axis);
-    result = get_point_in_ray_scalar(cylinder_axis, *scalar_in_axis);
-
-    return (result);
-}
-
-
-double  get_saturation_cylinder_base(t_shoot_data shoot_data,
-    double line_scalar, t_cylinder cylinder, t_point light)
-{
-    t_point intersection;
-    double  saturation;
-    t_ray   light_ray;
-    intersection = get_point_in_ray_scalar(shoot_data.ray_from_camera,
-            line_scalar);
-    new_ray(&light_ray, intersection, light);
-    if (is_shadow(shoot_data.figures_list, light_ray, light))
-        return (0);
-    normalize_vector(&(light_ray.direction));
-    saturation = dot_product(light_ray.direction, cylinder.direction);
-    if (saturation < 0)
-        saturation = saturation * -1;
-    if (is_inside_cylinder(shoot_data.ray_from_camera.origin, cylinder))
-    {
-        if (is_inside_cylinder(light, cylinder))
-            saturation = saturation * -1;
-        else
-            return (0);
-    }
-    return (saturation);
-}
-
-*/
-
 
 int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 {

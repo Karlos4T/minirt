@@ -47,9 +47,13 @@ t_vec producto_escalar(t_vec v, double n)
 
 t_vec normalize(t_vec v)
 {
-	v.x = v.x / module(v);
-	v.y = v.y / module(v);
-	v.z = v.z / module(v);
+	double m = module(v);
+	if (m == 0)
+		m = 0.1;
+
+	v.x = v.x / m;
+	v.y = v.y / m;
+	v.z = v.z / m;
 	return(v);
 }
 
@@ -126,8 +130,8 @@ t_vec *get_screen_coord(int x, int y, t_camera *c)
 		EL PUNTO XY DE LA PANTALLA ES EL PUNTO xyz del plano
 	*/
 	
-	coords->x = x * wsize / WIN_HEIGHT + c->o.x + c->v.x;
-	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
+	coords->x = x * wsize / WIN_HEIGHT + c->o.x;
+	coords->y = y * wsize / WIN_HEIGHT + c->o.y;
 	coords->z = c->o.z - 1;
 	
 	//printf("v(%f, %f, %f)\n", coords->x, coords->y, coords->z);
