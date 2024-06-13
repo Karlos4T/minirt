@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:00:08 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:23:05 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:56:02 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 static void	print_first(t_scene *s)
 {
-	printf("Camera\n");
-	printf("Origin:\t\t%f %f %f\n", s->cam->o.x, s->cam->o.y, s->cam->o.z);
-	printf("Orientation:\t%f %f %f\n", s->cam->v.x, s->cam->v.y, s->cam->v.z);
-	printf("FOV:\t\t%d\n\n", s->cam->fov);
-
-	printf("Ambient light\n");
-	printf("Brightness:\t%f\n", s->amb->intensity);
-	printf("Color:\t\t%x\n\n", *(s->amb->color));
-
-	printf("Point light\n");
-	printf("Origin:\t\t%f %f %f\n", s->light->o.x,
-		s->light->o.y, s->light->o.z);
-	printf("Brightness:\t%f\n\n", s->light->intensity);
+	if (s->cam != NULL)
+	{
+		printf("Camera\nOrigin:\t\t%f %f %f\nOrientation:\t%f %f %f\n",
+			s->cam->o.x, s->cam->o.y, s->cam->o.z,
+			s->cam->v.x, s->cam->v.y, s->cam->v.z);
+		printf("FOV:\t\t%d\n\n", s->cam->fov);
+	}
+	if (s->amb != NULL)
+	{
+		printf("Ambient light\nBrightness:\t%f\n", s->amb->intensity);
+		printf("Color:\t\t%x\n\n", *(s->amb->color));
+	}
+	if (s->light != NULL)
+	{
+		printf("Point light\n");
+		printf("Origin:\t\t%f %f %f\n", s->light->o.x,
+			s->light->o.y, s->light->o.z);
+		printf("Brightness:\t%f\n\n", s->light->intensity);
+	}
 }
 
 static void	print_spheres(t_scene *scene)
