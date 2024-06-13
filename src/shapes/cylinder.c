@@ -71,31 +71,6 @@ int	cut_cylinder(t_cylinder cy, t_ray r, double t)
 		return (0);
 	return (t);
 }
-/*
-double cylinder_covers(t_cylinder *cy, t_vec v)
-{
-	t_vec		*cp;
-	int			i;
-
-	i = 0;
-	while (i < 2)
-	{
-		double tp = vector_x_plane(*cy->covers[i], v);
-		if(tp)
-		{
-			cp = vec(0 - v.x * tp, 0 - v.y * tp, 0 - v.z * tp);
-			if (module(vec_sub(*cp, cy->covers[i]->o)) <= cy->radius)
-			{
-				cy->is_cover = i + 1;
-				printf("%f\n", tp);
-				return (tp);
-			}
-		}
-		i++;
-	}
-	return (0);
-}
-*/
 
 double cylinder_covers(t_cylinder *cy, t_ray r)
 {
@@ -151,20 +126,3 @@ double	vector_x_cylinder(t_cylinder *cy, t_ray r)
 		return (t[0]);
 	return (0);
 }
-
-// double	plane_x_cylinder(t_cylinder cy, t_vec v)
-// {
-// 	int			t;
-// 	t_plane		*pl;
-// 	t_vec		o;
-
-// 	o.x = cy.o.x + cy.height / 2 * cy.v.x;
-// 	o.y = cy.o.y + cy.height / 2 * cy.v.y;
-// 	o.z = cy.o.z + cy.height / 2 * cy.v.z;
-
-// 	pl = create_plane(o, cy.v, hexa(cy.color));
-// 	t = -(pl->o.x * cy.o.x + pl->o.y * cy.o.y + pl->o.z * cy.o.z
-// 			+ (cy.height / 2))
-// 		/ (pl->o.x * v.x + pl->o.y * v.y + pl->o.z * v.z);
-// 	return (t);
-// }
