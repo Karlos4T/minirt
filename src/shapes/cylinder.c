@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/09 22:19:09 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:08:43 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
 		o.z = cy->o.z + dot_prod(cy->v, *vec(0, 0, 1))
 			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+		return (create_plane(o, cy->v, color));
 	}
 	else
 	{
@@ -34,8 +35,8 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
 		o.z = cy->o.z - dot_prod(cy->v, *vec(0, 0, 1))
 			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+		return (create_plane(o, neg(cy->v), color));
 	}
-	return (create_plane(o, cy->v, color));
 }
 
 t_cylinder	*create_cylinder(t_cylinder_p cylinder)
