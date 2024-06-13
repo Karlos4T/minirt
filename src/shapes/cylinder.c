@@ -49,8 +49,10 @@ t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
 	cy->r2 = cylinder.diameter * cylinder.diameter * 0.25;
-	if (module(cy->v) > 1)
+	if (module(cy->v) > 1 && module(cy->v) < 1.21)
 		cy->r2 = cylinder.diameter * cylinder.diameter * 0.50;
+	else
+		cy->r2 = cylinder.diameter * cylinder.diameter * 0.75;
 	cy->height = cylinder.height;
 	cy->covers[0] = create_cover(cy, cylinder.color, 0);
 	cy->covers[1] = create_cover(cy, cylinder.color, 1);
