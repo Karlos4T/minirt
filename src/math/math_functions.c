@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/11 17:18:57 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/13 17:49:23 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,9 @@ t_vec *get_screen_coord(int x, int y, t_camera *c)
 		EL PUNTO XY DE LA PANTALLA ES EL PUNTO xyz del plano
 	*/
 	
-	coords->x = x * wsize / WIN_HEIGHT + c->o.x;
-	coords->y = y * wsize / WIN_HEIGHT + c->o.y;
-	coords->z = c->o.z;
+	coords->x = x * wsize / WIN_HEIGHT + c->o.x + c->v.x;
+	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
+	coords->z = c->o.z - 1;
 	
 	//printf("v(%f, %f, %f)\n", coords->x, coords->y, coords->z);
 	return(coords);
