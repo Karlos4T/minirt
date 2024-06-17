@@ -15,6 +15,7 @@
 
 # define WIN_WIDTH 1440
 # define WIN_HEIGHT 1080
+# define M_PI 3.141592
 
 # include "parse.h"
 # include "types.h"
@@ -64,6 +65,8 @@ t_vec		vec_add(t_vec v1, t_vec v2);
 t_vec		producto_escalar(t_vec v, double n);
 t_vec		get_point(t_ray r, int t);
 
+void rotate_camera(t_camera *camera, double angle_y, double angle_x);
+
 
 //COLOR
 int 		*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
@@ -74,7 +77,7 @@ double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
 
 //MAIN
 void		render_pixel(int x, int y, t_data *data, t_scene scene);
-t_vec		*get_screen_coord(int x, int y, t_camera *camera);
+t_vec       *get_screen_coord(int x, int y, t_camera *c);
 t_scene		*initialize_scene();
 
 
