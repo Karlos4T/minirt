@@ -115,73 +115,6 @@ double quadratic(double a, double b, double c)
 	return (0);
 }
 
-void rotate_vector(t_vec *vec, float rm[3][3])
-{
-    float x = vec->x;
-    float y = vec->y;
-    float z = vec->z;
-
-    vec->x = rm[0][0] * x + rm[0][1] * y + rm[0][2] * z;
-    vec->y = rm[1][0] * x + rm[1][1] * y + rm[1][2] * z;
-    vec->z = rm[2][0] * x + rm[2][1] * y + rm[2][2] * z;
-}
-
-// Calcular la matriz de rotación
-void calculate_rotation_matrix_y(float rm[3][3], double angle_y)
-{
-    float sin_y = sinf(angle_y);
-    float cos_y = cosf(angle_y);
-
-    rm[0][0] = cos_y;
-    rm[0][1] = 0;
-    rm[0][2] = sin_y;
-    rm[1][0] = 0;
-    rm[1][1] = 1;
-    rm[1][2] = 0;
-    rm[2][0] = -sin_y;
-    rm[2][1] = 0;
-    rm[2][2] = cos_y;
-}
-
-void calculate_rotation_matrix_x(float rm[3][3], double angle_x)
-{
-    float sin_x = sinf(angle_x);
-    float cos_x = cosf(angle_x);
-
-    rm[0][0] = 1;
-    rm[0][1] = 0;
-    rm[0][2] = 0;
-    rm[1][0] = 0;
-    rm[1][1] = cos_x;
-    rm[1][2] = -sin_x;
-    rm[2][0] = 0;
-    rm[2][1] = sin_x;
-    rm[2][2] = cos_x;
-}
-
-void combine_rotation_matrices(float combined[3][3], float ry[3][3], float rx[3][3])
-{
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            combined[i][j] = ry[i][0] * rx[0][j] + ry[i][1] * rx[1][j] + ry[i][2] * rx[2][j];
-        }
-    }
-}
-
-void rotate_camera(t_camera *camera, double angle_y, double angle_x)
-{
-    float rm_y[3][3];
-    float rm_x[3][3];
-    float rm_combined[3][3];
-
-    calculate_rotation_matrix_y(rm_y, angle_y);
-    calculate_rotation_matrix_x(rm_x, angle_x);
-    combine_rotation_matrices(rm_combined, rm_y, rm_x);
-
-    // Actualizar la matriz de rotación de la cámara
-    memcpy(camera->rotation_matrix, rm_combined, sizeof(rm_combined));
-}
-
 t_vec *get_screen_coord(int x, int y, t_camera *c)
 {
     t_vec *coords;
@@ -191,22 +124,20 @@ t_vec *get_screen_coord(int x, int y, t_camera *c)
     if (!coords)
         return NULL;
 
+    t_vec global_up = {0.0f, 1.0f, 0.0f};
+
+    t_vec right = normalize(cross_prod(global_up, c->v));
+
+    t_vec up = normalize(cross_prod(c->v, right));
+
     wsize = fabs(tan(c->fov / 2));
 
-    // Coordenadas en el plano de la cámara antes de la rotación
-    coords->x = x * wsize / WIN_HEIGHT + c->o.x + c->v.x;
-	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
-    coords->z = -1; // Considerando el plano de la cámara en z = -1
+    float screen_x = x * wsize / WIN_HEIGHT;
+    float screen_y = y * wsize / WIN_HEIGHT;
 
-    // Aplicar la rotación combinada
-    rotate_vector(coords, c->rotation_matrix);
-
-    // Transformar a las coordenadas globales (espacio 3D)
-    coords->x += c->o.x;
-    coords->y += c->o.y;
-    coords->z += c->o.z;
-
+    coords->x = c->o.x - screen_x * right.x - screen_y * up.x - c->v.x;
+    coords->y = c->o.y + screen_x * right.y + screen_y * up.y + c->v.y;
+    coords->z = c->o.z + screen_x * right.z + screen_y * up.z + c->v.z;
+    
     return coords;
 }
-
-
