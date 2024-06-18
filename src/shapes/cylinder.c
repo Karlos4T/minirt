@@ -49,7 +49,7 @@ t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
 	cy->r2 = cylinder.diameter * cylinder.diameter * 0.25;
-	if (module(cy->v) > 1 && module(cy->v) < 1.21)
+	if (module(cy->v) > 1 && module(cy->v) <= sqrt(2))
 		cy->r2 = cylinder.diameter * cylinder.diameter * 0.50;
 	else
 		cy->r2 = cylinder.diameter * cylinder.diameter * 0.75;

@@ -115,84 +115,48 @@ double quadratic(double a, double b, double c)
 	return (0);
 }
 
-/*
-t_vec *get_screen_coord(int x, int y, t_camera *c)
-{
-    t_vec *coords;
-    t_vec right, up, forward;
-    double aspect_ratio = (double)WIN_WIDTH / WIN_HEIGHT;
-    double wsize;
-
-    coords = malloc(sizeof(t_vec));
-
-    // Calcula el tamaño de la ventana en términos de la proyección
-    wsize = tan(c->fov / 2);
-
-    // Normaliza la dirección de la cámara
-    forward = normalize(c->v);
-
-    // Calcula el vector hacia arriba (up) de la cámara
-    t_vec global_up = {0, 0, 1}; // Suponiendo que Y es el eje hacia arriba en el mundo
-    right = normalize(cross_prod(global_up, forward));
-    up = cross_prod(forward, right);
-
-    // Coordenadas de la pantalla al espacio
-    double pixel_ndc_x = (x + 0.5) / WIN_WIDTH; // Coordenadas normalizadas de dispositivo
-    double pixel_ndc_y = (y + 0.5) / WIN_HEIGHT;
-    double pixel_screen_x = (2 * pixel_ndc_x - 1) * aspect_ratio * wsize;
-    double pixel_screen_y = (1 - 2 * pixel_ndc_y) * wsize;
-
-    // Calcula las coordenadas del espacio
-    coords->x = c->o.x + pixel_screen_x * right.x + pixel_screen_y * up.x - forward.x;
-    coords->y = c->o.y + pixel_screen_x * right.y + pixel_screen_y * up.y - forward.y;
-    coords->z = c->o.z + pixel_screen_x * right.z + pixel_screen_y * up.z - forward.z;
-
-    return coords;
-}
-*/
-
-void rotate_vector(t_vec *vec, float rotation_matrix[3][3])
+void rotate_vector(t_vec *vec, float rm[3][3])
 {
     float x = vec->x;
     float y = vec->y;
     float z = vec->z;
 
-    vec->x = rotation_matrix[0][0] * x + rotation_matrix[0][1] * y + rotation_matrix[0][2] * z;
-    vec->y = rotation_matrix[1][0] * x + rotation_matrix[1][1] * y + rotation_matrix[1][2] * z;
-    vec->z = rotation_matrix[2][0] * x + rotation_matrix[2][1] * y + rotation_matrix[2][2] * z;
+    vec->x = rm[0][0] * x + rm[0][1] * y + rm[0][2] * z;
+    vec->y = rm[1][0] * x + rm[1][1] * y + rm[1][2] * z;
+    vec->z = rm[2][0] * x + rm[2][1] * y + rm[2][2] * z;
 }
 
 // Calcular la matriz de rotación
-void calculate_rotation_matrix_y(float rotation_matrix[3][3], double angle_y)
+void calculate_rotation_matrix_y(float rm[3][3], double angle_y)
 {
     float sin_y = sinf(angle_y);
     float cos_y = cosf(angle_y);
 
-    rotation_matrix[0][0] = cos_y;
-    rotation_matrix[0][1] = 0;
-    rotation_matrix[0][2] = sin_y;
-    rotation_matrix[1][0] = 0;
-    rotation_matrix[1][1] = 1;
-    rotation_matrix[1][2] = 0;
-    rotation_matrix[2][0] = -sin_y;
-    rotation_matrix[2][1] = 0;
-    rotation_matrix[2][2] = cos_y;
+    rm[0][0] = cos_y;
+    rm[0][1] = 0;
+    rm[0][2] = sin_y;
+    rm[1][0] = 0;
+    rm[1][1] = 1;
+    rm[1][2] = 0;
+    rm[2][0] = -sin_y;
+    rm[2][1] = 0;
+    rm[2][2] = cos_y;
 }
 
-void calculate_rotation_matrix_x(float rotation_matrix[3][3], double angle_x)
+void calculate_rotation_matrix_x(float rm[3][3], double angle_x)
 {
     float sin_x = sinf(angle_x);
     float cos_x = cosf(angle_x);
 
-    rotation_matrix[0][0] = 1;
-    rotation_matrix[0][1] = 0;
-    rotation_matrix[0][2] = 0;
-    rotation_matrix[1][0] = 0;
-    rotation_matrix[1][1] = cos_x;
-    rotation_matrix[1][2] = -sin_x;
-    rotation_matrix[2][0] = 0;
-    rotation_matrix[2][1] = sin_x;
-    rotation_matrix[2][2] = cos_x;
+    rm[0][0] = 1;
+    rm[0][1] = 0;
+    rm[0][2] = 0;
+    rm[1][0] = 0;
+    rm[1][1] = cos_x;
+    rm[1][2] = -sin_x;
+    rm[2][0] = 0;
+    rm[2][1] = sin_x;
+    rm[2][2] = cos_x;
 }
 
 void combine_rotation_matrices(float combined[3][3], float ry[3][3], float rx[3][3])
@@ -206,16 +170,16 @@ void combine_rotation_matrices(float combined[3][3], float ry[3][3], float rx[3]
 
 void rotate_camera(t_camera *camera, double angle_y, double angle_x)
 {
-    float rotation_matrix_y[3][3];
-    float rotation_matrix_x[3][3];
-    float rotation_matrix_combined[3][3];
+    float rm_y[3][3];
+    float rm_x[3][3];
+    float rm_combined[3][3];
 
-    calculate_rotation_matrix_y(rotation_matrix_y, angle_y);
-    calculate_rotation_matrix_x(rotation_matrix_x, angle_x);
-    combine_rotation_matrices(rotation_matrix_combined, rotation_matrix_y, rotation_matrix_x);
+    calculate_rotation_matrix_y(rm_y, angle_y);
+    calculate_rotation_matrix_x(rm_x, angle_x);
+    combine_rotation_matrices(rm_combined, rm_y, rm_x);
 
     // Actualizar la matriz de rotación de la cámara
-    memcpy(camera->rotation_matrix, rotation_matrix_combined, sizeof(rotation_matrix_combined));
+    memcpy(camera->rotation_matrix, rm_combined, sizeof(rm_combined));
 }
 
 t_vec *get_screen_coord(int x, int y, t_camera *c)
@@ -225,13 +189,13 @@ t_vec *get_screen_coord(int x, int y, t_camera *c)
 
     coords = malloc(sizeof(t_vec));
     if (!coords)
-        return NULL; // Manejar error de memoria
+        return NULL;
 
     wsize = fabs(tan(c->fov / 2));
 
     // Coordenadas en el plano de la cámara antes de la rotación
-    coords->x = (x - WIN_WIDTH / 2.0) * wsize / (WIN_HEIGHT / 2.0);
-    coords->y = (y - WIN_HEIGHT / 2.0) * wsize / (WIN_HEIGHT / 2.0);
+    coords->x = x * wsize / WIN_HEIGHT + c->o.x + c->v.x;
+	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
     coords->z = -1; // Considerando el plano de la cámara en z = -1
 
     // Aplicar la rotación combinada

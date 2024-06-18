@@ -113,7 +113,7 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	t_vec	*screen_point;
 	
 	r = malloc(sizeof(t_ray));
-	rotate_camera(sc.cam, 50.0 * M_PI / 180.0, 0 * M_PI / 180.0);
+	rotate_camera(sc.cam, 0 * M_PI / 180.0, 0 * M_PI / 180.0);
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
 	r->v = vec_sub(sc.cam->o, *screen_point);
 	r->o = sc.cam->o;
