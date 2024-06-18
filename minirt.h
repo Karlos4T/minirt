@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:18:22 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:24:37 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include "./libft/include/libft.h"
+
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 
 //FUNCTIONS
@@ -45,7 +48,7 @@ t_vec		str_to_vec(char *str);
 int			ft_is_normalized(t_vec v);
 void		print_scene(t_scene *scene);
 int			ft_is_empty(char *line);
-double	    ft_atod(char *s);
+double		ft_atod(char *s);
 
 //MATH FUNCTIONS
 int			x_pos(int x);
@@ -80,5 +83,9 @@ void		render_pixel(int x, int y, t_data *data, t_scene scene);
 t_vec       *get_screen_coord(int x, int y, t_camera *c);
 t_scene		*initialize_scene();
 
+
+//HOOKS
+
+void		init_hooks(t_mlx *mlx);
 
 #endif

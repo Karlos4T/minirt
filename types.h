@@ -6,13 +6,12 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/09 22:06:53 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:32:59 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
-
 typedef struct s_vec
 {
 	double	x;
@@ -41,6 +40,13 @@ typedef struct s_data
 	int		length;
 	int		endian;
 }	t_data;
+
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	t_data	img;
+}	t_mlx;
 
 typedef struct s_camera
 {
