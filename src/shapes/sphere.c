@@ -29,7 +29,7 @@ double	vector_x_sphere(t_sphere *s, t_ray r)
 	double	b;
 	double	c;
 
-	//v = normalize(v);
+	t_vec v = normalize(v);
 	a = dot_prod(r.v, r.v);
 	b = 2 * (r.v.x * (r.o.x - s->o.x)
 			+ r.v.y * (r.o.y - s->o.y) + r.v.z * (r.o.z - s->o.z));

@@ -12,7 +12,7 @@
 
 #include "../minirt.h"
 
-double	get_brightness_level(t_sphere *s, t_light *l, t_vec *p)
+double	get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p)
 {
 	t_vec	v1;
 	t_vec	v2;
@@ -23,7 +23,7 @@ double	get_brightness_level(t_sphere *s, t_light *l, t_vec *p)
 	alpha = dot_prod(v1, neg(v2)) / (module(v1) * module(v2));
 	if (alpha < 0)
 		return (0);
-	return (alpha);
+	return (sqrt(alpha));
 }
 
 double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
@@ -35,7 +35,7 @@ double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
 	alpha = dot_prod(v1, neg(pl->v)) / (module(v1) * module(pl->v));
 	if (alpha < 0)
 		return (0);
-	return (alpha);
+	return (sqrt(alpha));
 }
 
 double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
@@ -76,14 +76,20 @@ int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 	i = 0;
 	while (ob->sph[i])
 	{
-		if (vector_x_sphere(ob->sph[i], *r))
+		if (vector_x_sphere(ob->sph[i], *r) > 0)
 			return (1);
 		i++;
 	}
 	i = 0;
 	while (ob->cyl[i])
 	{
-		if (vector_x_cylinder(ob->cyl[i], *r))
+		if (vector_x_cylinder(ob->cyl[i], *r) < 0)
+			return (1);
+		i++;
+	}
+	while (ob->pla[i])
+	{
+		if (vector_x_plane(ob->pla[i], *r) > 0)
 			return (1);
 		i++;
 	}

@@ -109,8 +109,8 @@ double quadratic(double a, double b, double c)
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
 		if (fabs(t[0]) < fabs(t[1]))
-			return (fabs(t[0]));
-		return (fabs(t[1]));
+			return (t[0]);
+		return (t[1]);
 	}
 	return (0);
 }

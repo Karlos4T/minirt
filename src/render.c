@@ -85,8 +85,8 @@ int	render_sphere(t_scene sc, double *T)
 	t_vec p;
 
 	p = get_point(*sc.cam->r, T[0]);
-	alpha = get_brightness_level(sp, sc.light, &p);
-	color = hexa(mult_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, 0)); 
+	alpha = get_brightness_level_sp(sp, sc.light, &p);
+	color = hexa(mult_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj))); 
 	return color;
 }
 
@@ -99,7 +99,7 @@ int render_cylinder(t_scene sc, double *T)
 
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
-	color = hexa(mult_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, 0));
+	color = hexa(mult_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
 	cy->is_cover = 0;
 	return color;
 }
@@ -113,7 +113,6 @@ void render_pixel(int x, int y, t_data *data, t_scene sc)
 	t_vec	*screen_point;
 	
 	r = malloc(sizeof(t_ray));
-	rotate_camera(sc.cam, 0 * M_PI / 180.0, 0 * M_PI / 180.0);
 	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
 	r->v = vec_sub(sc.cam->o, *screen_point);
 	r->o = sc.cam->o;

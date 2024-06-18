@@ -55,8 +55,8 @@ int	*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow)
 	{	
 		if (is_shadow)
 		{
-			// printf("%d\n", is_shadow);		//TODO muestra 1 por consola
-			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * al;
+			// printf("%d\n", is_shadow);
+			rgb[i] = rgb1[i] * al;
 		}
 		else
 			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;

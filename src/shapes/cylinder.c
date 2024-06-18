@@ -66,7 +66,7 @@ int	cut_cylinder(t_cylinder cy, t_ray r, double t)
 	t_vec	po;
 	double	hip;
 
-	pc = get_point(r, t);
+	pc = get_point(r, fabs(t));
 	po = vec_sub(pc, cy.o);
 	hip = module(po);
 	if (hip - 1 > sqrt(pow(cy.height / 2, 2) + pow(cy.radius, 2)))
