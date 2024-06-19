@@ -68,40 +68,40 @@ int	render_plane(t_scene sc, double *T)
 {
 	t_plane *pl = sc.obj->pla[(int)T[2]];
 	t_vec p;
-	int color;
+	int *color;
 	double alpha;
-	
+
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_plane(pl, sc.light, p);
-	color = hexa(mult_colors(pl->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
-	return color;
+	color = calculate_color(pl->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
+	return hexa(color);
 }
 
 int	render_sphere(t_scene sc, double *T)
 {
 	t_sphere *sp = sc.obj->sph[(int)T[2]];
-	int color;
+	int *color;
 	double alpha;
 	t_vec p;
 
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_sp(sp, sc.light, &p);
-	color = hexa(mult_colors(sp->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj))); 
-	return color;
+	color = calculate_color(sp->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
+	return hexa(color);
 }
 
 int render_cylinder(t_scene sc, double *T)
 {
 	t_cylinder *cy = sc.obj->cyl[(int)T[2]];
 	double alpha;
-	int color;
+	int *color;
 	t_vec p;
 
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
-	color = hexa(mult_colors(cy->color, sc.light->color, alpha, sc.amb->intensity, check_shadow(p, sc.light[0].o, sc.obj)));
+	color = calculate_color(cy->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
 	cy->is_cover = 0;
-	return color;
+	return hexa(color);
 }
 
 

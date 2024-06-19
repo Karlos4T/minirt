@@ -43,7 +43,7 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 double map_value(double x)
 {
     const double x_min = 1.0;
-    const double x_max = 1.68;
+    const double x_max = 1.75;
     const double y_min = 0.25;
     const double y_max = 0.72;
 
@@ -99,10 +99,6 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 	if(fabs(tp[1]) < fabs(tp[0]))
 		i = 1;
 	cp = get_point(r, fabs(tp[i]));
-	//if (module(r.o) != 0 && tp[i])
-	//	printf("%d\n", i);
-		//printf("r(%f, %f, %f)\n", r.v.x, r.v.y, r.v.z);
-	//	printf("r.o(%f, %f, %f) -> %f\n", v.x, v.y, v.z, tp[i]);
 	if (module(vec_sub(cp, cy->covers[i]->o)) <= cy->radius)
 	{
 		cy->is_cover = i + 1;

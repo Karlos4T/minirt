@@ -17,7 +17,7 @@ static void	print_first(t_scene *s)
 	printf("Camera\n");
 	printf("Origin:\t\t%f %f %f\n", s->cam->o.x, s->cam->o.y, s->cam->o.z);
 	printf("Orientation:\t%f %f %f\n", s->cam->v.x, s->cam->v.y, s->cam->v.z);
-	printf("FOV:\t\t%d\n\n", s->cam->fov);
+	printf("FOV:\t\t%f\n\n", s->cam->fov);
 
 	printf("Ambient light\n");
 	printf("Brightness:\t%f\n", s->amb->intensity);

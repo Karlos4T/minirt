@@ -76,6 +76,7 @@ int 		*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow)
 double		get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p);
 double		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
 double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
+int         *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow);
 
 
 //MAIN

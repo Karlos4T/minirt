@@ -23,7 +23,7 @@ double	get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p)
 	alpha = dot_prod(v1, neg(v2)) / (module(v1) * module(v2));
 	if (alpha < 0)
 		return (0);
-	return (sqrt(alpha));
+	return (alpha);
 }
 
 double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
@@ -35,7 +35,7 @@ double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
 	alpha = dot_prod(v1, neg(pl->v)) / (module(v1) * module(pl->v));
 	if (alpha < 0)
 		return (0);
-	return (sqrt(alpha));
+	return (alpha * alpha);
 }
 
 double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
@@ -89,7 +89,7 @@ int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 	}
 	while (ob->pla[i])
 	{
-		if (vector_x_plane(ob->pla[i], *r) > 0)
+		if (vector_x_plane(ob->pla[i], *r) == 0)
 			return (1);
 		i++;
 	}

@@ -53,7 +53,7 @@ typedef struct s_camera
 	t_vec	o;
 	t_vec	v;
 	t_ray	*r;
-	int		fov;
+	double		fov;
 	float	rotation_matrix[3][3];
 }	t_camera;
 
