@@ -39,6 +39,18 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 	}
 }
 
+//Esta tiene que ir en math funcs
+double map_value(double x)
+{
+    const double x_min = 1.0;
+    const double x_max = 1.68;
+    const double y_min = 0.25;
+    const double y_max = 0.72;
+
+    return y_min + ((x - x_min) / (x_max - x_min)) * (y_max - y_min);
+}
+
+
 t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 {
 	t_cylinder	*cy;
@@ -48,11 +60,8 @@ t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 	cy->v = cylinder.v;
 	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
-	cy->r2 = cylinder.diameter * cylinder.diameter * 0.25;
-	if (module(cy->v) > 1 && module(cy->v) <= sqrt(2))
-		cy->r2 = cylinder.diameter * cylinder.diameter * 0.50;
-	else
-		cy->r2 = cylinder.diameter * cylinder.diameter * 0.75;
+	cy->r2 = cylinder.diameter * cylinder.diameter * map_value(module(cy->v));
+	
 	cy->height = cylinder.height;
 	cy->covers[0] = create_cover(cy, cylinder.color, 0);
 	cy->covers[1] = create_cover(cy, cylinder.color, 1);

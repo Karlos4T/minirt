@@ -141,6 +141,7 @@ void render_screen(t_data *data, t_scene *scene)
 	int j;
 
 	i = 0;
+	printf("Rendering scene...\n");
 	while (i < WIN_HEIGHT)
 	{
 		j = 0;
@@ -151,4 +152,5 @@ void render_screen(t_data *data, t_scene *scene)
 		}
 		i++;
 	}
+	printf("Scene rendered Succesfully!\n");
 }

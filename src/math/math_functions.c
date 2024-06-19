@@ -115,6 +115,7 @@ double quadratic(double a, double b, double c)
 	return (0);
 }
 
+
 t_vec *get_screen_coord(int x, int y, t_camera *c)
 {
     t_vec *coords;
