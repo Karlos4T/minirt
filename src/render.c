@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:37:44 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:48:32 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,66 +64,54 @@ double *get_closest_object(t_scene sc)
 	return T;
 }
 
-int	render_plane(t_scene sc, double *T)
+int	*render_plane(t_scene sc, double *T)
 {
 	t_plane	*pl;
 	t_vec	p;
 	int		*color;
 	double	alpha;
-	// int		hex;
 
 	pl = sc.obj->pla[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_plane(pl, sc.light, p);
 	color = calculate_color(pl->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
-	// hex = hexa(color);
-	// free(color);		// TODO fix this
-	// return (hex);
-	return (hexa(color));
+	return (color);
 }
 
-int	render_sphere(t_scene sc, double *T)
+int	*render_sphere(t_scene sc, double *T)
 {
 	t_sphere	*sp;
 	int			*color;
 	double		alpha;
 	t_vec		p;
-	// int			hex;
 
 	sp = sc.obj->sph[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_sp(sp, sc.light, &p);
 	color = calculate_color(sp->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
-	// hex = hexa(color);
-	// free(color);		// TODO fix this
-	// return (hex);
-	return (hexa(color));
+	return (color);
 }
 
-int	render_cylinder(t_scene sc, double *T)
+int	*render_cylinder(t_scene sc, double *T)
 {
 	t_cylinder	*cy;
 	double		alpha;
 	int			*color;
 	t_vec		p;
-	// int			hex;
 
 	cy = sc.obj->cyl[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
 	color = calculate_color(cy->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
 	cy->is_cover = 0;
-	// hex = hexa(color);
-	// free(color);			// TODO fix this
-	// return (hex);
-	return (hexa(color));
+	return (color);
 }
 
 
 void	render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_ray	*r;
-	int		color;
+	int		*color;
 	double	*T;
 	t_vec	*screen_point;
 
@@ -148,8 +136,8 @@ void	render_pixel(int x, int y, t_data *data, t_scene sc)
 
 	free(T);
 	free(r);
-
-	my_mlx_pixel_put(data, x, y, color);
+	my_mlx_pixel_put(data, x, y, hexa(color));
+	// free(color);		// TODO fix this leak
 }
 
 void render_screen(t_data *data, t_scene *scene)

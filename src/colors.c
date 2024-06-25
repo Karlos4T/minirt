@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 16:22:06 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:42:26 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	hexa(int *rgb)
 	int	i;
 
 	i = 0;
+	if (!rgb)
+		return (0);
 	while (i < 3)
 	{
 		if (rgb[i] < 0)
