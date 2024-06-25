@@ -47,9 +47,13 @@ t_vec producto_escalar(t_vec v, double n)
 
 t_vec normalize(t_vec v)
 {
-	v.x = v.x / module(v);
-	v.y = v.y / module(v);
-	v.z = v.z / module(v);
+	double m = module(v);
+	if (m == 0)
+		m = 0.1;
+
+	v.x = v.x / m;
+	v.y = v.y / m;
+	v.z = v.z / m;
 	return(v);
 }
 
@@ -105,31 +109,36 @@ double quadratic(double a, double b, double c)
 		t[0] = (- b + sqrt(D)) / (2 * a);
 		t[1] = (- b - sqrt(D)) / (2 * a);
 		if (fabs(t[0]) < fabs(t[1]))
-			return (fabs(t[0]));
-		return (fabs(t[1]));
+			return (t[0]);
+		return (t[1]);
 	}
 	return (0);
 }
 
+
 t_vec *get_screen_coord(int x, int y, t_camera *c)
 {
-	t_vec	*coords;
-	coords = malloc(sizeof(t_vec));
+    t_vec *coords;
+    double wsize;
 
-	double wsize;
-	wsize = fabs(tan(c->fov/2));
-	
-	//printf("%f\n", x * limit / WIN_HEIGHT);
-	/*
-		LOS PUNTOS X E Y QUE RECIBIMOS NO SON LOS MISMOS PUNTOS EN EL PLANO 3D
-		ES DECIR TIENEN COMPONENTES EN x, y, z.
-		EL PUNTO XY DE LA PANTALLA ES EL PUNTO xyz del plano
-	*/
-	
-	coords->x = x * wsize / WIN_HEIGHT + c->o.x + c->v.x;
-	coords->y = y * wsize / WIN_HEIGHT + c->o.y + c->v.y;
-	coords->z = c->o.z - 1;
-	
-	//printf("v(%f, %f, %f)\n", coords->x, coords->y, coords->z);
-	return(coords);
+    coords = malloc(sizeof(t_vec));
+    if (!coords)
+        return NULL;
+
+    t_vec global_up = {0.0f, 1.0f, 0.0f};
+
+    t_vec right = normalize(cross_prod(global_up, c->v));
+
+    t_vec up = normalize(cross_prod(c->v, right));
+
+    wsize = fabs(tan(c->fov / 2));
+
+    float screen_x = x * wsize / WIN_HEIGHT;
+    float screen_y = y * wsize / WIN_HEIGHT;
+
+    coords->x = c->o.x - screen_x * right.x - screen_y * up.x - c->v.x;
+    coords->y = c->o.y + screen_x * right.y + screen_y * up.y + c->v.y;
+    coords->z = c->o.z + screen_x * right.z + screen_y * up.z + c->v.z;
+    
+    return coords;
 }

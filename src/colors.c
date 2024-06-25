@@ -42,31 +42,64 @@ int	hexa(int *rgb)
 	return (hexa);
 }
 
-int	*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow)
-{
-	int	*rgb;
+void scale_color(int *result, int *color, float scale) {
+    for (int i = 0; i < 3; i++) {
+        result[i] = fminf(color[i] * scale, 255);
+    }
+}
+
+void add_colors(int *result, int *a, int *b) {
+    for (int i = 0; i < 3; i++) {
+        result[i] = fminf(a[i] + b[i], 255);
+    }
+}
+
+void multiply_colors(int *result, int *a, int *b) {
+    for (int i = 0; i < 3; i++) {
+        result[i] = fminf(a[i] * b[i] / 255.0f, 255);
+    }
+}
+
+int *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow) {
+
+    int *result = malloc(sizeof(int) * 3);
+    int ambient[3];
+    int diffuse[3];
+
+    scale_color(ambient, ambient_color, ambient_intensity);
+    if (is_shadow)
+        scale_color(diffuse, point_color, 0);
+    else
+        scale_color(diffuse, point_color, point_intensity * fmaxf(alpha, 0));
+    int combined[3];
+    add_colors(combined, ambient, diffuse);
+    multiply_colors(result, surface_color, combined);
+    
+    return result;
+
+/*
+//FUNCIÓN DE GESTION DE ILUMINACIÓN ORIGINAL
+    int	*rgb;
 	int	i;
 
-	(void) rgb2;
-	(void) al;
+    (void)point_color;
+    (void)point_intensity;
+
 	i = 0;
 	rgb = malloc(sizeof(int) * 3);
 	while (i < 3)
 	{	
 		if (is_shadow)
 		{
-			// printf("%d\n", is_shadow);		//TODO muestra 1 por consola
-			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * al;
+			// printf("%d\n", is_shadow);
+			rgb[i] = surface_color[i] * ambient_intensity;
 		}
 		else
-			rgb[i] = sqrt(rgb1[i] * rgb2[i]) * alpha;
-		if (rgb[i] < + al * rgb1[i])
-			rgb[i] = al * rgb1[i];
-		//if (rgb2[i] > 0)
-		//	rgb[i] = (rgb1[i] + rgb2[i] * al) * alpha / 255;
-		//else
-		//	rgb[i] = (rgb1[i] * al) * alpha / 255;
+			rgb[i] = sqrt(surface_color[i] * ambient_color[i]) * alpha;
+		if (rgb[i] < + ambient_intensity * surface_color[i])
+			rgb[i] = ambient_intensity * surface_color[i];
 		i++;
 	}
 	return (rgb);
+*/
 }
