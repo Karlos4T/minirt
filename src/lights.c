@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:13:12 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/09 22:18:54 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:45:57 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,11 @@ double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
 {
 	t_vec	v1;
 	double	alpha;
+	t_vec	*v;
 
-	v1 = normalize(*create_vector(l->o, p));
+	v = create_vector(l->o, p);
+	v1 = normalize(*v);
+	free(v);
 	alpha = dot_prod(v1, neg(pl->v)) / (module(v1) * module(pl->v));
 	if (alpha < 0)
 		return (0);
@@ -65,33 +68,60 @@ double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
 
 int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 {
-	t_vec	v;
+	t_vec	*v;
 	int		i;
 	t_ray	*r;
 
-	v = *create_vector(p, l);
+	v = create_vector(p, l);
 	r = malloc(sizeof(t_ray));
 	r->o = p;
-	r->v = normalize(v);
-	i = 0;
-	while (ob->sph[i])
-	{
+	r->v = normalize(*v);
+	free(v);
+	i = -1;
+	while (ob->sph[++i])
 		if (vector_x_sphere(ob->sph[i], *r) > 0)
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (ob->cyl[i])
-	{
+			return (free(r), 1);
+	i = -1;
+	while (ob->cyl[++i])
 		if (vector_x_cylinder(ob->cyl[i], *r) < 0)
-			return (1);
-		i++;
-	}
-	while (ob->pla[i])
-	{
+			return (free(r), 1);
+	i = -1;
+	while (ob->pla[++i])
 		if (vector_x_plane(ob->pla[i], *r) == 0)
-			return (1);
-		i++;
-	}
-	return (0);
+			return (free(r), 1);
+	return (free(r), 0);
 }
+
+// TODO comprobar por a veces se muestra una linea negra (atom.rt)
+// int	check_shadow(t_vec p, t_vec l, t_objects *ob)
+// {
+// 	t_vec	v;
+// 	int		i;
+// 	t_ray	*r;
+
+// 	v = *create_vector(p, l);
+// 	r = malloc(sizeof(t_ray));
+// 	r->o = p;
+// 	r->v = normalize(v);
+// 	i = 0;
+// 	while (ob->sph[i])
+// 	{
+// 		if (vector_x_sphere(ob->sph[i], *r) > 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (ob->cyl[i])
+// 	{
+// 		if (vector_x_cylinder(ob->cyl[i], *r) < 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	while (ob->pla[i])
+// 	{
+// 		if (vector_x_plane(ob->pla[i], *r) == 0)
+// 			return (1);
+// 		i++;
+// 	}
+// 	return (0);
+// }

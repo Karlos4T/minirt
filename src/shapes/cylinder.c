@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/11 19:08:43 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:01:21 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 
 	if (type == 0)
 	{
-		o.x = cy->o.x + dot_prod(cy->v, *vec(1, 0, 0))
-			/ (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2);
-		o.y = cy->o.y + dot_prod(cy->v, *vec(0, 1, 0))
-			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
-		o.z = cy->o.z + dot_prod(cy->v, *vec(0, 0, 1))
-			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+		o.x = cy->o.x + dot_prod(cy->v, vec_s(1, 0, 0))
+			/ (module(cy->v) * module(vec_s(1, 0, 0))) * (cy->height / 2);
+		o.y = cy->o.y + dot_prod(cy->v, vec_s(0, 1, 0))
+			/ (module(cy->v) * module(vec_s(0, 1, 0))) * (cy->height / 2);
+		o.z = cy->o.z + dot_prod(cy->v, vec_s(0, 0, 1))
+			/ (module(cy->v) * module(vec_s(0, 0, 1))) * (cy->height / 2);
 		return (create_plane(o, cy->v, color));
 	}
 	else
 	{
-		o.x = cy->o.x - dot_prod(cy->v, *vec(1, 0, 0))
-			/ (module(cy->v) * module(*vec(1, 0, 0))) * (cy->height / 2);
-		o.y = cy->o.y - dot_prod(cy->v, *vec(0, 1, 0))
-			/ (module(cy->v) * module(*vec(0, 1, 0))) * (cy->height / 2);
-		o.z = cy->o.z - dot_prod(cy->v, *vec(0, 0, 1))
-			/ (module(cy->v) * module(*vec(0, 0, 1))) * (cy->height / 2);
+		o.x = cy->o.x - dot_prod(cy->v, vec_s(1, 0, 0))
+			/ (module(cy->v) * module(vec_s(1, 0, 0))) * (cy->height / 2);
+		o.y = cy->o.y - dot_prod(cy->v, vec_s(0, 1, 0))
+			/ (module(cy->v) * module(vec_s(0, 1, 0))) * (cy->height / 2);
+		o.z = cy->o.z - dot_prod(cy->v, vec_s(0, 0, 1))
+			/ (module(cy->v) * module(vec_s(0, 0, 1))) * (cy->height / 2);
 		return (create_plane(o, neg(cy->v), color));
 	}
 }
@@ -61,7 +61,6 @@ t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 	cy->radius = cylinder.diameter / 2;
 	cy->is_cover = 0;
 	cy->r2 = cylinder.diameter * cylinder.diameter * map_value(module(cy->v));
-	
 	cy->height = cylinder.height;
 	cy->covers[0] = create_cover(cy, cylinder.color, 0);
 	cy->covers[1] = create_cover(cy, cylinder.color, 1);

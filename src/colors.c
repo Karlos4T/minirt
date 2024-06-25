@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/08 14:47:59 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:22:06 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,23 @@ void multiply_colors(int *result, int *a, int *b) {
     }
 }
 
-int *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow) {
+int *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow)
+{
+	int	*result;
+	int	ambient[3];
+	int	diffuse[3];
+	int	combined[3];
 
-    int *result = malloc(sizeof(int) * 3);
-    int ambient[3];
-    int diffuse[3];
-
-    scale_color(ambient, ambient_color, ambient_intensity);
-    if (is_shadow)
-        scale_color(diffuse, point_color, 0);
-    else
-        scale_color(diffuse, point_color, point_intensity * fmaxf(alpha, 0));
-    int combined[3];
-    add_colors(combined, ambient, diffuse);
-    multiply_colors(result, surface_color, combined);
-    
-    return result;
+	result = malloc(sizeof(int) * 3);
+	scale_color(ambient, ambient_color, ambient_intensity);
+	if (is_shadow)
+		scale_color(diffuse, point_color, 0);
+	else
+		scale_color(diffuse, point_color, point_intensity * fmaxf(alpha, 0));
+	add_colors(combined, ambient, diffuse);
+	multiply_colors(result, surface_color, combined);
+	return (result);
+}
 
 /*
 //FUNCIÓN DE GESTION DE ILUMINACIÓN ORIGINAL
@@ -102,4 +103,3 @@ int *calculate_color(int *surface_color, int *ambient_color, float ambient_inten
 	}
 	return (rgb);
 */
-}

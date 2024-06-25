@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/13 17:49:23 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:51:24 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,30 +115,23 @@ double quadratic(double a, double b, double c)
 	return (0);
 }
 
-
-t_vec *get_screen_coord(int x, int y, t_camera *c)
+t_vec	*get_screen_coord(int x, int y, t_camera *c)
 {
-    t_vec *coords;
-    double wsize;
+	t_vec		*coords;
+	double		wsize;
+	const t_vec	global_up = {0.0f, 1.0f, 0.0f};
+	const t_vec	right = normalize(cross_prod(global_up, c->v));
+	const t_vec	up = normalize(cross_prod(c->v, right));
 
-    coords = malloc(sizeof(t_vec));
-    if (!coords)
-        return NULL;
-
-    t_vec global_up = {0.0f, 1.0f, 0.0f};
-
-    t_vec right = normalize(cross_prod(global_up, c->v));
-
-    t_vec up = normalize(cross_prod(c->v, right));
-
-    wsize = fabs(tan(c->fov / 2));
-
-    float screen_x = x * wsize / WIN_HEIGHT;
-    float screen_y = y * wsize / WIN_HEIGHT;
-
-    coords->x = c->o.x - screen_x * right.x - screen_y * up.x - c->v.x;
-    coords->y = c->o.y + screen_x * right.y + screen_y * up.y + c->v.y;
-    coords->z = c->o.z + screen_x * right.z + screen_y * up.z + c->v.z;
-    
-    return coords;
+	coords = malloc(sizeof(t_vec));
+	if (!coords)
+		return (NULL);
+	wsize = fabs(tan(c->fov / 2));
+	coords->x = c->o.x - (x * wsize / WIN_HEIGHT) * right.x
+		- (y * wsize / WIN_HEIGHT) * up.x - c->v.x;
+	coords->y = c->o.y + (x * wsize / WIN_HEIGHT) * right.y
+		+ (y * wsize / WIN_HEIGHT) * up.y + c->v.y;
+	coords->z = c->o.z + (x * wsize / WIN_HEIGHT) * right.z
+		+ (y * wsize / WIN_HEIGHT) * up.z + c->v.z;
+	return (coords);
 }
