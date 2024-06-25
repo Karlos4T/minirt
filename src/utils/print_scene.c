@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:00:08 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/25 15:53:09 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:53:31 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_first(t_scene *s)
 		printf("Camera\nOrigin:\t\t%f %f %f\nOrientation:\t%f %f %f\n",
 			s->cam->o.x, s->cam->o.y, s->cam->o.z,
 			s->cam->v.x, s->cam->v.y, s->cam->v.z);
-		printf("FOV:\t\t%d\n\n", s->cam->fov);
+		printf("FOV:\t\t%f\n\n", s->cam->fov);
 	}
 	if (s->amb != NULL)
 	{
