@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 10:13:12 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 16:45:57 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:11:50 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,23 @@ double	get_brightness_level_plane(t_plane *pl, t_light *l, t_vec p)
 
 double	get_brightness_level_cylinder(t_cylinder *cy, t_light *l, t_vec p)
 {
-	t_vec		v1;
-	t_vec		v2;
-	double		alpha;
+	t_vec	v1;
+	t_vec	v2;
+	double	alpha;
+	t_vec	axis_point;
+	t_vec	q;
+
+	axis_point = vec_add(cy->o, producto_escalar(cy->v,
+				dot_prod(vec_sub(cy->o, p), cy->v)));
+	q = vec_add(cy->o, producto_escalar(normalize(cy->v),
+				dot_prod(vec_sub(cy->o, l->o), normalize(cy->v))));
 	if (cy->is_cover)
 	{
 		alpha = get_brightness_level_plane(cy->covers[cy->is_cover - 1], l, p);
 		cy->is_cover = 0;
 		return (alpha);
 	}
-    t_vec h = vec_sub(cy->o, p);
-    double t_proj = dot_prod(h, cy->v);
-    t_vec axis_point = vec_add(cy->o, producto_escalar(cy->v, t_proj));
-	t_vec oc = vec_sub(cy->o, l->o);
-    double projection_length = dot_prod(oc, normalize(cy->v));
-    t_vec q = vec_add(cy->o, producto_escalar(normalize(cy->v), projection_length));
-    v2 = normalize(vec_sub(q, l->o));
+	v2 = normalize(vec_sub(q, l->o));
 	v1 = normalize(vec_sub(axis_point, p));
 	alpha = (dot_prod(v1, v2));
 	if ((module(v1) * module(v2)) != 0)

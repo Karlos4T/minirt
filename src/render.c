@@ -6,34 +6,36 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 18:05:44 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:13:45 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 
-double *get_closest_object(t_scene sc)
+
+//_t contiene la siguiente info
+//_t[0]: valor de t (distancia del origen al objeto)
+//_t[1]: tipo de objeto que se encuentra mas cerca (esfera, cilindro, plano...)
+//_t[2]: la posicion del objeto dentro de
+//			la array de objetos (esfera 1, esfera 2, cilindro 6...)
+double	*get_closest_object(t_scene sc)
 {
-	t_ray r;
-	double *T;
+	t_ray	r;
+	double	*_t;
 	double	t;
-	int i;
-	//T contiene la siguiente info
-	//T[0]: valor de t (distancia del origen al objeto)
-	//T[1]: tipo de objeto que se encuentra mas cerca (esfera, cilindro, plano...)
-	//T[2]: la posicion del objeto dentro de la array de objetos (esfera 1, esfera 2, cilindro 6...)
-	
-	T = malloc(sizeof(double) * 3);
+	int		i;
+
+	_t = malloc(sizeof(double) * 3);
 	r = *sc.cam->r;
 	i = 0;
 	while (sc.obj->pla[i] != NULL)
 	{
 		t = vector_x_plane(sc.obj->pla[i], r);
-		if (t && (fabs(t) < fabs(T[0]) || !T[0]) && t < 0)
+		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]) && t < 0)
 		{
-			T[0] = fabs(t);
-			T[1] = 1;
-			T[2] = i;
+			_t[0] = fabs(t);
+			_t[1] = 1;
+			_t[2] = i;
 		}
 		i++;
 	}
@@ -41,11 +43,11 @@ double *get_closest_object(t_scene sc)
 	while (sc.obj->sph[i] != NULL)
 	{
 		t = vector_x_sphere(sc.obj->sph[i], r);
-		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
+		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]))
 		{
-			T[0] = fabs(t);
-			T[1] = 2;
-			T[2] = i;
+			_t[0] = fabs(t);
+			_t[1] = 2;
+			_t[2] = i;
 		}
 		i++;
 	}
@@ -53,15 +55,15 @@ double *get_closest_object(t_scene sc)
 	while (sc.obj->cyl[i] != NULL)
 	{
 		t = vector_x_cylinder(sc.obj->cyl[i], r);
-		if (t && (fabs(t) < fabs(T[0]) || !T[0]))
+		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]))
 		{
-			T[0] = fabs(t);
-			T[1] = 3;
-			T[2] = i;
+			_t[0] = fabs(t);
+			_t[1] = 3;
+			_t[2] = i;
 		}
 		i++;
 	}
-	return T;
+	return (_t);
 }
 
 int	*render_plane(t_scene sc, double *T)
@@ -115,7 +117,7 @@ void	render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_ray	*r;
 	int		*color;
-	double	*T;
+	double	*t;
 	t_vec	*screen_point;
 
 	color = 0;
@@ -125,28 +127,25 @@ void	render_pixel(int x, int y, t_data *data, t_scene sc)
 	// free(screen_point);		// TODO fix this leak
 	r->o = sc.cam->o;
 	sc.cam->r = r;
-
-	T = get_closest_object(sc);
-
-	if (T[1] == 1)
-		color = render_plane(sc, T);
-	else if (T[1] == 2)
+	t = get_closest_object(sc);
+	if (t[1] == 1)
+		color = render_plane(sc, t);
+	else if (t[1] == 2)
 	{
-		color = render_sphere(sc, T);
+		color = render_sphere(sc, t);
 	}
-	else if (T[1] == 3)
-		color = render_cylinder(sc, T);
-
-	free(T);
+	else if (t[1] == 3)
+		color = render_cylinder(sc, t);
+	free(t);
 	free(r);
 	my_mlx_pixel_put(data, x, y, hexa(color));
 	// free(color);		// TODO fix this leak
 }
 
-void render_screen(t_data *data, t_scene *scene)
+void	render_screen(t_data *data, t_scene *scene)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	printf("Rendering scene...\n");
