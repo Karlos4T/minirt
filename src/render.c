@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:36:28 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:36:59 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ int	render_plane(t_scene sc, double *T)
 	// int		hex;
 
 	pl = sc.obj->pla[(int)T[2]];
+	t_plane	*pl;
+	t_vec	p;
+	int		*color;
+	double	alpha;
+	// int		hex;
+
+	pl = sc.obj->pla[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_plane(pl, sc.light, p);
 	color = calculate_color(pl->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
@@ -84,6 +91,13 @@ int	render_plane(t_scene sc, double *T)
 
 int	render_sphere(t_scene sc, double *T)
 {
+	t_sphere	*sp;
+	int			*color;
+	double		alpha;
+	t_vec		p;
+	// int			hex;
+
+	sp = sc.obj->sph[(int)T[2]];
 	t_sphere	*sp;
 	int			*color;
 	double		alpha;
@@ -109,6 +123,13 @@ int	render_cylinder(t_scene sc, double *T)
 	// int			hex;
 
 	cy = sc.obj->cyl[(int)T[2]];
+	t_cylinder	*cy;
+	double		alpha;
+	int			*color;
+	t_vec		p;
+	// int			hex;
+
+	cy = sc.obj->cyl[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
 	color = calculate_color(cy->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
@@ -121,11 +142,17 @@ int	render_cylinder(t_scene sc, double *T)
 
 
 void	render_pixel(int x, int y, t_data *data, t_scene sc)
+void	render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_ray	*r;
 	int		color;
 	double	*T;
+	t_ray	*r;
+	int		color;
+	double	*T;
 	t_vec	*screen_point;
+
+	color = 0;
 
 	color = 0;
 	r = malloc(sizeof(t_ray));
