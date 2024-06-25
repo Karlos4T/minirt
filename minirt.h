@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/10 18:24:37 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:00:16 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_vec		normalize(t_vec v);
 double		dot_prod(t_vec v1, t_vec v2);
 t_vec		neg(t_vec v);
 t_vec		*vec(double x, double y, double z);
+t_vec		vec_s(double x, double y, double z);
 t_vec		cross_prod(t_vec v1, t_vec v2);
 t_vec		vec_sub(t_vec a, t_vec b);
 int			check_shadow(t_vec p, t_vec l, t_objects *ob);

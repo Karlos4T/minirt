@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/08 16:28:13 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 16:59:41 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ t_vec	*vec(double x, double y, double z)
 	v->x = x;
 	v->y = y;
 	v->z = z;
+	return (v);
+}
+
+t_vec	vec_s(double x, double y, double z)
+{
+	t_vec	v;
+
+	v.x = x;
+	v.y = y;
+	v.z = z;
 	return (v);
 }
 
