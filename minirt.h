@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/25 17:00:16 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:04:44 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,18 @@ t_vec		vec_add(t_vec v1, t_vec v2);
 t_vec		producto_escalar(t_vec v, double n);
 t_vec		get_point(t_ray r, int t);
 
-void rotate_camera(t_camera *camera, double angle_y, double angle_x);
-
-
 //COLOR
-int 		*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
 double		get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p);
 double		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
 double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
-int         *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow);
-
+int			*calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow);
 
 //MAIN
 void		render_pixel(int x, int y, t_data *data, t_scene scene);
-t_vec       *get_screen_coord(int x, int y, t_camera *c);
+t_vec		*get_screen_coord(int x, int y, t_camera *c);
 t_scene		*initialize_scene();
 
-
 //HOOKS
-
 void		init_hooks(t_mlx *mlx);
 
 #endif

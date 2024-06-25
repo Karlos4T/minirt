@@ -6,38 +6,38 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 16:51:24 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:52:41 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minirt.h"
 
-int x_pos(int x)
+int	x_pos(int x)
 {
-    return (x + WIN_WIDTH / 2 - WIN_WIDTH);
+	return (x + WIN_WIDTH / 2 - WIN_WIDTH);
 }
 
-int y_pos(int y)
+int	y_pos(int y)
 {
-    return (-y - WIN_HEIGHT / 2 + WIN_HEIGHT);
+	return (-y - WIN_HEIGHT / 2 + WIN_HEIGHT);
 }
 
-double module(t_vec v)
+double	module(t_vec v)
 {
-	return(sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 }
 
-t_vec get_point(t_ray r, int t)
+t_vec	get_point(t_ray r, int t)
 {
-	t_vec v;
-	
+	t_vec	v;
+
 	v.x = r.o.x + r.v.x * t;
 	v.y = r.o.y + r.v.y * t;
 	v.z = r.o.z + r.v.z * t;
-	return v;
+	return (v);
 }
 
-t_vec producto_escalar(t_vec v, double n)
+t_vec	producto_escalar(t_vec v, double n)
 {
 	v.x = v.x * n;
 	v.y = v.y * n;
@@ -45,19 +45,20 @@ t_vec producto_escalar(t_vec v, double n)
 	return (v);
 }
 
-t_vec normalize(t_vec v)
+t_vec	normalize(t_vec v)
 {
-	double m = module(v);
+	double	m;
+
+	m = module(v);
 	if (m == 0)
 		m = 0.1;
-
 	v.x = v.x / m;
 	v.y = v.y / m;
 	v.z = v.z / m;
-	return(v);
+	return (v);
 }
 
-t_vec neg(t_vec v)
+t_vec	neg(t_vec v)
 {
 	v.x = -v.x;
 	v.y = -v.y;
@@ -80,34 +81,34 @@ t_vec	vec_add(t_vec v1, t_vec v2)
 	v1.x = v1.x + v2.x;
 	v1.y = v1.y + v2.y;
 	v1.z = v1.z + v2.z;
-	return(v1);
+	return (v1);
 }
 
 t_vec	vec_sub(t_vec v1, t_vec v2)
 {
 	t_vec	v;
-	
+
 	v.x = v2.x - v1.x;
 	v.y = v2.y - v1.y;
 	v.z = v2.z - v1.z;
 	return (v);
 }
 
-double dot_prod(t_vec v1, t_vec v2)
+double	dot_prod(t_vec v1, t_vec v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-double quadratic(double a, double b, double c)
+double	quadratic(double a, double b, double c)
 {
-	double D;
-	double t[2];
+	double	d;
+	double	t[2];
 
-	D = b * b - (4 * a * c);
-	if (D >= 0)
+	d = b * b - (4 * a * c);
+	if (d >= 0)
 	{
-		t[0] = (- b + sqrt(D)) / (2 * a);
-		t[1] = (- b - sqrt(D)) / (2 * a);
+		t[0] = (-b + sqrt(d)) / (2 * a);
+		t[1] = (-b - sqrt(d)) / (2 * a);
 		if (fabs(t[0]) < fabs(t[1]))
 			return (t[0]);
 		return (t[1]);

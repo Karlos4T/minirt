@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:48:32 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:05:44 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	*render_plane(t_scene sc, double *T)
 	pl = sc.obj->pla[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_plane(pl, sc.light, p);
-	color = calculate_color(pl->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
+	color = calculate_color(sc, pl->color, alpha,
+			check_shadow(p, sc.light[0].o, sc.obj));
 	return (color);
 }
 
@@ -88,7 +89,8 @@ int	*render_sphere(t_scene sc, double *T)
 	sp = sc.obj->sph[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_sp(sp, sc.light, &p);
-	color = calculate_color(sp->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
+	color = calculate_color(sc, sp->color, alpha,
+			check_shadow(p, sc.light[0].o, sc.obj));
 	return (color);
 }
 
@@ -102,7 +104,8 @@ int	*render_cylinder(t_scene sc, double *T)
 	cy = sc.obj->cyl[(int)T[2]];
 	p = get_point(*sc.cam->r, T[0]);
 	alpha = get_brightness_level_cylinder(cy, sc.light, p);
-	color = calculate_color(cy->color, sc.amb->color, sc.amb->intensity, sc.light->color, sc.light->intensity, alpha, check_shadow(p, sc.light[0].o, sc.obj));
+	color = calculate_color(sc, cy->color, alpha,
+			check_shadow(p, sc.light[0].o, sc.obj));
 	cy->is_cover = 0;
 	return (color);
 }

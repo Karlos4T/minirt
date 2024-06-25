@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 13:16:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/09 22:16:23 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:56:05 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ double	vector_x_sphere(t_sphere *s, t_ray r)
 	double	b;
 	double	c;
 
-	t_vec v = normalize(v);
 	a = dot_prod(r.v, r.v);
 	b = 2 * (r.v.x * (r.o.x - s->o.x)
 			+ r.v.y * (r.o.y - s->o.y) + r.v.z * (r.o.z - s->o.z));
@@ -37,7 +36,3 @@ double	vector_x_sphere(t_sphere *s, t_ray r)
 		+ pow(r.o.z - s->o.z, 2) - pow(s->radius, 2);
 	return (quadratic(a, b, c));
 }
-
-
-
-

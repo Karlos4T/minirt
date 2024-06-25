@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:42:26 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:03:20 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,46 @@ int	hexa(int *rgb)
 		i++;
 	}
 	hexa = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
-	//free(rgb);
 	return (hexa);
 }
 
-void scale_color(int *result, int *color, float scale) {
-    for (int i = 0; i < 3; i++) {
-        result[i] = fminf(color[i] * scale, 255);
-    }
+void	scale_color(int *result, int *color, float scale)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		result[i] = fminf(color[i] * scale, 255);
+		i++;
+	}
 }
 
-void add_colors(int *result, int *a, int *b) {
-    for (int i = 0; i < 3; i++) {
-        result[i] = fminf(a[i] + b[i], 255);
-    }
+void	add_colors(int *result, int *a, int *b)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		result[i] = fminf(a[i] + b[i], 255);
+		i++;
+	}
 }
 
-void multiply_colors(int *result, int *a, int *b) {
-    for (int i = 0; i < 3; i++) {
-        result[i] = fminf(a[i] * b[i] / 255.0f, 255);
-    }
+void	multiply_colors(int *result, int *a, int *b)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		result[i] = fminf(a[i] * b[i] / 255.0f, 255);
+		i++;
+	}
 }
 
-int *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow)
+int	*calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow)
 {
 	int	*result;
 	int	ambient[3];
@@ -70,11 +87,12 @@ int *calculate_color(int *surface_color, int *ambient_color, float ambient_inten
 	int	combined[3];
 
 	result = malloc(sizeof(int) * 3);
-	scale_color(ambient, ambient_color, ambient_intensity);
+	scale_color(ambient, sc.amb->color, sc.amb->intensity);
 	if (is_shadow)
-		scale_color(diffuse, point_color, 0);
+		scale_color(diffuse, sc.light->color, 0);
 	else
-		scale_color(diffuse, point_color, point_intensity * fmaxf(alpha, 0));
+		scale_color(diffuse, sc.light->color,
+			sc.light->intensity * fmaxf(alpha, 0));
 	add_colors(combined, ambient, diffuse);
 	multiply_colors(result, surface_color, combined);
 	return (result);
@@ -82,11 +100,11 @@ int *calculate_color(int *surface_color, int *ambient_color, float ambient_inten
 
 /*
 //FUNCIÓN DE GESTION DE ILUMINACIÓN ORIGINAL
-    int	*rgb;
+	int	*rgb;
 	int	i;
 
-    (void)point_color;
-    (void)point_intensity;
+	(void)point_color;
+	(void)point_intensity;
 
 	i = 0;
 	rgb = malloc(sizeof(int) * 3);

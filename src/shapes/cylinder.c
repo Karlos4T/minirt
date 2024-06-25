@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:01:21 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/25 17:55:04 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 }
 
 //Esta tiene que ir en math funcs
-double map_value(double x)
+double	map_value(double x)
 {
-    const double x_min = 1.0;
-    const double x_max = 1.75;
-    const double y_min = 0.25;
-    const double y_max = 0.72;
+	const double	x_min = 1.0;
+	const double	x_max = 1.75;
+	const double	y_min = 0.25;
+	const double	y_max = 0.72;
 
-    return y_min + ((x - x_min) / (x_max - x_min)) * (y_max - y_min);
+	return (y_min + ((x - x_min) / (x_max - x_min)) * (y_max - y_min));
 }
 
 
@@ -82,12 +82,12 @@ int	cut_cylinder(t_cylinder cy, t_ray r, double t)
 	return (t);
 }
 
-double cylinder_covers(t_cylinder *cy, t_ray r)
+double	cylinder_covers(t_cylinder *cy, t_ray r)
 {
 	t_vec		cp;
 	int			i;
 	double		tp[2];
-	
+
 	i = 0;
 	while (i < 2)
 	{
@@ -95,7 +95,7 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 		i++;
 	}
 	i = 0;
-	if(fabs(tp[1]) < fabs(tp[0]))
+	if (fabs(tp[1]) < fabs(tp[0]))
 		i = 1;
 	cp = get_point(r, fabs(tp[i]));
 	if (module(vec_sub(cp, cy->covers[i]->o)) <= cy->radius)
@@ -103,14 +103,13 @@ double cylinder_covers(t_cylinder *cy, t_ray r)
 		cy->is_cover = i + 1;
 		return (tp[i]);
 	}
-	return 0;
+	return (0);
 }
 
 double	vector_x_cylinder(t_cylinder *cy, t_ray r)
 {
 	t_vec		u;
 	t_vec		v;
-	double		a;
 	double		b;
 	double		c;
 	double		t[2];
@@ -118,11 +117,10 @@ double	vector_x_cylinder(t_cylinder *cy, t_ray r)
 	u = cross_prod(r.v, cy->v);
 	v = vec_sub(r.o, cy->o);
 	v = cross_prod(v, cy->v);
-	a = dot_prod(u, u);
 	b = 2 * dot_prod(u, v);
 	c = dot_prod(v, v) - cy->r2;
 	t[0] = cylinder_covers(cy, r);
-	t[1] = cut_cylinder(*cy, r, quadratic(a, b, c));
+	t[1] = cut_cylinder(*cy, r, quadratic(dot_prod(u, u), b, c));
 	if (t[1])
 	{
 		cy->is_cover = 0;
