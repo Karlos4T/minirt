@@ -6,12 +6,18 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 18:13:45 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 17:01:43 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
 
+static void	set_values(double **d, double t, double j, double i)
+{
+	(*d)[0] = t;
+	(*d)[1] = j;
+	(*d)[2] = i;
+}
 
 //_t contiene la siguiente info
 //_t[0]: valor de t (distancia del origen al objeto)
@@ -20,57 +26,37 @@
 //			la array de objetos (esfera 1, esfera 2, cilindro 6...)
 double	*get_closest_object(t_scene sc)
 {
-	t_ray	r;
-	double	*_t;
-	double	t;
-	int		i;
+	const t_ray	r = *sc.cam->r;
+	double		*_t;
+	int			i;
 
 	_t = malloc(sizeof(double) * 3);
-	r = *sc.cam->r;
-	i = 0;
-	while (sc.obj->pla[i] != NULL)
-	{
-		t = vector_x_plane(sc.obj->pla[i], r);
-		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]) && t < 0)
-		{
-			_t[0] = fabs(t);
-			_t[1] = 1;
-			_t[2] = i;
-		}
-		i++;
-	}
-	i = 0;
-	while (sc.obj->sph[i] != NULL)
-	{
-		t = vector_x_sphere(sc.obj->sph[i], r);
-		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]))
-		{
-			_t[0] = fabs(t);
-			_t[1] = 2;
-			_t[2] = i;
-		}
-		i++;
-	}
-	i = 0;
-	while (sc.obj->cyl[i] != NULL)
-	{
-		t = vector_x_cylinder(sc.obj->cyl[i], r);
-		if (t && (fabs(t) < fabs(_t[0]) || !_t[0]))
-		{
-			_t[0] = fabs(t);
-			_t[1] = 3;
-			_t[2] = i;
-		}
-		i++;
-	}
+	i = -1;
+	while (sc.obj->pla[++i] != NULL)
+		if (vector_x_plane(sc.obj->pla[i], r)
+			&& (fabs(vector_x_plane(sc.obj->pla[i], r)) < fabs(_t[0]) || !_t[0])
+			&& vector_x_plane(sc.obj->pla[i], r) < 0)
+			set_values(&_t, fabs(vector_x_plane(sc.obj->pla[i], r)), 1, i);
+	i = -1;
+	while (sc.obj->sph[++i] != NULL)
+		if (vector_x_sphere(sc.obj->sph[i], r)
+			&& (fabs(vector_x_sphere(sc.obj->sph[i], r))
+				< fabs(_t[0]) || !_t[0]))
+			set_values(&_t, fabs(vector_x_sphere(sc.obj->sph[i], r)), 2, i);
+	i = -1;
+	while (sc.obj->cyl[++i] != NULL)
+		if (vector_x_cylinder(sc.obj->cyl[i], r)
+			&& (fabs(vector_x_cylinder(sc.obj->cyl[i], r))
+				< fabs(_t[0]) || !_t[0]))
+			set_values(&_t, fabs(vector_x_cylinder(sc.obj->cyl[i], r)), 3, i);
 	return (_t);
 }
 
-int	*render_plane(t_scene sc, double *T)
+int	render_plane(t_scene sc, double *T)
 {
 	t_plane	*pl;
 	t_vec	p;
-	int		*color;
+	int		color;
 	double	alpha;
 
 	pl = sc.obj->pla[(int)T[2]];
@@ -81,10 +67,10 @@ int	*render_plane(t_scene sc, double *T)
 	return (color);
 }
 
-int	*render_sphere(t_scene sc, double *T)
+int	render_sphere(t_scene sc, double *T)
 {
 	t_sphere	*sp;
-	int			*color;
+	int			color;
 	double		alpha;
 	t_vec		p;
 
@@ -96,11 +82,11 @@ int	*render_sphere(t_scene sc, double *T)
 	return (color);
 }
 
-int	*render_cylinder(t_scene sc, double *T)
+int	render_cylinder(t_scene sc, double *T)
 {
 	t_cylinder	*cy;
 	double		alpha;
-	int			*color;
+	int			color;
 	t_vec		p;
 
 	cy = sc.obj->cyl[(int)T[2]];
@@ -112,14 +98,12 @@ int	*render_cylinder(t_scene sc, double *T)
 	return (color);
 }
 
-
 void	render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_ray	*r;
 	int		color;
 	double	*t;
 	t_vec	*coords;
-
 
 	color = 0;
 	r = malloc(sizeof(t_ray));

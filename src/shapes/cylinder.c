@@ -6,12 +6,11 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:55:04 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:15:49 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minirt.h"
-
 
 static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 {
@@ -49,7 +48,6 @@ double	map_value(double x)
 
 	return (y_min + ((x - x_min) / (x_max - x_min)) * (y_max - y_min));
 }
-
 
 t_cylinder	*create_cylinder(t_cylinder_p cylinder)
 {

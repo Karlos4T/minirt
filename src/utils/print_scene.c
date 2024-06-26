@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:00:08 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/25 15:53:31 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:15:34 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ static void	print_cylinders(t_scene *scene)
 		printf("Color:\t\t%x\n\n", *(c[i]->color));
 		i++;
 	}
-
 }
 
 void	print_scene(t_scene *scene)

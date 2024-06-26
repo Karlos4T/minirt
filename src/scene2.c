@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:31:04 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 16:59:41 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:16:38 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_light	*create_light(t_vec o, double intensity, int color)
 	light->o = o;
 	light->intensity = intensity;
 	light->color = rgb(color);
-
 	return (light);
 }
 
@@ -74,6 +73,5 @@ t_camera	*create_camera(t_vec o, t_vec v, int fov)
 	camera->o = o;
 	camera->v = v;
 	camera->fov = fov;
-
 	return (camera);
 }
