@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 14:37:55 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/10 18:11:53 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:25:24 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_camera	*parse_cam(t_scene *scene, char *line)
 		ft_error("Invalid camera format");
 	o = str_to_vec(split[1]);
 	v = str_to_vec(split[2]);
+	v.x = -v.x;
 	fov = ft_atoi(split[3]);
+	if (fov == 180)
+		fov = 179;
 	ft_free_matrix(split);
 	if (!ft_is_normalized(v))
 		ft_error("Invalid normalized vector");

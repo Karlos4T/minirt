@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/25 18:04:44 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:24:33 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define WIN_WIDTH 1440
 # define WIN_HEIGHT 1080
-# define M_PI 3.141592
+# define M_PI 3.14159265358979323846
 
 # include "parse.h"
 # include "types.h"

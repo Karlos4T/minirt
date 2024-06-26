@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/10 18:32:59 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:31:59 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,9 @@ typedef struct s_objects
 	int			n_cyl;
 	int			n_sph;
 	int			n_pla;
-	t_cylinder	*cyl[20];
-	t_sphere	*sph[20];
-	t_plane		*pla[20];
+	t_cylinder	*cyl[150];
+	t_sphere	*sph[150];
+	t_plane		*pla[150];
 }	t_objects;
 
 /**

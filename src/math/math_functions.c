@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 13:44:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 17:52:41 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:24:36 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_vec	*get_screen_coord(int x, int y, t_camera *c)
 	coords = malloc(sizeof(t_vec));
 	if (!coords)
 		return (NULL);
-	wsize = fabs(tan(c->fov / 2));
+	wsize = fabs(tan((c->fov * (M_PI / 180.0)) / 2));
 	coords->x = c->o.x - (x * wsize / WIN_HEIGHT) * right.x
 		- (y * wsize / WIN_HEIGHT) * up.x - c->v.x;
 	coords->y = c->o.y + (x * wsize / WIN_HEIGHT) * right.y
