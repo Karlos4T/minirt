@@ -116,15 +116,17 @@ int	*render_cylinder(t_scene sc, double *T)
 void	render_pixel(int x, int y, t_data *data, t_scene sc)
 {
 	t_ray	*r;
-	int		*color;
+	int		color;
 	double	*t;
-	t_vec	*screen_point;
+	t_vec	*coords;
+
 
 	color = 0;
 	r = malloc(sizeof(t_ray));
-	screen_point = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
-	r->v = vec_sub(sc.cam->o, *screen_point);
-	// free(screen_point);		// TODO fix this leak
+	coords = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
+	// printf("coords: %f %f %f\n", coords.x, coords.y, coords.z);
+	r->v = vec_sub(sc.cam->o, *coords);
+	// free(coords);		// TODO fix this leak
 	r->o = sc.cam->o;
 	sc.cam->r = r;
 	t = get_closest_object(sc);
@@ -138,8 +140,7 @@ void	render_pixel(int x, int y, t_data *data, t_scene sc)
 		color = render_cylinder(sc, t);
 	free(t);
 	free(r);
-	my_mlx_pixel_put(data, x, y, hexa(color));
-	// free(color);		// TODO fix this leak
+	my_mlx_pixel_put(data, x, y, color);
 }
 
 void	render_screen(t_data *data, t_scene *scene)
