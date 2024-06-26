@@ -86,43 +86,5 @@ int	check_shadow(t_vec p, t_vec l, t_objects *ob)
 	while (ob->cyl[++i])
 		if (vector_x_cylinder(ob->cyl[i], *r) < 0)
 			return (free(r), 1);
-	i = -1;
-	while (ob->pla[++i])
-		if (vector_x_plane(ob->pla[i], *r) == 0)
-			return (free(r), 1);
 	return (free(r), 0);
 }
-
-// TODO comprobar por a veces se muestra una linea negra (atom.rt)
-// int	check_shadow(t_vec p, t_vec l, t_objects *ob)
-// {
-// 	t_vec	v;
-// 	int		i;
-// 	t_ray	*r;
-
-// 	v = *create_vector(p, l);
-// 	r = malloc(sizeof(t_ray));
-// 	r->o = p;
-// 	r->v = normalize(v);
-// 	i = 0;
-// 	while (ob->sph[i])
-// 	{
-// 		if (vector_x_sphere(ob->sph[i], *r) > 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (ob->cyl[i])
-// 	{
-// 		if (vector_x_cylinder(ob->cyl[i], *r) < 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	while (ob->pla[i])
-// 	{
-// 		if (vector_x_plane(ob->pla[i], *r) == 0)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }

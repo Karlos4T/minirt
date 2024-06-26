@@ -33,8 +33,6 @@ double	vector_x_plane(t_plane *pl, t_ray r)
 	d = dot_prod(pl->v, r.v);
 	if (!d)
 		return (0);
-	t = -((pl->v.x * pl->o.x + pl->v.y * pl->o.y + pl->v.z * pl->o.z)
-			- (pl->v.x * r.o.x + pl->v.y * r.o.y + pl->v.z * r.o.z))
-		/ (pl->v.x * v.x + pl->v.y * v.y + v.z * pl->v.z);
+	t = -(dot_prod(pl->v, pl->o) - dot_prod(pl->v, r.o)) / dot_prod(pl->v, v);
 	return (t);
 }
