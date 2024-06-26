@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/26 14:24:33 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:56:08 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_vec		get_point(t_ray r, int t);
 double		get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p);
 double		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
 double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
-int			*calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow);
+int			calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow);
 
 //MAIN
 void		render_pixel(int x, int y, t_data *data, t_scene scene);

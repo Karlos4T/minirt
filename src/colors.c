@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:32:20 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/25 18:03:20 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:57:01 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,13 @@ void	multiply_colors(int *result, int *a, int *b)
 	}
 }
 
-int	*calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow)
+int	calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow)
 {
 	int	*result;
 	int	ambient[3];
 	int	diffuse[3];
 	int	combined[3];
+	int	res;
 
 	result = malloc(sizeof(int) * 3);
 	scale_color(ambient, sc.amb->color, sc.amb->intensity);
@@ -95,7 +96,9 @@ int	*calculate_color(t_scene sc, int *surface_color, float alpha, int is_shadow)
 			sc.light->intensity * fmaxf(alpha, 0));
 	add_colors(combined, ambient, diffuse);
 	multiply_colors(result, surface_color, combined);
-	return (result);
+	res = result[0] << 16 | result[1] << 8 | result[2];
+	// free(result);
+	return (res);
 }
 
 /*
