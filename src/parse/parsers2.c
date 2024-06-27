@@ -6,11 +6,11 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 14:06:23 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/27 14:06:31 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:18:50 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+#include "../../minirt.h"
 
 t_sphere	*parse_sphere(char *line)
 {

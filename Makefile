@@ -17,9 +17,9 @@ MLX_PATH = mlx-linux/
 LIBFT = libft/libft.a
 LINK_LIBFT = -lft -L ./libft
 SHAPES = sphere.c plane.c cylinder.c cylinder2.c
-PARSE = reader.c parser.c parsers.c
+PARSE = reader.c parser.c parsers.c parsers2.c
 UTILS = ft_haschar.c ft_splitlen.c ft_atod.c ft_error.c converters.c ft_is_normalized.c print_scene.c ft_is_empty.c
-MATH = math_functions.c
+MATH = math_functions.c math_functions2.c math_functions3.c
 SRC = main.c hooks.c functions.c scene.c scene2.c colors.c colors2.c render.c render2.c lights.c
 SRCS = $(addprefix src/, $(SRC)) \
 		$(addprefix src/shapes/, $(SHAPES)) \
