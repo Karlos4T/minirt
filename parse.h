@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 21:54:39 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/11 16:00:04 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:15:03 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_cylinder_p
 	double	height;
 	int		color;
 }	t_cylinder_p;
-
 
 void		open_rt(char *filename, t_scene *scene);
 void		parse(int fd, t_scene *scene);

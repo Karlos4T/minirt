@@ -6,13 +6,13 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 13:18:32 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/26 16:15:49 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:13:09 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minirt.h"
 
-static t_plane	*create_cover(t_cylinder *cy, int color, int type)
+t_plane	*create_cover(t_cylinder *cy, int color, int type)
 {
 	t_vec	o;
 
@@ -36,34 +36,6 @@ static t_plane	*create_cover(t_cylinder *cy, int color, int type)
 			/ (module(cy->v) * module(vec_s(0, 0, 1))) * (cy->height / 2);
 		return (create_plane(o, neg(cy->v), color));
 	}
-}
-
-//Esta tiene que ir en math funcs
-double	map_value(double x)
-{
-	const double	x_min = 1.0;
-	const double	x_max = 1.75;
-	const double	y_min = 0.25;
-	const double	y_max = 0.72;
-
-	return (y_min + ((x - x_min) / (x_max - x_min)) * (y_max - y_min));
-}
-
-t_cylinder	*create_cylinder(t_cylinder_p cylinder)
-{
-	t_cylinder	*cy;
-
-	cy = malloc(sizeof(t_cylinder));
-	cy->o = cylinder.o;
-	cy->v = cylinder.v;
-	cy->radius = cylinder.diameter / 2;
-	cy->is_cover = 0;
-	cy->r2 = cylinder.diameter * cylinder.diameter * map_value(module(cy->v));
-	cy->height = cylinder.height;
-	cy->covers[0] = create_cover(cy, cylinder.color, 0);
-	cy->covers[1] = create_cover(cy, cylinder.color, 1);
-	cy->color = rgb(cylinder.color);
-	return (cy);
 }
 
 int	cut_cylinder(t_cylinder cy, t_ray r, double t)
