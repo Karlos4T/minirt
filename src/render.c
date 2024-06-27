@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 13:33:53 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/27 14:01:44 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:24:53 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void	render_screen(t_data *data, t_scene *scene)
 	int	j;
 
 	i = 0;
+	if (!scene->amb || !scene->cam || !scene->light)
+		ft_error("Missing scene elements");
 	printf("Rendering scene...\n");
 	while (i < WIN_HEIGHT)
 	{
