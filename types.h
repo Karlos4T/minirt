@@ -6,12 +6,13 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:01:02 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/10 18:32:59 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:15:16 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
 typedef struct s_vec
 {
 	double	x;
@@ -53,7 +54,7 @@ typedef struct s_camera
 	t_vec	o;
 	t_vec	v;
 	t_ray	*r;
-	double		fov;
+	double	fov;
 	float	rotation_matrix[3][3];
 }	t_camera;
 
@@ -109,9 +110,9 @@ typedef struct s_objects
 	int			n_cyl;
 	int			n_sph;
 	int			n_pla;
-	t_cylinder	*cyl[20];
-	t_sphere	*sph[20];
-	t_plane		*pla[20];
+	t_cylinder	*cyl[150];
+	t_sphere	*sph[150];
+	t_plane		*pla[150];
 }	t_objects;
 
 /**

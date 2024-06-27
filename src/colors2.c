@@ -1,38 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   colors2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 13:44:46 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/09 22:17:49 by dximenez         ###   ########.fr       */
+/*   Created: 2024/06/27 13:52:44 by dximenez          #+#    #+#             */
+/*   Updated: 2024/06/27 14:03:46 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minirt.h"
+#include "../minirt.h"
 
-t_plane	*create_plane(t_vec o, t_vec v, int color)
+int	*rgb(int color)
 {
-	t_plane	*plane;
+	int	*rgb;
 
-	plane = malloc(sizeof(t_plane));
-	plane->o = o;
-	plane->v = v;
-	plane->color = rgb(color);
-	return (plane);
+	rgb = malloc(sizeof(int) * 3);
+	rgb[0] = (color) >> 16 & 0xFF;
+	rgb[1] = (color) >> 8 & 0xFF;
+	rgb[2] = (color) & 0xFF;
+	return (rgb);
 }
 
-double	vector_x_plane(t_plane *pl, t_ray r)
+int	hexa(int *rgb)
 {
-	double	t;
-	double	d;
-	t_vec	v;
+	int	hexa;
+	int	i;
 
-	v = r.v;
-	d = dot_prod(pl->v, r.v);
-	if (!d)
+	i = 0;
+	if (!rgb)
 		return (0);
-	t = -(dot_prod(pl->v, pl->o) - dot_prod(pl->v, r.o)) / dot_prod(pl->v, v);
-	return (t);
+	while (i < 3)
+	{
+		if (rgb[i] < 0)
+			rgb[i] = 0;
+		else if (rgb[i] > 255)
+			rgb[i] = 255;
+		i++;
+	}
+	hexa = (rgb[0] << 16) + (rgb[1] << 8) + rgb[2];
+	return (hexa);
 }

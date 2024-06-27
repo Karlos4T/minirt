@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 17:34:01 by carlosga          #+#    #+#             */
-/*   Updated: 2024/06/10 18:34:18 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:16:05 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	init_window(t_mlx *mlx, t_data *i)
 	i->img = mlx_new_image(mlx->mlx, WIN_WIDTH, WIN_HEIGHT);
 	i->addr = mlx_get_data_addr(i->img, &i->bpp, &i->length, &i->endian);
 }
-
 
 int	main(int argc, char **argv)
 {

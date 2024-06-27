@@ -6,7 +6,7 @@
 /*   By: dximenez <dximenez@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 16:05:41 by dximenez          #+#    #+#             */
-/*   Updated: 2024/06/10 18:24:37 by dximenez         ###   ########.fr       */
+/*   Updated: 2024/06/27 14:14:24 by dximenez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define WIN_WIDTH 1440
 # define WIN_HEIGHT 1080
-# define M_PI 3.141592
+# define M_PI 3.14159265358979323846
 
 # include "parse.h"
 # include "types.h"
@@ -28,7 +28,6 @@
 
 # include <X11/X.h>
 # include <X11/keysym.h>
-
 
 //FUNCTIONS
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -60,6 +59,7 @@ t_vec		normalize(t_vec v);
 double		dot_prod(t_vec v1, t_vec v2);
 t_vec		neg(t_vec v);
 t_vec		*vec(double x, double y, double z);
+t_vec		vec_s(double x, double y, double z);
 t_vec		cross_prod(t_vec v1, t_vec v2);
 t_vec		vec_sub(t_vec a, t_vec b);
 int			check_shadow(t_vec p, t_vec l, t_objects *ob);
@@ -68,25 +68,21 @@ t_vec		vec_add(t_vec v1, t_vec v2);
 t_vec		producto_escalar(t_vec v, double n);
 t_vec		get_point(t_ray r, int t);
 
-void rotate_camera(t_camera *camera, double angle_y, double angle_x);
-
-
 //COLOR
-int 		*mult_colors(int *rgb1, int *rgb2, double alpha, double al, int is_shadow);
 double		get_brightness_level_sp(t_sphere *s, t_light *l, t_vec *p);
 double		get_brightness_level_plane(t_plane *s, t_light *l, t_vec p);
 double		get_brightness_level_cylinder(t_cylinder *c, t_light *l, t_vec p);
-int         *calculate_color(int *surface_color, int *ambient_color, float ambient_intensity, int *point_color, float point_intensity, float alpha, int is_shadow);
-
+int			calculate_color(t_scene sc, int *surface_color,
+				float alpha, int is_shadow);
 
 //MAIN
+double		*get_closest_object(t_scene sc);
 void		render_pixel(int x, int y, t_data *data, t_scene scene);
-t_vec       *get_screen_coord(int x, int y, t_camera *c);
-t_scene		*initialize_scene();
-
+t_vec		*get_screen_coord(int x, int y, t_camera *c);
+double		map_value(double x);
+t_plane		*create_cover(t_cylinder *cy, int color, int type);
 
 //HOOKS
-
 void		init_hooks(t_mlx *mlx);
 
 #endif
