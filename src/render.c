@@ -31,23 +31,24 @@ double	*get_closest_object(t_scene sc)
 	int			i;
 
 	_t = malloc(sizeof(double) * 3);
+	_t[0] = 0;
 	i = -1;
 	while (sc.obj->pla[++i] != NULL)
 		if (vector_x_plane(sc.obj->pla[i], r)
-			&& (fabs(vector_x_plane(sc.obj->pla[i], r)) < fabs(_t[0]) || !_t[0])
+			&& (!_t[0] || fabs(vector_x_plane(sc.obj->pla[i], r)) < fabs(_t[0]))
 			&& vector_x_plane(sc.obj->pla[i], r) < 0)
 			set_values(&_t, fabs(vector_x_plane(sc.obj->pla[i], r)), 1, i);
 	i = -1;
 	while (sc.obj->sph[++i] != NULL)
 		if (vector_x_sphere(sc.obj->sph[i], r)
-			&& (fabs(vector_x_sphere(sc.obj->sph[i], r))
-				< fabs(_t[0]) || !_t[0]))
+			&& (!_t[0] || fabs(vector_x_sphere(sc.obj->sph[i], r))
+				< fabs(_t[0])))
 			set_values(&_t, fabs(vector_x_sphere(sc.obj->sph[i], r)), 2, i);
 	i = -1;
 	while (sc.obj->cyl[++i] != NULL)
 		if (vector_x_cylinder(sc.obj->cyl[i], r)
-			&& (fabs(vector_x_cylinder(sc.obj->cyl[i], r))
-				< fabs(_t[0]) || !_t[0]))
+			&& (!_t[0] || fabs(vector_x_cylinder(sc.obj->cyl[i], r))
+				< fabs(_t[0])))
 			set_values(&_t, fabs(vector_x_cylinder(sc.obj->cyl[i], r)), 3, i);
 	return (_t);
 }
@@ -108,9 +109,8 @@ void	render_pixel(int x, int y, t_data *data, t_scene sc)
 	color = 0;
 	r = malloc(sizeof(t_ray));
 	coords = get_screen_coord(x_pos(x), y_pos(y), sc.cam);
-	// printf("coords: %f %f %f\n", coords.x, coords.y, coords.z);
 	r->v = vec_sub(sc.cam->o, *coords);
-	// free(coords);		// TODO fix this leak
+	free(coords);
 	r->o = sc.cam->o;
 	sc.cam->r = r;
 	t = get_closest_object(sc);
